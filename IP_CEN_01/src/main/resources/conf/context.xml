@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <context:annotation-config />
+
+    <bean id="actionsProperties" class="com.hp.uca.expert.vp.im.actions.ActionsProperties">
+    </bean>
+
+    <bean id="problemsFactory" class="com.hp.uca.expert.vp.pd.core.ProblemsFactory">
+        <property name="actionsProperties" ref="actionsProperties" />
+        <property name="problemPackageName" value="com.hpe.uca.vp.IP_CEN_01.pd.problem." />
+        <property name="problemContextPackage" value="com.hpe.uca.vp.IP_CEN_01.pd.core." />
+        <property name="generalBehaviorClassName" value="MyGeneralBehavior" />
+        <property name="problemClassName" value="MyProblemDefault" />
+    </bean>
+
+    <bean id="propagationsFactory" class="com.hp.uca.expert.vp.tp.core.PropagationsFactory">
+        <property name="actionsProperties" ref="actionsProperties" />
+        <property name="propagationPackageName" value="com.hpe.uca.vp.IP_CEN_01.tp.propagation." />
+        <property name="propagationContextPackage" value="com.hpe.uca.vp.IP_CEN_01.tp.core." />
+        <property name="generalBehaviorClassName" value="MyGeneralBehavior" />
+        <property name="propagationClassName" value="MyPropagationDefault" />
+    </bean>
+
+    <bean id="automationsFactory" class="com.hpe.uca.expert.vp.auto.core.AutomationsFactory">
+        <property name="actionsProperties" ref="actionsProperties" />
+        <property name="automationPackageName" value="com.hpe.uca.vp.IP_CEN_01.auto.automation." />
+        <property name="automationContextPackage" value="com.hpe.uca.vp.IP_CEN_01.auto.core." />
+        <property name="generalBehaviorClassName" value="MyGeneralBehavior" />
+        <property name="automationClassName" value="MyAutomationDefault" />
+    </bean>
+
+    <bean id="troubleTicketsFactory" class="com.hpe.uca.expert.vp.tt.core.TroubleTicketsFactory">
+        <property name="actionsProperties" ref="actionsProperties" />
+    </bean>
+
+    <bean name="alarmForwarderRCA" class="com.hp.uca.expert.alarm.FileAlarmForwarder">
+        <constructor-arg index="0">
+            <bean name="forwardedAlarmsFile" class="java.io.File">
+                <constructor-arg index="0">
+                    <value>rca-forwarded-alarms.xml</value>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <value>false</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="loadGlobalParams" class="com.hpe.uca.expert.vp.auto.globalparams.GlobalParamsLoad">
+        <property name="globalParamsDao" ref="globalParamsDao" />
+        <property name="actionMode" value="Closed Loop" />
+        <property name="actionType" value="real" />
+        <property name="activateGlobalParams" value="1" />
+    </bean>
+
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mappers xmlns="http://hp.com/uca/expert/instancemapper">
+
+   <!--
+    
+   <mapper name="SOME_CONCAT_MAPPER" >
+      <expression>
+         <stringExpr><![CDATA[
+This.Field.specificProblem+"_"+
+This.Field.probableCause+"_"+
+This.Field.perceivedSeverity+"_"+
+This.Field.originatingManagedEntity.class(0) + " " + This.Field.originatingManagedEntity.instance(0)+"_"+
+This.Field.additionalText
+]]></stringExpr>
+      </expression>
+   </mapper>
+    
+   -->
+     
+</mappers>

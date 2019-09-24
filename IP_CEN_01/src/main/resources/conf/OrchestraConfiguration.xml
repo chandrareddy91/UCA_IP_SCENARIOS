@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OrchestraWorkflow xmlns="http://hp.com/uca/expert/orchestra/config">
+
+	<Routes>
+		<Route name="ED -> PD">
+			<COPY>
+				<Source>
+					<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+					<ScenarioName><![CDATA[com.hpe.uca.expert.vp.ed.EnrichmentDispatcher]]></ScenarioName>
+				</Source>
+				<Destinations>
+					<Destination>
+						<Filter>
+							<filterName>ED -> PD</filterName>
+						</Filter>
+						<Target>
+							<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+							<ScenarioName><![CDATA[com.hp.uca.expert.vp.pd.ProblemDetection]]></ScenarioName>
+						</Target>
+					</Destination>
+				</Destinations>
+			</COPY>
+		</Route>
+		
+		<!-- <Route name="ED -> TP">
+			<COPY>
+				<Source>
+					<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+					<ScenarioName><![CDATA[com.hpe.uca.expert.vp.ed.EnrichmentDispatcher]]></ScenarioName>
+				</Source>
+				<Destinations>
+					<Destination>
+						<Filter>
+							<filterName>ED -> TP</filterName>
+						</Filter>
+						<Target>
+							<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+							<ScenarioName><![CDATA[com.hp.uca.expert.vp.tp.TopologyPropagation]]></ScenarioName>
+						</Target>
+					</Destination>
+				</Destinations>
+			</COPY>
+		</Route>
+
+		<Route name="ED -> TT">
+			<COPY>
+				<Source>
+					<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+					<ScenarioName><![CDATA[com.hpe.uca.expert.vp.ed.EnrichmentDispatcher]]></ScenarioName>
+				</Source>
+				<Destinations>
+					<Destination>
+						<Filter>
+							<filterName>ED -> TT</filterName>
+						</Filter>
+						<Target>
+							<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+							<ScenarioName><![CDATA[com.hpe.uca.expert.vp.tt.TroubleTicketing]]></ScenarioName>
+						</Target>
+					</Destination>
+				</Destinations>
+			</COPY>
+		</Route>
+		<Route name="ED -> Auto">
+			<COPY>
+				<Source>
+					<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+					<ScenarioName><![CDATA[com.hpe.uca.expert.vp.ed.EnrichmentDispatcher]]></ScenarioName>
+				</Source>
+				<Destinations>
+					<Destination>
+						<Filter>
+							<filterName><![CDATA[ED -> AUTO]]></filterName>
+						</Filter>
+						<Target>
+							<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+							<ScenarioName><![CDATA[com.hp.uca.expert.vp.auto.Automation]]></ScenarioName>
+						</Target>
+					</Destination>
+				</Destinations>
+			</COPY>
+		</Route>
+ -->
+		<Route name="ED -> All">
+			<COPY>
+				<Source>
+					<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+					<ScenarioName><![CDATA[com.hpe.uca.expert.vp.ed.EnrichmentDispatcher]]></ScenarioName>
+				</Source>
+				<Destinations>
+					<Destination>
+						<Filter>
+							<filterName><![CDATA[ED -> ALL]]></filterName>
+						</Filter>
+						<Target>
+							<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+							<ScenarioName><![CDATA[com.hp.uca.expert.vp.pd.ProblemDetection]]></ScenarioName>
+						</Target>
+					</Destination>
+
+					<!-- <Destination>
+						<Filter>
+							<filterName><![CDATA[ED -> ALL]]></filterName>
+						</Filter>
+						<Target>
+							<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+							<ScenarioName><![CDATA[com.hp.uca.expert.vp.tp.TopologyPropagation]]></ScenarioName>
+						</Target>
+					</Destination>
+
+					<Destination>
+						<Filter>
+							<filterName><![CDATA[ED -> ALL]]></filterName>
+						</Filter>
+						<Target>
+							<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+							<ScenarioName><![CDATA[com.hp.uca.expert.vp.auto.Automation]]></ScenarioName>
+						</Target>
+					</Destination>
+
+					<Destination>
+						<Filter>
+							<filterName><![CDATA[ED -> ALL]]></filterName>
+						</Filter>
+						<Target>
+							<ValuePackNameVersion><![CDATA[IP_CEN_01-1.0]]></ValuePackNameVersion>
+							<ScenarioName><![CDATA[com.hpe.uca.expert.vp.tt.TroubleTicketing]]></ScenarioName>
+						</Target>
+					</Destination> -->
+				</Destinations>
+			</COPY>
+		</Route>
+	</Routes>
+</OrchestraWorkflow>

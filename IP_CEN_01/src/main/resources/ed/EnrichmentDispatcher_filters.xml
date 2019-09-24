@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<filters xmlns="http://hp.com/uca/expert/filter">
+
+    <topFilter name="NetworkAlarms">
+        <allCondition tag="OrchestrationType=NetworkAlarm">
+            <instanceOfFilterStatement>
+                <fullClassName><![CDATA[com.hp.uca.expert.alarm.AlarmCommon]]></fullClassName>
+            </instanceOfFilterStatement>
+           <!--  <notCondition>
+                <anyCondition>
+                    <stringFilterStatement>
+                        <fieldName><![CDATA[userText]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[.*<action>UCA EBC .*</action><trigger>.*</trigger><group>.*</group>.*]]></fieldValue>
+                    </stringFilterStatement>
+                    <stringFilterStatement>
+                        <fieldName><![CDATA[userText]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[.*<action>UCA EBC .*</action><trigger>.*</trigger><propagationGroup>.*</propagationGroup>.*]]></fieldValue>
+                    </stringFilterStatement>
+                </anyCondition>
+            </notCondition> -->
+            <notCondition>
+                <anyCondition>
+                    <stringFilterStatement>
+                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[toBeDefinedByVIL]]></fieldValue>
+                    </stringFilterStatement>
+		     		<stringFilterStatement>
+                        <fieldName><![CDATA[userText]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[.*<action>UCA EBC .*</action><trigger>.*</trigger><group>.*</group>.*]]></fieldValue>
+                    </stringFilterStatement>
+                    <stringFilterStatement>
+                        <fieldName><![CDATA[userText]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[.*<action>UCA EBC .*</action><trigger>.*</trigger><propagationGroup>.*</propagationGroup>.*]]></fieldValue>
+                    </stringFilterStatement>
+                </anyCondition>
+            </notCondition>
+            <anyCondition>
+                <allCondition tag="CategoryId=Interface">
+                    <stringFilterStatement tag="PatternId=interface_down">
+                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[INTERFACE DOWN]]></fieldValue>
+                    </stringFilterStatement>
+                </allCondition>
+                <allCondition tag="CategoryId=Link">
+                    <stringFilterStatement tag="PatternId=link_down">
+                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[LINK DOWN]]></fieldValue>
+                    </stringFilterStatement>
+                </allCondition>
+                 <allCondition tag="CategoryId=Protocol">
+                    <stringFilterStatement tag="PatternId=protocol_down">
+                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[PROTOCOL DOWN]]></fieldValue>
+                    </stringFilterStatement>
+                </allCondition>
+                 <allCondition tag="CategoryId=Infra">
+	                 <anyCondition>
+	                    <stringFilterStatement tag="PatternId=high_temp">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[INFRA TEMP]]></fieldValue>
+	                    </stringFilterStatement>
+	                    <stringFilterStatement tag="PatternId=fan_failure">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[INFRA FAN]]></fieldValue>
+	                    </stringFilterStatement>
+	                    <stringFilterStatement tag="PatternId=power_supply">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[INFRA POWER]]></fieldValue>
+	                    </stringFilterStatement>
+	                 </anyCondition>
+                </allCondition>
+                <allCondition tag="CategoryId=DeviceResourceAlarm">
+	                 <anyCondition>
+	                    <stringFilterStatement tag="PatternId=cpu_issue">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[CPU ISSUE]]></fieldValue>
+	                    </stringFilterStatement>
+	                    <stringFilterStatement tag="PatternId=memory_issue">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[MEMORY ISSUE]]></fieldValue>
+	                    </stringFilterStatement>
+	                    <stringFilterStatement tag="PatternId=cisco_high_cpu">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[CISCO HIGH CPU]]></fieldValue>
+	                    </stringFilterStatement>
+	                    <stringFilterStatement tag="PatternId=cpm_cpurising_threshold">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[CPMCPURISINGTHRESHOLD]]></fieldValue>
+	                    </stringFilterStatement>
+	                 </anyCondition>
+                </allCondition>
+                 <allCondition tag="CategoryId=NNMIssue">
+	                 <anyCondition>
+	                    <stringFilterStatement tag="PatternId=nnm_issue">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[NNM ISSUE]]></fieldValue>
+	                    </stringFilterStatement>
+	                 </anyCondition>
+                </allCondition>
+                 <allCondition tag="CategoryId=Hardware">
+	                 <anyCondition>
+	                    <stringFilterStatement tag="PatternId=Card_Hardware_Fail">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[HARDWARE FAILURE]]></fieldValue>
+	                    </stringFilterStatement>
+	                 </anyCondition>
+                </allCondition>
+                <allCondition tag="CategoryId=NodeDown">
+	                 <anyCondition>
+	                    <stringFilterStatement tag="PatternId=Node_Down">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[NODE DOWN]]></fieldValue>
+	                    </stringFilterStatement>
+	                 </anyCondition>
+                </allCondition>
+            </anyCondition>
+            <anyCondition>
+                       <stringFilterStatement tag="ComputeSourceUniqueIdMapper=retrievePrimaryKeyUca">
+                              <fieldName><![CDATA[primaryKeyUca]]></fieldName>
+                              <operator><![CDATA[matches]]></operator>
+                              <fieldValue><![CDATA[.+]]></fieldValue>
+                          </stringFilterStatement>
+             </anyCondition>
+        </allCondition>
+    </topFilter>
+
+    <topFilter name="ProblemAlarms">
+        <allCondition tag="OrchestrationType=ProblemAlarmCreatedByPD">
+            <instanceOfFilterStatement>
+                <fullClassName><![CDATA[com.hp.uca.expert.alarm.AlarmCommon]]></fullClassName>
+            </instanceOfFilterStatement>
+            <stringFilterStatement>
+                <fieldName><![CDATA[userText]]></fieldName>
+                <operator><![CDATA[matches]]></operator>
+                <fieldValue><![CDATA[.*<action>UCA EBC .*</action><trigger>.*</trigger><group>.*</group>.*]]></fieldValue>
+            </stringFilterStatement>
+            <anyCondition>
+		          <anyCondition  tag="ComputeSourceUniqueIdMapper=reteriveNodeNameFromPrimaryKeyUca, PatternId=pba_Interface_down, CategoryId=Interface">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : INTERFACE DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		          <anyCondition  tag="ComputeSourceUniqueIdMapper=reteriveNodeNameFromPrimaryKeyUca, PatternId=pba_Link_down, CategoryId=Link">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : LINK DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : WAN LINK DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : WLD LINK DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : B2B LINK DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : MSSC LINK DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : SGSN LINK DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		           <anyCondition  tag="ComputeSourceUniqueIdMapper=reteriveNodeNameFromPrimaryKeyUca, PatternId=pba_protocol_down, CategoryId=Protocol">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : PROTOCOL DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : WAN LINK PROTOCOL DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		          <anyCondition  tag="ComputeSourceUniqueIdMapper=retrievePrimaryKeyUca, PatternId=pba_Infra, CategoryId=Infra">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : INFRA TEMP]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : INFRA FAN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : INFRA POWER]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		          <anyCondition  tag="ComputeSourceUniqueIdMapper=retrievePrimaryKeyUca, PatternId=pba_Device_Resource_Alarm, CategoryId=DeviceResourceAlarm">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : CPU ISSUE]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		                 	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : MEMORY ISSUE]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		          <anyCondition  tag="ComputeSourceUniqueIdMapper=retrievePrimaryKeyUca, PatternId=pba_nnm_issue, CategoryId=NNMIssue">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : NNMi ISSUE]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		          <anyCondition  tag="ComputeSourceUniqueIdMapper=retrievePrimaryKeyUca, PatternId=pba_hardware_issue, CategoryId=Hardware">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : HARDWARE FAILURE]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		          <anyCondition  tag="ComputeSourceUniqueIdMapper=reterivePopName, PatternId=pba_Node_Down, CategoryId=NodeDown">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : NODE DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		           <anyCondition  tag="ComputeSourceUniqueIdMapper=reteriveNodeNameFromPrimaryKeyUca, PatternId=pba_node_isolation, CategoryId=NodeDown">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : NODE ISOLATION]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		          <anyCondition  tag="ComputeSourceUniqueIdMapper=reterivePopName, PatternId=pba_pop_down, CategoryId=PopDown">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[NIA : POP DOWN]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		           <anyCondition  tag="ComputeSourceUniqueIdMapper=reterivePopName, PatternId=pba_pop_isolation, CategoryId=PopIsolation">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[NIA : POP ISOLATION]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+          </anyCondition>
+       </allCondition>
+    </topFilter>
+
+    <topFilter name="ServiceAlarms">
+        <allCondition tag="OrchestrationType=ServiceAlarmCreatedByTSP">
+            <instanceOfFilterStatement>
+                <fullClassName><![CDATA[com.hp.uca.expert.alarm.AlarmCommon]]></fullClassName>
+            </instanceOfFilterStatement>
+            <stringFilterStatement>
+                <fieldName><![CDATA[userText]]></fieldName>
+                <operator><![CDATA[matches]]></operator>
+                <fieldValue><![CDATA[.*<action>UCA EBC .*</action><trigger>.*</trigger><propagationGroup>.*</propagationGroup>.*]]></fieldValue>
+            </stringFilterStatement>
+            <anyCondition>
+                <stringFilterStatement tag="ComputeSourceUniqueIdMapper=retrieveServiceName, PatternId=sa_phone_service, CategoryId=PhoneService">
+                    <fieldName><![CDATA[standardAlarmName]]></fieldName>
+                    <operator><![CDATA[startsWith]]></operator>
+                    <fieldValue><![CDATA[service ServiceAlarm]]></fieldValue>
+                </stringFilterStatement>
+                <stringFilterStatement tag="ComputeSourceUniqueIdMapper=retrieveCustomerName, PatternId=sa_customer, CategoryId=Customer">
+                    <fieldName><![CDATA[standardAlarmName]]></fieldName>
+                    <operator><![CDATA[startsWith]]></operator>
+                    <fieldValue><![CDATA[customer ServiceAlarm]]></fieldValue>
+                </stringFilterStatement>
+            </anyCondition>
+        </allCondition>
+    </topFilter>
+
+    <topFilter name="TroubleTickets">
+        <anyCondition tag="OrchestrationType=TroubleTicket">
+            <allCondition>
+                <instanceOfFilterStatement>
+                    <fullClassName><![CDATA[com.hp.uca.expert.troubleticket.TroubleTicket]]></fullClassName>
+                </instanceOfFilterStatement>
+                <isPresentFilterStatement>
+                    <fieldName><![CDATA[faultyEntity]]></fieldName>
+                </isPresentFilterStatement>
+            </allCondition>
+        </anyCondition>
+    </topFilter>
+    
+    <topFilter name="AutoEvents">
+        <anyCondition tag="OrchestrationType=AutomationEvent">
+            <allCondition>
+                <instanceOfFilterStatement>
+                    <fullClassName><![CDATA[com.hp.uca.expert.autoevent.AutoEventCommon]]></fullClassName>
+                </instanceOfFilterStatement>
+            </allCondition>
+        </anyCondition>
+    </topFilter>
+    
+    <topFilter name="TopologyEvents">
+        <anyCondition>
+            <allCondition>
+                <instanceOfFilterStatement>
+                    <fullClassName><![CDATA[com.hp.uca.expert.topology.TopologyUpdateEvent]]></fullClassName>
+                </instanceOfFilterStatement>
+            </allCondition>
+        </anyCondition>
+    </topFilter>
+    
+</filters>

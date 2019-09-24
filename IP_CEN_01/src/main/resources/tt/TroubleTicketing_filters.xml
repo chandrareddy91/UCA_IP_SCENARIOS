@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<filters xmlns="http://hp.com/uca/expert/filter">
+
+    <topFilter name="TroubleTicketEvents" >
+        <anyCondition>
+            <!-- TroubleTicket Creation -->
+            <allCondition>
+                <instanceOfFilterStatement>
+                    <fullClassName>com.hp.uca.expert.troubleticket.TroubleTicket</fullClassName>
+                </instanceOfFilterStatement>
+                <isPresentFilterStatement>
+                    <fieldName>faultyEntity</fieldName>
+                </isPresentFilterStatement>
+            </allCondition>
+            <!-- TroubleTicket Attribute Value Change -->
+            <allCondition>
+                <instanceOfFilterStatement>
+                    <fullClassName>com.hp.uca.expert.troubleticket.TroubleTicketAttributeChangeEvent</fullClassName>
+                </instanceOfFilterStatement>
+            </allCondition>
+            <!-- TroubleTicket State Change -->
+            <allCondition>
+                <instanceOfFilterStatement>
+                    <fullClassName>com.hp.uca.expert.troubleticket.TroubleTicketStatusChangeEvent</fullClassName>
+                </instanceOfFilterStatement>
+            </allCondition>
+            <!-- TroubleTicket Deletion -->
+            <allCondition>
+                <instanceOfFilterStatement>
+                    <fullClassName>com.hp.uca.expert.troubleticket.TroubleTicketDeleteEvent</fullClassName>
+                </instanceOfFilterStatement>
+            </allCondition>
+        </anyCondition>
+    </topFilter>
+
+</filters>

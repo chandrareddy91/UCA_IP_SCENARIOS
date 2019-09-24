@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- See documentation @ http://mybatis.github.io/mybatis-3/sqlmap-xml.html -->
+
+<mapper namespace="com.hp.uca.expert.autoevent.history.store.AutoEventHistoryDao">
+	<resultMap id="autoeventshistoryMap" type="com.hp.uca.expert.autoevent.history.store.StoredAutoEventHistory" >
+	</resultMap>
+	<resultMap type="java.lang.String" id="stringMap"> </resultMap>
+
+    
+   <update id="createStore" parameterType="com.hp.uca.expert.store.sql.SqlStore">
+    	CREATE TABLE 
+    		<if test="supportsIfNotExist">
+    		IF NOT EXISTS
+    		</if>
+    		AUTOEVENTSHISTORY (
+    		<choose>
+    		<when test="name != null and name.equals('sqlite')">
+    			identifier  INTEGER PRIMARY KEY,
+    		</when>
+		<when test="name != null and ( name.equals('hsqldb') or name.equals('h2') )">
+              	identifier VARCHAR(200) NOT NULL,
+    		</when>
+    		<otherwise>
+    		</otherwise>
+    		</choose>
+                actionName VARCHAR(100),
+				actionId VARCHAR(100),
+				service VARCHAR(200),
+				correlKey VARCHAR(200),
+				parameters VARCHAR(5000),
+				actionMode VARCHAR(100),
+				actionOriginator VARCHAR(100),
+				originatorId VARCHAR(100),
+				type VARCHAR(100),
+				dispatchType VARCHAR(100),
+				scriptName VARCHAR(100),
+				actionType VARCHAR(100),				
+				correlActionList VARCHAR(5000),
+				state VARCHAR(100),
+				status VARCHAR(100),
+				correlActionResult CLOB,
+				taskRequest CLOB,				
+				taskResponse CLOB,	
+				leafNode  VARCHAR(100),
+				actionReference	VARCHAR(500),  								
+				automationFilter VARCHAR(500),  
+				startTime ${bigInt},
+			   	lastUpdateTime ${bigInt},
+			   	endTime VARCHAR(100),
+			    archiveData VARCHAR(100)			   	    
+                );
+    </update>
+    
+   
+	
+	<insert id="storeAutoEventHistory" parameterType="com.hp.uca.expert.store.mappers.AutoEventHistoryCreationMapper">
+		INSERT INTO AUTOEVENTSHISTORY
+			(
+				identifier,
+				actionName,
+				actionId,
+				service,
+				correlKey,
+				parameters,
+				actionMode,
+				actionOriginator,
+				originatorId,
+				type,
+				dispatchType,
+				scriptName,
+				actionType,				
+				correlActionList,
+				state,
+				status,
+				correlActionResult,
+				taskRequest,					
+				taskResponse,							
+				leafNode,
+				actionReference,							
+				automationFilter,
+				startTime,
+				lastUpdateTime,
+				endTime,
+				archiveData
+			)
+		VALUES
+			(
+			#{autoeventhistory.identifier},
+			#{autoeventhistory.actionName},
+			#{autoeventhistory.actionId},
+			#{autoeventhistory.service},
+			#{autoeventhistory.correlKey},
+			#{autoeventhistory.parameters},
+			#{autoeventhistory.actionMode},
+			#{autoeventhistory.actionOriginator},
+			#{autoeventhistory.originatorId},
+			#{autoeventhistory.type},
+			#{autoeventhistory.dispatchType},
+			#{autoeventhistory.scriptName},
+			#{autoeventhistory.actionType},
+			#{autoeventhistory.correlActionList},
+			#{autoeventhistory.state},
+			#{autoeventhistory.status},
+			#{autoeventhistory.correlActionResult},
+			#{autoeventhistory.taskRequest},
+			#{autoeventhistory.taskResponse},						
+			#{autoeventhistory.leafNode},
+			#{autoeventhistory.actionReference},
+			#{autoeventhistory.automationFilter},
+			#{autoeventhistory.startTime},
+			#{lastUpdateTime},
+			#{autoeventhistory.endTime},
+			#{autoeventhistory.archiveData}
+			)
+	</insert>
+	
+	 <delete id="clearAll">
+    	DELETE FROM AUTOEVENTSHISTORY
+    </delete>
+    
+    <delete id="deleteStore">
+    	DROP TABLE AUTOEVENTSHISTORY
+    </delete>
+	
+	<select id="getAutoEventHistory" resultMap="autoeventshistoryMap" >
+		SELECT
+			*    	
+		FROM
+			AUTOEVENTSHISTORY
+		WHERE
+			identifier = #{identifier}
+			AND 
+			STARTTIME <![CDATA[ <> ]]> 0			
+	</select>
+	
+	<select id="getAutoEventsHistoryWithParams" resultMap="autoeventshistoryMap" >
+              SELECT * FROM (SELECT ROWNUM AS RECORDNUM,IDENTIFIER,ACTIONNAME,ACTIONID,SERVICE,CORRELKEY,ACTIONMODE,ACTIONORIGINATOR,ORIGINATORID,TYPE,
+              DISPATCHTYPE,SCRIPTNAME,ACTIONTYPE,CORRELACTIONLIST,STATE,STATUS,TASKREQUEST,TASKRESPONSE,STARTTIME,ENDTIME,CORRELACTIONRESULT FROM  (SELECT * FROM AUTOEVENTSHISTORY 
+                     <where>                    
+                     <if test="param1 != null and param1 != '' "> AND archiveData = #{param1}</if>
+                     <if test="param2 != null and param2 != '' "> AND status = #{param2}</if>
+                     <if test="param3 != null and param3 != '' "> AND actionMode = #{param3}</if>
+                     <if test="param4 != null and param4 != '' "> AND actionOriginator = #{param4}</if>
+                     <if test="param5 != null and param5 != '' "> AND correlKey = #{param5}</if>
+                     <if test="param6 != null and param6 != '' "> AND service = #{param6}</if>
+                     <if test="param7 != null and param7 != '' "> AND startTime <![CDATA[ >= ]]> #{param7}</if>
+                     <if test="param8 != null and param8 != '' "> AND endTime <![CDATA[ <= ]]> #{param8}</if>
+              </where>
+              ORDER BY ORIGINATORID DESC, IDENTIFIER DESC)) <where> <if test="param9 > 0 and param9 != null and param9 != '' ">  RECORDNUM <![CDATA[ >= ]]> #{param9} </if> <if test="param10 > 0 and param10 != null and param10 != '' "> and RECORDNUM <![CDATA[ <= ]]> #{param10} </if> </where>;
+	</select>
+    
+	
+	<select id="getAllAutoEventServices" resultMap="stringMap" >
+		SELECT 
+			DISTINCT service    	
+		FROM
+			AUTOEVENTSHISTORY		
+	</select>	
+	
+	<select id="getAllAutoEventProblems" resultMap="stringMap" >
+		SELECT 
+			DISTINCT correlKey    	
+		FROM
+			AUTOEVENTSHISTORY		
+	</select>		
+	
+	<delete id="removeAutoEventHistory">
+		DELETE FROM AUTOEVENTSHISTORY
+		WHERE identifier = #{identifier}
+	</delete>
+	
+	<update id="archiveAutoEventHistory" >
+		UPDATE AUTOEVENTSHISTORY SET
+			ARCHIVEDATA = #{param1}
+		WHERE identifier = #{param2}	
+	</update>
+	
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<filters xmlns="http://hp.com/uca/expert/filter">
+
+    <!--topFilter name="Automation_Switch">
+        <anyCondition tag="ServiceManager">
+             <patternIdFilterStatement>
+                <operator>isEqual</operator>
+                <patternIdValue>pba_switch_down</patternIdValue>
+            </patternIdFilterStatement>
+            <orchestrationTypeFilterStatement>
+                <orchestrationTypeValue>AutomationEvent</orchestrationTypeValue>
+            </orchestrationTypeFilterStatement>   
+        </anyCondition>
+    </topFilter-->
+
+    <!--topFilter name="Automation_Service">
+    <anyCondition tag="ServiceManager">
+             <patternIdFilterStatement>
+                <operator>isEqual</operator>
+                <patternIdValue>sa_phone_service</patternIdValue>
+            </patternIdFilterStatement>
+            <orchestrationTypeFilterStatement>
+                <orchestrationTypeValue>AutomationEvent</orchestrationTypeValue>
+            </orchestrationTypeFilterStatement>   
+        </anyCondition>
+    </topFilter-->
+
+</filters>

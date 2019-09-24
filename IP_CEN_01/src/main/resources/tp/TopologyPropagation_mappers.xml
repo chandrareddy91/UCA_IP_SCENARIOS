@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mappers xmlns="http://hp.com/uca/expert/instancemapper">
+
+    <!--mapper name="retrieveSwitchName">
+        <extract>
+            <fieldName>originatingManagedEntity</fieldName>
+            <matcher>SWITCH (.*)$</matcher>
+            <mappedTo>$1</mappedTo>
+        </extract>
+    </mapper>
+    <mapper name="retrievePhoneName">
+        <extract>
+            <fieldName>originatingManagedEntity</fieldName>
+            <matcher>PHONE (.*)$</matcher>
+            <mappedTo>$1</mappedTo>
+        </extract>
+    </mapper>
+    <mapper name="retrieveServiceName">
+        <extract>
+            <fieldName>originatingManagedEntity</fieldName>
+            <matcher>SERVICE (.*)$</matcher>
+            <mappedTo>$1</mappedTo>
+        </extract>
+    </mapper>
+    <mapper name="retrieveCustomerName">
+        <extract>
+            <fieldName>originatingManagedEntity</fieldName>
+            <matcher>CUSTOMER (.*)$</matcher>
+            <mappedTo>$1</mappedTo>
+        </extract>
+    </mapper>
+    
+    <mapper name='isSwitch'>
+        <extract>
+            <fieldName>dbType</fieldName>
+            <matcher>switch</matcher>
+            <mappedTo>switch</mappedTo>
+        </extract>
+    </mapper>    
+    
+    <mapper name='addTextWithWholeSubTreeIS'>
+        <expression>
+        	<stringExpr><![CDATA[
+Tag(propagationObject) + " ServiceAlarm with:
+Total # of impacting: " + Group.ImpactingState.Size + "
+Directly impacting  : " + FirstLevel.ImpactingState.Field.dbUniqueId.", " + "
+Impacted switches   : " + All.ImpactingState.Match.isSwitch.Field.dbUniqueId.", "
+]]>
+        	</stringExpr>
+        </expression>
+    </mapper-->
+    
+</mappers>

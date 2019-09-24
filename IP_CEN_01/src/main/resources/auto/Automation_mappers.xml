@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mappers xmlns="http://hp.com/uca/expert/instancemapper" xmlns:xi="http://www.w3.org/2001/XInclude">>	
+
+    <!-- Mapper for resourceInstance -->
+    <!--mapper name="computeResourceInstType">
+        <extract>
+            <fieldName><![CDATA[additionalInformation]]></fieldName>
+            <matcher><![CDATA[(.*) RESINST (.*) RESTTYPE (.*)]]></matcher> 
+            <mappedTo><![CDATA[$2:$3]]></mappedTo>
+        </extract>
+    </mapper-->
+
+</mappers>

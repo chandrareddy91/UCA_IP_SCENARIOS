@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns="http://config.auto.vp.expert.uca.hp.com/"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.0"
+	targetNamespace="http://config.auto.vp.expert.uca.hp.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:cmn="http://config.im.vp.expert.uca.hp.com/" elementFormDefault="qualified">
+
+	<xs:import namespace="http://config.im.vp.expert.uca.hp.com/" schemaLocation="CommonTypes.xsd" />
+
+	<xs:element name="AutomationPolicies">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="mainPolicy" type="MainPolicy"
+					minOccurs="1" maxOccurs="1" />
+				<!-- xs:element name="globalPolicy" type="GlobalPolicy"
+					minOccurs="1" maxOccurs="1" /-->
+				<xs:element name="automationPolicy" type="AutomationPolicy"
+					minOccurs="1" maxOccurs="unbounded" />				
+			</xs:sequence>
+			<xs:attribute name="__tooltip" type="xs:string"
+				fixed="Configuration of a Problem Detection value pack" use="optional">
+				<xs:annotation>
+					<xs:appinfo>
+						<jxb:property fixedAttributeAsConstantProperty="true" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="MainPolicy">
+		<xs:all>
+			<xs:element name="global" type="Global"
+					minOccurs="1" maxOccurs="1" />	
+		</xs:all>
+
+		<xs:attribute name="__tooltip" type="xs:string"
+			fixed="Configuration settings common to all problems defined in a Automation Value Pack."
+			use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+
+	</xs:complexType>
+
+<xs:complexType name="Global">
+		<xs:all>
+			<xs:element name="allowActionRetry" type="xs:boolean" 
+				minOccurs="0" maxOccurs="1" default="false" />
+			<xs:element name="diagnosticInfoDateFormat" type="xs:string"
+				minOccurs="0" maxOccurs="1" default="dd-MM-yy" />	
+			<xs:element name="waitingTimeAfterResync" type="xs:long"
+				minOccurs="0" maxOccurs="1" default="2000" />			
+		</xs:all>
+</xs:complexType>
+
+	<xs:complexType name="AutomationPolicy">
+		<xs:all>
+			<xs:element name="automationAlarm" type="AutomationAlarm"
+				minOccurs="1" maxOccurs="1" />
+
+ 			<xs:element name="strings" type="cmn:Strings" minOccurs="0"
+				maxOccurs="1" />
+
+		</xs:all>
+		<xs:attribute name="name" use="required" type="xs:string" />
+		<!-- xs:attribute name="enableComputeProblemEntityFromMappers" type="xs:boolean" 
+			use="optional" default="true"/> <xs:attribute name="enableComputeProblemEntityFromFields" 
+			type="xs:boolean" use="optional" default="false"/ -->
+		<xs:attribute name="__tooltip" type="xs:string"
+			fixed="Configuration settings specific to each problem defined in a Automation Value Pack."
+			use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="__tooltip_name" type="xs:string"
+			fixed="Name of the Problem. A TopFilter with the same name is defined in the Filter Configuration."
+			use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<!--xs:attribute name="__tooltip_enableComputeProblemEntityFromMappers" 
+			type="xs:string" fixed="When true, enables the use of calling mappers in 
+			computeProblemEntity()." use="optional"> <xs:annotation> <xs:appinfo> <jxb:property 
+			fixedAttributeAsConstantProperty="true" /> </xs:appinfo> </xs:annotation> 
+			</xs:attribute> <xs:attribute name="__tooltip_enableComputeProblemEntityFromFields" 
+			type="xs:string" fixed="When true, enables calculation of fields key/value 
+			pairs in computeProblemEntity()." use="optional"> <xs:annotation> <xs:appinfo> 
+			<jxb:property fixedAttributeAsConstantProperty="true" /> </xs:appinfo> </xs:annotation> 
+			</xs:attribute -->
+		<xs:attribute name="__dynamicList_name" type="xs:string"
+			fixed="topFilterList" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+
+	</xs:complexType>
+
+	<xs:complexType name="AutomationAlarm">
+		<xs:sequence>
+			<xs:element name="goForAutomation" type="xs:boolean"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="delayForAutomation" type="xs:long"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="manualMode" type="xs:boolean" minOccurs="1"
+				maxOccurs="1" />	
+		</xs:sequence>
+		<!-- xs:attribute name="terminateWhenLonesome" type="xs:boolean" use="optional" 
+			default="false" / -->
+
+		<xs:attribute name="__tooltip" type="xs:string"
+			fixed="Configuration of 'Automation' Alarms." use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		
+		<xs:attribute name="__tooltip_goForAutomation"
+			type="xs:string" fixed="Flag to indicate whether to proceed with Automation."
+			use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="__default_goForAutomation"
+			type="xs:string" fixed="Automatically converted as Boolean java class instance." use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+				
+		
+		<xs:attribute name="__default_delayForAutomation" type="xs:long"
+			fixed="2000" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="__default_manualmode" type="xs:string"
+			fixed="Flag to indicate whether to initiate Automation manually."
+			use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property fixedAttributeAsConstantProperty="true" />
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+
+	</xs:complexType>
+
+
+	
+	<!-- xs:complexType name="FieldsChooser"> <xs:sequence> <xs:element name="field" 
+		type="FieldChooser" minOccurs="1" maxOccurs="unbounded" /> </xs:sequence> 
+		<xs:attribute name="keyValueSeparator" type="xs:string" use="optional" default="="/> 
+		<xs:attribute name="__tooltip" type="xs:string" fixed="Configuration of the 
+		FieldsChooser" use="optional"> <xs:annotation> <xs:appinfo> <jxb:property 
+		fixedAttributeAsConstantProperty="true" /> </xs:appinfo> </xs:annotation> 
+		</xs:attribute> <xs:attribute name="__tooltip_field" type="xs:string" fixed="Defines 
+		the field of an alarm used as a key/value pair for computeProblemEntity." 
+		use="optional"> <xs:annotation> <xs:appinfo> <jxb:property fixedAttributeAsConstantProperty="true" 
+		/> </xs:appinfo> </xs:annotation> </xs:attribute> <xs:attribute name="__tooltip_keyValueSeparator" 
+		type="xs:string" fixed="Defines the separator between key and value for building 
+		the key/value pair in computeProblemEntity." use="optional"> <xs:annotation> 
+		<xs:appinfo> <jxb:property fixedAttributeAsConstantProperty="true" /> </xs:appinfo> 
+		</xs:annotation> </xs:attribute> <xs:attribute name="__default_keyValueSeparator" 
+		type="xs:string" fixed="=" use="optional"> <xs:annotation> <xs:appinfo> <jxb:property 
+		fixedAttributeAsConstantProperty="true" /> </xs:appinfo> </xs:annotation> 
+		</xs:attribute> </xs:complexType> <xs:complexType name="FieldChooser"> <xs:all> 
+		<xs:element name="key" type="FieldChooserChoice" minOccurs="1" maxOccurs="1" 
+		/> <xs:element name="valueIgnored" type="xs:string" minOccurs="0" maxOccurs="1" 
+		/> </xs:all> <xs:attribute name="__tooltip" type="xs:string" fixed="Configuration 
+		of the FieldChooser" use="optional"> <xs:annotation> <xs:appinfo> <jxb:property 
+		fixedAttributeAsConstantProperty="true" /> </xs:appinfo> </xs:annotation> 
+		</xs:attribute> <xs:attribute name="__tooltip_key" type="xs:string" fixed="Defines 
+		the field key (can be custom field or not) of an alarm used as a key/value 
+		pair for computeProblemEntity." use="optional"> <xs:annotation> <xs:appinfo> 
+		<jxb:property fixedAttributeAsConstantProperty="true" /> </xs:appinfo> </xs:annotation> 
+		</xs:attribute> <xs:attribute name="__tooltip_valueIgnored" type="xs:string" 
+		fixed="Defines an optional value to be ignored for a field during computeProblemEntity.." 
+		use="optional"> <xs:annotation> <xs:appinfo> <jxb:property fixedAttributeAsConstantProperty="true" 
+		/> </xs:appinfo> </xs:annotation> </xs:attribute> </xs:complexType> <xs:complexType 
+		name="FieldChooserChoice"> <xs:choice> <xs:element name="tagName" type="xs:string" 
+		/> <xs:element name="fieldName" type="xs:string" /> </xs:choice> <xs:attribute 
+		name="__tooltip_tagName" type="xs:string" fixed="Defines the tag defining 
+		the field name to be used as key/value pair for computeProblemEntity." use="optional"> 
+		<xs:annotation> <xs:appinfo> <jxb:property fixedAttributeAsConstantProperty="true" 
+		/> </xs:appinfo> </xs:annotation> </xs:attribute> <xs:attribute name="__tooltip_fieldName" 
+		type="xs:string" fixed="Defines directly the field name to be used as key/value 
+		pair for computeProblemEntity." use="optional"> <xs:annotation> <xs:appinfo> 
+		<jxb:property fixedAttributeAsConstantProperty="true" /> </xs:appinfo> </xs:annotation> 
+		</xs:attribute> </xs:complexType -->
+
+
+
+
+
+</xs:schema>
+
+
+

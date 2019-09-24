@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProblemPolicies xmlns="http://config.pd.vp.expert.uca.hp.com/" xmlns:cm="http://config.im.vp.expert.uca.hp.com/">
+    <mainPolicy enablePrioritySort="true" multipleParentSupport="true" enableTopoAccess="true">
+        <candidateVisibility>
+            <candidateVisibilityTimeMode>Max</candidateVisibilityTimeMode>
+            <candidateVisibilityTimeValue>30000</candidateVisibilityTimeValue>
+            <markCandidate>true</markCandidate>
+        </candidateVisibility>
+        <transientFiltering>
+            <transientFilteringEnabled>false</transientFilteringEnabled>
+            <transientFilteringDelay>5000</transientFilteringDelay>
+        </transientFiltering>
+        <counterTotalNumberAlarms>Current</counterTotalNumberAlarms>
+    </mainPolicy>
+    <problemPolicy name="ProblemDefault">
+        <problemAlarm>
+            <delayForProblemAlarmCreation>2000</delayForProblemAlarmCreation>
+            <delayForProblemAlarmClearance>0</delayForProblemAlarmClearance>
+        </problemAlarm>
+        <troubleTicket>
+            <automaticTroubleTicketCreation>false</automaticTroubleTicketCreation>
+            <propagateTroubleTicketToSubAlarms>false</propagateTroubleTicketToSubAlarms>
+            <propagateTroubleTicketToProblemAlarm>false</propagateTroubleTicketToProblemAlarm>
+            <delayForTroubleTicketCreation>10000</delayForTroubleTicketCreation>
+        </troubleTicket>
+        <groupTickFlagAware>false</groupTickFlagAware>
+        <timeWindow>
+            <timeWindowMode>None</timeWindowMode>
+            <timeWindowBeforeTrigger>30000</timeWindowBeforeTrigger>
+            <timeWindowAfterTrigger>30000</timeWindowAfterTrigger>
+        </timeWindow>
+        <booleans />
+        <strings />
+        <longs />
+        <tags>
+            <!-- TeMIP OC for ProblemAlarms if not defined in ActionsFactories.xml -->
+            <!-- <cm:tag name="ProblemAlarm.Creation.OC"> -->
+            <!--     <cm:value>.uca_problem</cm:value> -->
+            <!-- </cm:tag> -->
+        </tags>
+    </problemPolicy>
+    
+    
+</ProblemPolicies>

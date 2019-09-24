@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- edited with XMLSpy v2017 rel. 3 (x64) (http://www.altova.com) by Anzile (Hewlett Packard Enterprise Com) -->
+<xs:schema xmlns="http://config.tp.vp.expert.uca.hp.com/" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cmn="http://config.im.vp.expert.uca.hp.com/" xmlns:annox="http://annox.dev.java.net"
+    jxb:extensionBindingPrefixes="annox" targetNamespace="http://config.tp.vp.expert.uca.hp.com/" elementFormDefault="qualified"
+    jxb:version="2.0">
+    <xs:import namespace="http://config.im.vp.expert.uca.hp.com/" schemaLocation="CommonTypes.xsd" />
+    <xs:element name="PropagationPolicies">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mainPolicy" type="MainPolicy" />
+                <xs:element name="propagationPolicy" type="PropagationPolicy" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="__tooltip" type="xs:string" use="optional"
+                fixed="Configuration of a Topology Propagation value pack">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:property fixedAttributeAsConstantProperty="true" />
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="MainPolicy">
+        <xs:all>
+            <xs:element name="counterTotalNumberAlarms" type="cmn:CounterTotalNumberAlarms" minOccurs="0" />
+            <xs:element name="topologyReportGenerationMode" type="TopologyReportGenerationMode" default="disabled" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Configuration of the TopologyContextReport events generation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="stateSourceIdentifier" type="xs:string" use="optional" />
+        <xs:attribute name="__tooltip" type="xs:string" use="optional"
+            fixed="Configuration settings common to all problems defined in a Topology Propagation Value Pack.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_counterTotalNumberAlarms" type="xs:string" use="optional"
+            fixed="Configuration of the ServiceAlarm field representing the Total Number of Alarms.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_counterTotalNumberAlarms" type="xs:string" use="optional" fixed="Current">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_stateSourceIdentifier" type="xs:string" use="optional"
+            fixed="String indicating what to use for sourceIdentifier field when creating new State.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_stateSourceIdentifier" type="xs:string" use="optional" fixed="UCA-EBC">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:simpleType name="TopologyReportGenerationMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="disabled" />
+            <xs:enumeration value="full" />
+            <xs:enumeration value="partial" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="PropagationPolicy">
+        <xs:all>
+            <xs:element name="serviceAlarm" type="ServiceAlarm" minOccurs="0" />
+            <xs:element name="troubleTicket" type="cmn:TroubleTicket" minOccurs="0" />
+            <xs:element name="groupTickFlagAware" type="xs:boolean" minOccurs="0" />
+            <xs:element name="propagationRule" type="PropagationRule" minOccurs="0" />
+            <xs:element name="poiCategories" type="PoiCategories" minOccurs="0" />
+            <xs:element name="thresholdValues" type="ThresholdValues" minOccurs="0" />
+            <xs:element name="propagationObject" type="xs:string" minOccurs="0" />
+            <xs:element name="healthStatusCategory" type="xs:string" minOccurs="0" />
+            <xs:element name="statusName" type="xs:string" minOccurs="0" />
+            <xs:element name="percentageAvailabilityKey" type="xs:string" minOccurs="0" />
+            <xs:element name="booleans" type="cmn:Booleans" minOccurs="0" />
+            <xs:element name="strings" type="cmn:Strings" minOccurs="0" />
+            <xs:element name="longs" type="cmn:Longs" minOccurs="0" />
+            <xs:element name="tags" type="cmn:Tags" minOccurs="0" />
+        </xs:all>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="__tooltip" type="xs:string" use="optional"
+            fixed="Configuration settings specific to each propagation defined in a Topology Propagation Value Pack.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_name" type="xs:string" use="optional"
+            fixed="Name of the Propagation. A TopFilter with the same name is defined in the Filter Configuration.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__dynamicList_name" type="xs:string" use="optional" fixed="topFilterList">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_groupTickFlagAware" type="xs:string" use="optional"
+            fixed="Indicates that at regular tick intervals (see Scenario configuration), the Topology State Propagator scenario, if customized for that,  will execute some user code performed on the PropagationGroup object.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_propagationObject" type="xs:string" use="optional"
+            fixed="Describes the propagation state name when creating Node POIs and the name that is used for creating Service Alarms.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_healthStatusCategory" type="xs:string" use="optional"
+            fixed="Refers to the state category used as attributes name prefix.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_healthStatusCategory" type="xs:string" use="optional" fixed="Availability">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_statusName" type="xs:string" use="optional"
+            fixed="Refers to the attribute name used for status attribute when creating Node POIs.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_statusName" type="xs:string" use="optional" fixed="state">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_percentageAvailabilityKey" type="xs:string" use="optional"
+            fixed="Refers to the attribute name used for percentageAvailability attribute when creating Node POIs.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_percentageAvailabilityKey" type="xs:string" use="optional" fixed="percAvailability">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ThresholdValues">
+        <xs:sequence>
+            <xs:element name="OK" type="ThresholdOk" minOccurs="1" />
+            <xs:element name="LOW" type="ThresholdLow" minOccurs="1" />
+            <xs:element name="MEDIUM" type="ThresholdMed" minOccurs="1" />
+            <xs:element name="HIGH" type="ThresholdHigh" minOccurs="1" />
+            <xs:element name="CRITICAL" type="ThresholdCritical" minOccurs="1" />
+            <xs:element name="DOWN" type="ThresholdDown" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of Threshold Values">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_node" type="xs:string" use="optional" fixed="type of the node to include">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_node" type="xs:string" use="optional" fixed="customer">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ThresholdDown">
+        <xs:sequence>
+            <xs:element name="perceivedSeverity" type="PerceivedSeverity" minOccurs="1" />
+            <xs:element name="availabilityPercentage" type="xs:double" minOccurs="1" />
+            <xs:element name="poiImportance" type="PoiImportance" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="__tooltip_name" type="xs:string" use="optional" fixed="The name used to display this Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_name" type="xs:string" use="optional" fixed="DOWN">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of DOWN Threshold Values">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_perceivedSeverity" type="xs:string" use="optional"
+            fixed="Perceived Severity of the ServiceAlarm">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_perceivedSeverity" type="xs:string" use="optional" fixed="CRITICAL">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_availabilityPercentage" type="xs:string" use="optional"
+            fixed="Availability Percentage Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_availabilityPercentage" type="xs:string" use="optional" fixed="0.0">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_poiImportance" type="xs:string" use="optional"
+            fixed="POI Importance of the graphical representation">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_poiImportance" type="xs:string" use="optional" fixed="Critical">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ThresholdCritical">
+        <xs:sequence>
+            <xs:element name="perceivedSeverity" type="PerceivedSeverity" minOccurs="1" />
+            <xs:element name="availabilityPercentage" type="xs:double" minOccurs="1" />
+            <xs:element name="poiImportance" type="PoiImportance" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="__tooltip_name" type="xs:string" use="optional" fixed="The name used to display this Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_name" type="xs:string" use="optional" fixed="CRITICAL">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of CRITICAL Threshold Values">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_perceivedSeverity" type="xs:string" use="optional"
+            fixed="Perceived Severity of the ServiceAlarm">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_perceivedSeverity" type="xs:string" use="optional" fixed="CRITICAL">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_availabilityPercentage" type="xs:string" use="optional"
+            fixed="Availability Percentage Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_availabilityPercentage" type="xs:string" use="optional" fixed="25.0">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_poiImportance" type="xs:string" use="optional"
+            fixed="POI Importance of the graphical representation">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_poiImportance" type="xs:string" use="optional" fixed="Critical">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ThresholdHigh">
+        <xs:sequence>
+            <xs:element name="perceivedSeverity" type="PerceivedSeverity" minOccurs="1" />
+            <xs:element name="availabilityPercentage" type="xs:double" minOccurs="1" />
+            <xs:element name="poiImportance" type="PoiImportance" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="__tooltip_name" type="xs:string" use="optional" fixed="The name used to display this Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_name" type="xs:string" use="optional" fixed="HIGH">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of HIGH Threshold Values">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_perceivedSeverity" type="xs:string" use="optional"
+            fixed="Perceived Severity of the ServiceAlarm">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_perceivedSeverity" type="xs:string" use="optional" fixed="MAJOR">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_availabilityPercentage" type="xs:string" use="optional"
+            fixed="Availability Percentage Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_availabilityPercentage" type="xs:string" use="optional" fixed="50.0">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_poiImportance" type="xs:string" use="optional"
+            fixed="POI Importance of the graphical representation">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_poiImportance" type="xs:string" use="optional" fixed="High">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ThresholdMed">
+        <xs:sequence>
+            <xs:element name="perceivedSeverity" type="PerceivedSeverity" minOccurs="1" />
+            <xs:element name="availabilityPercentage" type="xs:double" minOccurs="1" />
+            <xs:element name="poiImportance" type="PoiImportance" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="__tooltip_name" type="xs:string" use="optional" fixed="The name used to display this Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_name" type="xs:string" use="optional" fixed="MEDIUM">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of MEDIUM Threshold Values">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_perceivedSeverity" type="xs:string" use="optional"
+            fixed="Perceived Severity of the ServiceAlarm">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_perceivedSeverity" type="xs:string" use="optional" fixed="MINOR">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_availabilityPercentage" type="xs:string" use="optional"
+            fixed="Availability Percentage Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_availabilityPercentage" type="xs:string" use="optional" fixed="75.0">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_poiImportance" type="xs:string" use="optional"
+            fixed="POI Importance of the graphical representation">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_poiImportance" type="xs:string" use="optional" fixed="Medium">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ThresholdLow">
+        <xs:sequence>
+            <xs:element name="perceivedSeverity" type="PerceivedSeverity" minOccurs="1" />
+            <xs:element name="availabilityPercentage" type="xs:double" minOccurs="1" />
+            <xs:element name="poiImportance" type="PoiImportance" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="__tooltip_name" type="xs:string" use="optional" fixed="The name used to display this Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_name" type="xs:string" use="optional" fixed="LOW">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of LOW Threshold Values">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_perceivedSeverity" type="xs:string" use="optional"
+            fixed="Perceived Severity of the ServiceAlarm">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_perceivedSeverity" type="xs:string" use="optional" fixed="WARNING">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_availabilityPercentage" type="xs:string" use="optional"
+            fixed="Availability Percentage Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_availabilityPercentage" type="xs:string" use="optional" fixed="99.999999999999999999999">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_poiImportance" type="xs:string" use="optional"
+            fixed="POI Importance of the graphical representation">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_poiImportance" type="xs:string" use="optional" fixed="Low">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ThresholdOk">
+        <xs:sequence>
+            <xs:element name="perceivedSeverity" type="PerceivedSeverity" minOccurs="1" />
+            <xs:element name="availabilityPercentage" type="xs:double" minOccurs="1" />
+            <xs:element name="poiImportance" type="PoiImportance" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="__tooltip_name" type="xs:string" use="optional" fixed="The name used to display this Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_name" type="xs:string" use="optional" fixed="OK">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of OK Threshold Values">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_perceivedSeverity" type="xs:string" use="optional"
+            fixed="Perceived Severity of the ServiceAlarm">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_perceivedSeverity" type="xs:string" use="optional" fixed="CLEAR">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_availabilityPercentage" type="xs:string" use="optional"
+            fixed="Availability Percentage Threshold">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_availabilityPercentage" type="xs:string" use="optional" fixed="100.0">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_poiImportance" type="xs:string" use="optional"
+            fixed="POI Importance of the graphical representation">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_poiImportance" type="xs:string" use="optional" fixed="None">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="PoiCategories">
+        <xs:sequence>
+            <xs:element name="poiCategory" type="PoiCategory" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of Point Of Interest Category">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="PoiCategory">
+        <xs:sequence>
+            <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of Point Of Interest Category">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_key" type="xs:string" use="optional" fixed="POI category to assign">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_key" type="xs:string" use="optional" fixed="SERVICE">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="PropagationRule">
+        <xs:sequence>
+            <xs:element name="rule" type="Rule" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of 'PropagationRule'.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_rule" type="xs:string" use="optional" fixed="State Calculation Mode">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_rule" type="xs:string" use="optional" fixed="WorstChildPercentage">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ServiceAlarm">
+        <xs:sequence>
+            <xs:element name="enableServiceAlarmCreation" type="xs:boolean" default="false" nillable="false" minOccurs="0" />
+            <xs:element name="delayForServiceAlarmCreation" type="xs:long" minOccurs="0" />
+            <xs:element name="delayForServiceAlarmClearance" type="xs:long" minOccurs="0" />
+            <xs:element name="attachWholeSubTreeRootCauses" type="xs:boolean" default="false" nillable="false" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="__tooltip" type="xs:string" use="optional" fixed="Configuration of 'ServiceAlarm' Alarms.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_enableServiceAlarmCreation" type="xs:string" use="optional"
+            fixed="Automates the creation of a ServiceAlarm. By default false.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_enableServiceAlarmCreation" type="xs:string" use="optional" fixed="false">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_delayForServiceAlarmCreation" type="xs:string" use="optional"
+            fixed="Delay applied before creating the ServiceAlarm. Value is in millisecond.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_delayForServiceAlarmCreation" type="xs:string" use="optional" fixed="2000">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_delayForServiceAlarmClearance" type="xs:string" use="optional"
+            fixed="Delay applied before clearance of the ServiceAlarm. Value is in millisecond.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_delayForServiceAlarmClearance" type="xs:string" use="optional" fixed="0">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__tooltip_attachWholeSubTreeRootCauses" type="xs:string" use="optional"
+            fixed="Automates the attachement of the WholeSubTreeRootCauses list to a ServiceAlarm. By default false.">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="__default_attachWholeSubTreeRootCauses" type="xs:string" use="optional" fixed="false">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jxb:property fixedAttributeAsConstantProperty="true" />
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:simpleType name="PerceivedSeverity">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="INDETERMINATE" />
+            <xs:enumeration value="WARNING" />
+            <xs:enumeration value="MINOR" />
+            <xs:enumeration value="MAJOR" />
+            <xs:enumeration value="CRITICAL" />
+            <xs:enumeration value="CLEAR" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PoiImportance">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="None" />
+            <xs:enumeration value="Low" />
+            <xs:enumeration value="Medium" />
+            <xs:enumeration value="High" />
+            <xs:enumeration value="Critical" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Rule">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="WorstChildPercentage" />
+            <xs:enumeration value="WorstChildAverage" />
+            <xs:enumeration value="LowestChildValue" />
+            <xs:enumeration value="HighestChildValue" />
+            <xs:enumeration value="FullPercentage" />
+            <xs:enumeration value="ProtectionAvailability" />
+            <xs:enumeration value="ProtectionHighAvailability" />
+            <xs:enumeration value="ProtectionRelativeHighAvailability" />
+            <xs:enumeration value="SPRingHighAvailability">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <annox:annotate>@java.lang.Deprecated</annox:annotate>
+                    </xs:appinfo>
+                    <xs:documentation>@deprecated Replaced by SPRing2FHighAvailability since v4.1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SPRingSegmentAvailability">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <annox:annotate>@java.lang.Deprecated</annox:annotate>
+                    </xs:appinfo>
+                    <xs:documentation>@deprecated Replaced by SPRing2FSegmentAvailability since v4.1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SPRingSegmentHighAvailability">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <annox:annotate>@java.lang.Deprecated</annox:annotate>
+                    </xs:appinfo>
+                    <xs:documentation>@deprecated Replaced by SPRing2FSegmentHighAvailability since v4.1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SPRing2FHighAvailability" />
+            <xs:enumeration value="SPRing2FSegmentAvailability" />
+            <xs:enumeration value="SPRing2FSegmentHighAvailability" />
+            <xs:enumeration value="SPRing4FHighAvailability" />
+            <xs:enumeration value="SPRing4FSegmentAvailability" />
+            <xs:enumeration value="SPRing4FSegmentHighAvailability" />
+            <xs:enumeration value="Custom" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

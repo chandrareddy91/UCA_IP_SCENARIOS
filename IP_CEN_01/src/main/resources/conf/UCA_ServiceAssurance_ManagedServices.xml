@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hewlett Packard Enterprise -->
+<ServiceAssurance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://serviceassurance.model.expert.uca.hpe.com"
+    name="IP_CEN_01" version="1.0">
+    <description>Assurance Calculation for Managed Services</description>
+    <Definitions>
+        <HealthStatusDefinitions>
+            <HealthStatusCategory id="hsc_availability" isNearRealTime="true" name="Availability">
+                <HealthStatusValues numberOfStatusValues="6">
+                    <StatusValue severityOrder="1" statusDefaultValueName="OK" perceivedSeverity="CLEAR"
+                        availabilityPercentage="100.0" poiImportance="None" />
+                    <StatusValue severityOrder="2" statusDefaultValueName="LOW" perceivedSeverity="WARNING"
+                        availabilityPercentage="99.9999999999" poiImportance="Low" />
+                    <StatusValue severityOrder="3" statusDefaultValueName="MED" perceivedSeverity="MINOR"
+                        availabilityPercentage="75.0" poiImportance="Medium" />
+                    <StatusValue severityOrder="4" statusDefaultValueName="HIGH" perceivedSeverity="MAJOR"
+                        availabilityPercentage="50.0" poiImportance="High" />
+                    <StatusValue severityOrder="5" statusDefaultValueName="CRITICAL" perceivedSeverity="CRITICAL"
+                        availabilityPercentage="25.0" poiImportance="Critical" />
+                    <StatusValue severityOrder="6" statusDefaultValueName="DOWN" perceivedSeverity="CRITICAL"
+                        availabilityPercentage="0.0" poiImportance="Critical" />
+                </HealthStatusValues>
+                <description>The availability</description>
+            </HealthStatusCategory>
+            <HealthStatusCategory id="hsc_retainability" isNearRealTime="true" name="Retainability">
+                <HealthStatusValues numberOfStatusValues="6">
+                    <StatusValue severityOrder="1" statusDefaultValueName="OK" perceivedSeverity="CLEAR"
+                        availabilityPercentage="100.0" poiImportance="None" />
+                    <StatusValue severityOrder="2" statusDefaultValueName="LOW" perceivedSeverity="WARNING"
+                        availabilityPercentage="99.9999999999" poiImportance="Low" />
+                    <StatusValue severityOrder="3" statusDefaultValueName="MED" perceivedSeverity="MINOR"
+                        availabilityPercentage="75.0" poiImportance="Medium" />
+                    <StatusValue severityOrder="4" statusDefaultValueName="HIGH" perceivedSeverity="MAJOR"
+                        availabilityPercentage="50.0" poiImportance="High" />
+                    <StatusValue severityOrder="5" statusDefaultValueName="CRITICAL" perceivedSeverity="CRITICAL"
+                        availabilityPercentage="25.0" poiImportance="Critical" />
+                    <StatusValue severityOrder="6" statusDefaultValueName="DOWN" perceivedSeverity="CRITICAL"
+                        availabilityPercentage="0.0" poiImportance="Critical" />
+                </HealthStatusValues>
+                <description>The retainability</description>
+            </HealthStatusCategory>
+            <HealthStatusType id="availability_customer" category="hsc_availability" name="customerAvailability">
+                <description>The availability of a customer</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_service" category="hsc_availability" name="serviceAvailability">
+                <description>The availability of a service</description>
+            </HealthStatusType>
+            <HealthStatusType id="retainability_service" category="hsc_retainability" name="serviceRetainability">
+                <description>The retainability of a service</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_location" category="hsc_availability" name="locationAvailability">
+                <description>The availability of a location</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_serverShelf" category="hsc_availability" name="serverShelfAvailability">
+                <description>The availability of a server shelf</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_application" category="hsc_availability" name="applicationAvailability">
+                <description>The availability of an application</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_pool" category="hsc_availability" name="poolAvailability">
+                <description>The availability of a pool</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_callServer" category="hsc_availability" name="callServerAvailability">
+                <description>The availability of a call server</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_virtualMachine" category="hsc_availability" name="virtualMachineAvailability">
+                <description>The availability of a virtual machine</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_phone" category="hsc_availability" name="phoneAvailability">
+                <description>The availability of a phone</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_server" category="hsc_availability" name="serverAvailability">
+                <description>The availability of a server</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_switch" category="hsc_availability" name="switchAvailability">
+                <description>The availability of a switch</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_cer" category="hsc_availability" name="cerAvailability">
+                <description>The availability of a CER</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_cerPort" category="hsc_availability" name="cerPortAvailability">
+                <description>The availability of a CER port</description>
+            </HealthStatusType>
+            <HealthStatusType id="availability_coreNetwork" category="hsc_availability" name="coreNetworkAvailability">
+                <description>The availability of the core network</description>
+            </HealthStatusType>
+        </HealthStatusDefinitions>
+        <SIAdefinition id="Customer_Availability">
+            <descripton>SIA</descripton>
+            <Content>Ze Customer SIA</Content>
+        </SIAdefinition>
+    </Definitions>
+    <Models>
+        <Model id="sa1" name="sa">
+            <description>The SA model</description>
+            <EnrichmentsForSCDs>
+                <EnrichmentsForSCD SCDid="customer" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_customer" internalId="ID9" name="hsCustomer"
+                            isExposedToOthersModels="true" poiCategories="SERVICE,LOCATION">
+                            <tag name="ServiceAlarm.Creation.Delay" value="10s" />
+                            <tag name="ServiceAlarm.Creation.AdditionalText.Mapper" value="addTextWithWholeSubTreeIS" />
+                            <tag name="Group.WholeSubTree.AttachImpactingStates" value="true" />
+                        </HealthStatus>
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID11" />
+                            <SubHealthStatus internalId="ID12" />
+                            <SubHealthStatus internalId="ID14" />
+                            <ServiceImpactAlarm patternId="sa_customer" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="service" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_service" internalId="ID11" name="hsService"
+                            isExposedToOthersModels="true" poiCategories="SERVICE" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID21" />
+                            <SubHealthStatus internalId="ID22" />
+                            <SubHealthStatus internalId="ID23" />
+                            <ServiceImpactAlarm patternId="sa_phone_service" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="retainability_service" internalId="ID12" name="hsService"
+                            isExposedToOthersModels="true" poiCategories="SERVICE" />
+                        <computedBy package="package" functionName="WorstChildPercentage" />
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="location" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_location" internalId="ID14" name="hsLocation"
+                            isExposedToOthersModels="true" poiCategories="LOCATION" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID20" />
+                            <SubHealthStatus internalId="ID22" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="serverShelf" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_serverShelf" internalId="ID20" name="hsServerShelf"
+                            isExposedToOthersModels="true" poiCategories="LOCATION" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID40" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="application" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_application" internalId="ID21" name="hsApplication"
+                            isExposedToOthersModels="true" poiCategories="SERVICE" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID35" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="phonePool" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_pool" internalId="ID22" name="hsPool"
+                            isExposedToOthersModels="true" poiCategories="SERVICE,LOCATION" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID38" />
+                            <SubHealthStatus internalId="ID50" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="callServer" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_callServer" internalId="ID23" name="hsCallServer"
+                            isExposedToOthersModels="true" poiCategories="LOCATION" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <!-- <SubHealthStatus internalId="ID38" /> -->
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="vm" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_virtualMachine" internalId="ID35" name="hsVirtualMachine"
+                            isExposedToOthersModels="true" poiCategories="SERVICE" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID40" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="ipPhone" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_phone" internalId="ID38" name="hsPhone"
+                            isExposedToOthersModels="true" poiCategories="SERVICE,LOCATION" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID50" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="server" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_server" internalId="ID40" name="hsServer"
+                            isExposedToOthersModels="true" poiCategories="LOCATION" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID50" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="switch" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_switch" internalId="ID50" name="hsSwitch"
+                            isExposedToOthersModels="true" poiCategories="SERVICE,LOCATION" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="ID50" />
+                            <SubHealthStatus internalId="ID60" />
+                            <RootCause patternId="pba_switch_down" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="cer" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_cer" internalId="ID60" name="hsCer"
+                            isExposedToOthersModels="true" poiCategories="" />
+                        <computedBy package="package" functionName="WorstChildPercentage">
+                            <SubHealthStatus internalId="HS_AVAILABILITY_CER_PORT" />
+                            <SubHealthStatus internalId="ID70" />
+                        </computedBy>
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="port" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_cerPort" internalId="HS_AVAILABILITY_CER_PORT"
+                            name="hsCerPortAvailability" isExposedToOthersModels="true" poiCategories="" />
+                        <computedBy package="package" functionName="WorstChildPercentage" />
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+                <EnrichmentsForSCD SCDid="coreNetwork" packageName="IP_CEN_01" packageVersion="1.0">
+                    <AttachHealthStatus>
+                        <HealthStatus HealthStatusType="availability_coreNetwork" internalId="ID70" name="hsCoreNetwork"
+                            isExposedToOthersModels="true" poiCategories="" />
+                        <computedBy package="package" functionName="WorstChildPercentage" />
+                    </AttachHealthStatus>
+                </EnrichmentsForSCD>
+            </EnrichmentsForSCDs>
+        </Model>
+    </Models>
+</ServiceAssurance>

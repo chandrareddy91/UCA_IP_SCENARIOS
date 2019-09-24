@@ -1,0 +1,56 @@
+<!DOCTYPE aspectj PUBLIC
+        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<!-- To enable AOP, add following JVM agent : -javaagent:lib/aspectjweaver-1.8.9.jar -->
+<aspectj>
+
+    <weaver options="-verbose -showWeaveInfo"> <!-- -Xreweavable -debug -XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler -->
+        <!-- only weave classes in our application-specific packages -->
+        <include within="com.hp.uca.expert..*" />
+    </weaver>
+
+    <aspects>
+
+        <!-- ################### -->
+        <!-- aspects to weave in -->
+        <!-- ################### -->
+
+        <!-- <aspect name="com.hp.uca.expert.engine.aspect.MonitoringAspect" /> -->
+
+        <!-- Aspect to trace every method execution in Inference Machine -->
+        <concrete-aspect name="UCA_InferenceMachine" extends="com.hp.uca.expert.engine.aspect.LogCallHierarchyAspect">
+            <pointcut name="logCallHierarchy"
+                expression="
+                (  execution(* com.hp.uca.expert.vp.im..*.*(..))
+                || execution(* com.hp.uca.expert.vp.common..*.*(..))
+                || execution(* com.hp.uca.expert.rulesession.internal.RuleSession.*(..))
+                || execution(* com.hp.uca.expert.vp.ed..*.*(..))
+                || execution(* com.hp.uca.expert.vp.pd..*.*(..))
+                || execution(* com.hp.uca.expert.vp.tp..*.*(..))
+                )
+                &amp;&amp; !(execution(* _get*(..)))
+                &amp;&amp; !(execution(* get*(..)))
+                &amp;&amp; !(execution(* set*(..)))
+                &amp;&amp; !(execution(* display*(..)))
+                &amp;&amp; !(execution(* fromValue(..)))
+                &amp;&amp; !(execution(* valueOf(..)))
+                &amp;&amp; !(execution(* values()))
+                &amp;&amp; !(execution(* value()))
+                &amp;&amp; !(execution(* ordinal()))
+                &amp;&amp; !(execution(* toString()))
+                &amp;&amp; !(within(com.hp.uca.expert..testmaterial..*))
+                &amp;&amp; !(within(com.hp.uca.expert..ObjectFactory))
+                &amp;&amp; !(within(com.hp.uca.expert.vp.im.config..*))
+                &amp;&amp; !(within(com.hp.uca.expert.vp.pd.config..*))
+                &amp;&amp; !(within(com.hp.uca.expert.vp.tp.config..*))
+                &amp;&amp; !(within(com.hp.uca.expert.vp.common.beans..*))
+                &amp;&amp; !(within(com.hp.uca.expert.vp.common.util..*))
+                &amp;&amp; !(within(com.hp.uca.expert.vp.common.core.CommonConfiguration))
+                &amp;&amp; !(within(com.hp.uca.expert.problem.Problems+))
+                &amp;&amp; !(within(com.hp.uca.expert.propagation.Propagations+))
+                &amp;&amp; !(within(com.hp.uca.expert.vp.pd.core.ProblemDefaultTagsHandler))
+                &amp;&amp; !(within(com.hp.uca.expert.vp.tp.core.PropagationDefaultTags))" />
+        </concrete-aspect>
+
+    </aspects>
+
+</aspectj>

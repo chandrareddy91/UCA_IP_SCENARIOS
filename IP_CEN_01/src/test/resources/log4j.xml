@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements. See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="threshold" value="TRACE" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="[%d{ISO8601}][%-5p][%v][%-10t]%m%n" />
+        </layout>
+    </appender>
+
+    <appender name="TOPODATALOAD" class="org.apache.log4j.RollingFileAppender">
+        <param name="threshold" value="TRACE" />
+        <param name="File" value="target/logs/uca-ebc-TopologyDataload.log" />
+        <param name="Append" value="true" />
+        <param name="MaxBackupIndex" value="2" />
+        <param name="MaxFileSize" value="10MB" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="[%d{ISO8601}][%-5p][%v][%-10t][%-5c][%4L]%m%n" />
+        </layout>
+    </appender>
+
+    <appender name="ASYNCINCOMINGMSG" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="INCOMINGMSGFILE" />
+    </appender>
+
+    <appender name="UMBASYNCINCOMINGMSG" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="UMBINCOMINGMSGFILE" />
+    </appender>
+
+    <appender name="ASYNCDISPATCHEDMSG" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="DISPATCHEDMSGFILE" />
+    </appender>
+
+    <appender name="INCOMINGMSGFILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="threshold" value="INFO" />
+        <param name="File" value="target/logs/uca-ebc-collector.log" />
+        <!-- Max file size -->
+        <param name="MaxFileSize" value="10MB" />
+        <param name="MaxBackupIndex" value="10" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="%m%n" />
+        </layout>
+    </appender>
+
+    <appender name="DISPATCHEDMSGFILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="threshold" value="INFO" />
+        <param name="File" value="target/logs/uca-ebc-dispatched-events.log" />
+        <!-- Max file size -->
+        <param name="MaxFileSize" value="10MB" />
+        <param name="MaxBackupIndex" value="10" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="%m%n" />
+        </layout>
+    </appender>
+
+    <appender name="UMBINCOMINGMSGFILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="threshold" value="INFO" />
+        <param name="File" value="target/logs/uca-ebc-received-events.log" />
+        <!-- Max file size -->
+        <param name="MaxFileSize" value="10MB" />
+        <param name="MaxBackupIndex" value="10" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="%m%n" />
+        </layout>
+    </appender>
+
+    <appender name="ASYNCREJECTEDMSG" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="REJECTEDMSGFILE" />
+    </appender>
+
+    <appender name="REJECTEDMSGFILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="threshold" value="INFO" />
+        <param name="File" value="target/logs/uca-ebc-collector-rejected.log" />
+        <!-- Max file size -->
+        <param name="MaxFileSize" value="10MB" />
+        <param name="MaxBackupIndex" value="10" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="[%d{ISO8601}][%-5p][%v][%-10t][%-5c][%4L]%m%n" />
+        </layout>
+    </appender>
+
+    <appender name="CHAINSAW" class="org.apache.log4j.net.SocketAppender">
+        <!--param name="Name" value="UCA_Expert" /-->
+        <param name="Port" value="4445" />
+        <param name="RemoteHost" value="localhost" />
+        <param name="ReconnectionDelay" value="60000" />
+        <param name="Threshold" value="DEBUG" />
+    </appender>
+
+    <appender name="UCAEBCADAPTER" class="org.apache.log4j.RollingFileAppender">
+        <param name="threshold" value="TRACE" />
+        <param name="File" value="target/logs/uca-ebc-adapter.log" />
+        <param name="Append" value="true" />
+        <param name="MaxBackupIndex" value="2" />
+        <param name="MaxFileSize" value="100MB" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="[%d{ISO8601}][%-5p][%v][%-10t][%-5c][%4L]%m%n" />
+        </layout>
+    </appender>
+
+    <!-- ######################################## -->
+    <!--  Standard Production importer-->
+    <!-- ######################################## -->
+
+    <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="threshold" value="TRACE" />
+        <param name="File" value="target/logs/uca-ebc.log" />
+        <param name="Append" value="true" />
+        <param name="MaxBackupIndex" value="2" />
+        <param name="MaxFileSize" value="100MB" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="[%d{ISO8601}][%-5p][%v][%-10t][%-5c][%4L]%m%n" />
+        </layout>
+    </appender>
+
+    <!-- Socket appender for best OtrosLogViewer integration -->
+    <appender name="SOCKET" class="org.apache.log4j.net.SocketHubAppender">
+        <param name="Port" value="4560" />
+        <param name="LocationInfo" value="true" />
+        <param name="BufferSize" value="1000" />
+        <param name="Application" value="UCA-EBC" />
+    </appender>
+
+
+    <!-- ######################################## -->
+    <!--  NDC importer-->
+    <!-- ######################################## -->
+
+    <!--
+    <appender name="NDC-FILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="threshold" value="TRACE" />
+        <param name="File" value="target/logs/uca-ebc.log" />
+        <param name="Append" value="true" />
+        <param name="MaxBackupIndex" value="2" />
+        <param name="MaxFileSize" value="100MB" />
+        <layout class="com.hp.uca.common.log.UcaPatternLayout">
+            <param name="ConversionPattern" value="[%d{ABSOLUTE}][%p][%t][%c][%L][m:%M][ndc:%x][%X]XXXXX%m%n" />
+        </layout>
+    </appender>
+    -->
+
+    <logger name="NDC_VP" additivity="false">
+        <level value="DEBUG" />
+    </logger>
+
+    <logger name="FireAllRules_NDC" additivity="false">
+        <level value="DEBUG" />
+    </logger>
+
+    <logger name="ProblemDetection_NDC" additivity="false">
+        <level value="DEBUG" />
+    </logger>
+
+    <logger name="TopologyStatePropagator_NDC" additivity="false">
+        <level value="DEBUG" />
+    </logger>
+
+    <!-- CallHierarchyMode configuration -->
+    <logger name="CallHierarchyLogger" additivity="false">
+        <!-- level = TRACE : LogCallHierarchyAspect trace with method in message / LogHelper do NOT trace (ENABLED_FULL_AOP) -->
+        <!-- level = DEBUG : LogCallHierarchyAspect trace without method in message / LogHelper do trace (ENABLED_MIXED) -->
+        <!-- level > DEBUG : LogCallHierarchyAspect do NOT trace / LogHelper do trace (DISABLED_MANUAL) -->
+        <level value="TRACE" />
+    </logger>
+
+    <!-- for '-m' monitoring mode usage and a concrete LogCallHierarchyAspect enabled -->
+    <logger name="com.hp.uca.expert.engine.aspect.LogCallHierarchyAspect" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ############################ -->
+    <!-- JUnit Tests Only             -->
+    <!-- ############################ -->
+
+    <logger name="com.hp.uca.expert.testmaterial" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.vp.common.testmaterial" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hpe.uca.expert.vp.im.testmaterial" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hpe.uca.expert.vp.pd.testmaterial" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hpe.uca.expert.vp.tp.testmaterial" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="ft" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>   
+
+    <!-- ######################################## -->
+    <!-- IM Common - Services                     -->
+    <!-- ######################################## -->
+
+    <logger name="com.hp.uca.expert.vp.common.services" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hpe.uca.vp.im.common.services" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- IM Common - Action                       -->   
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.common.core.ActionsInstantiator" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <logger name="com.hp.uca.expert.vp.common.actions" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    
+<!--     <logger name="com.hp.uca.expert.vp.common.actions.db" additivity="false"> -->
+<!--         <level value="TRACE" /> -->
+<!--         <appender-ref ref="CONSOLE" /> -->
+<!--         <appender-ref ref="FILE" /> -->
+<!--         <appender-ref ref="SOCKET" /> -->
+<!--     </logger> -->
+<!--     <logger name="com.hp.uca.expert.vp.common.actions.hpsa" additivity="false"> -->
+<!--         <level value="TRACE" /> -->
+<!--         <appender-ref ref="CONSOLE" /> -->
+<!--         <appender-ref ref="FILE" /> -->
+<!--         <appender-ref ref="SOCKET" /> -->
+<!--     </logger> -->
+<!--     <logger name="com.hp.uca.expert.vp.common.actions.internal" additivity="false"> -->
+<!--         <level value="TRACE" /> -->
+<!--         <appender-ref ref="CONSOLE" /> -->
+<!--         <appender-ref ref="FILE" /> -->
+<!--         <appender-ref ref="SOCKET" /> -->
+<!--     </logger> -->
+<!--     <logger name="com.hp.uca.expert.vp.common.actions.script" additivity="false"> -->
+<!--         <level value="TRACE" /> -->
+<!--         <appender-ref ref="CONSOLE" /> -->
+<!--         <appender-ref ref="FILE" /> -->
+<!--         <appender-ref ref="SOCKET" /> -->
+<!--     </logger> -->
+<!--     <logger name="com.hp.uca.expert.vp.common.actions.simulator" additivity="false"> -->
+<!--         <level value="TRACE" /> -->
+<!--         <appender-ref ref="CONSOLE" /> -->
+<!--         <appender-ref ref="FILE" /> -->
+<!--         <appender-ref ref="SOCKET" /> -->
+<!--     </logger> -->
+<!--     <logger name="com.hp.uca.expert.vp.common.actions.temip" additivity="false"> -->
+<!--         <level value="TRACE" /> -->
+<!--         <appender-ref ref="CONSOLE" /> -->
+<!--         <appender-ref ref="FILE" /> -->
+<!--         <appender-ref ref="SOCKET" /> -->
+<!--     </logger> -->
+<!--     <logger name="com.hp.uca.expert.vp.common.actions.uttl" additivity="false"> -->
+<!--         <level value="TRACE" /> -->
+<!--         <appender-ref ref="CONSOLE" /> -->
+<!--         <appender-ref ref="FILE" /> -->
+<!--         <appender-ref ref="SOCKET" /> -->
+<!--     </logger> -->
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Action                      --> 	
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.pd.services.PD_Service_Action -->
+    <!-- ======================================== -->
+    <!-- Action_Associate                   TRACE -->
+    <!-- Action_ClearAlarm                  DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.pd.services.PD_Service_Action" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.tp.services.TP_Service_Action --> 
+    <!-- ======================================== -->
+    <!-- Action_Associate                   TRACE -->
+    <!-- Action_ClearAlarm                  DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.tp.services.TP_Service_Action" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>    
+
+
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.group           -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.group" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.group.Groups" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.group.PropagationGroups" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.group.AutomationGroups" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.group.SharedGroupsManager" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.watchdog.WatchdogManager --> 
+    <!-- ======================================== -->
+    <!-- Action_Associate                   DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.watchdog.WatchdogManager" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Dispatcher                  -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.dispatcher.Dispatcher -->
+    <!-- ======================================== --> 
+    <!-- D_Broadcast                        DEBUG -->
+    <!-- D_DispatchToVP                     DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.dispatcher" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>    
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Enrichment                  -->
+    <!-- ######################################## -->
+    <!-- Class: com.hpe.uca.expert.vp.ed.core.internal.EnrichmentDispatcher -->
+    <!-- ======================================== -->
+    <!-- ED_Signing                         DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hpe.uca.expert.vp.ed" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Filters		      -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.lifecycle.common.LifeCycle -->
+    <!-- ======================================== -->
+    <!-- F_Blocking                         DEBUG -->
+    <!-- F_Passing                          DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.lifecycle.common.LifeCycle" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- Class:  com.hp.uca.expert.filter         -->
+    <!-- ======================================== -->
+    <!-- F_NotMatching                      DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.filter" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+	
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Forwarder                   -->
+    <!-- ######################################## -->
+    <!-- Forwarder_Enqueue                        -->
+    <!-- ???????????????                          -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.alarm.BaseAlarmForwarder" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.alarm.JDBCAlarmForwarder" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.event.AbstractEventForwarder" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>	
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Mobility                    -->
+    <!-- ######################################## -->
+    <!-- Mobility_newGroup -->
+    <!-- Mobility_useEarlierTrigger -->
+    <!-- ######################################## -->
+    <!-- ??????????????? -->
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: PD_Process -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.pd.core.internal.PD_Process -->
+    <!-- ======================================== -->
+    <!-- PD_AttachAlarmToGroup               INFO -->
+    <!-- PD_CreateProblemAlarmForGroup       INFO -->
+    <!-- PD_AnalyzingContextOfProblem       DEBUG -->
+    <!-- PD_AnalyzingContextOfGroup         DEBUG Warning conflict with TP_ -->
+    <!-- PD_AnalyzingContextOfAlarm        TODO   -->
+    <!-- PD_DetectAlarmHasPotentialRole    TODO   -->
+    <!-- PD_MayBePartOf                    TODO   -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.pd" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Topology                    -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.topology.query.GenericQuery -->
+    <!-- ======================================== -->
+    <!-- DB_CypherQuery                     DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.topology.query" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.topology.attrmgr" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: TP_Process                  -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.tp.core.internal.TP_Process -->
+    <!-- ======================================== -->
+    <!-- TP_AnalyzeRole                   DEBUG   -->
+    <!-- TP_AttachToGroup INFO Warning conflict with PD_  -->
+    <!-- TP_ComputedState                    INFO -->
+    <!-- TP_CreatedSA                         ??? -->
+    <!-- TP_CreatedState                     INFO -->
+    <!-- TP_CreatePropGroup                  INFO -->
+    <!-- TP_DetectHasPotentialRole           INFO -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.tp.core" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.vp.tp.core.internal.TP_ContextReport" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: GraphDB_Visualization       -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.tp.services.TP_Service_PointOfInterest -->
+    <!-- ======================================== -->
+    <!-- UI_CreateNode_Attr                 DEBUG -->
+    <!-- UI_CreateNode_POI                  DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.tp.services.TP_Service_PointOfInterest" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.topology.poi" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.tp.services.TP_Service_StateCalculation -->
+    <!-- ======================================== -->
+    <!-- UI_CreateNode_Attr                  INFO -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.tp.services" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Lifecycle                   -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.pd.core.internal.PD_Lifecycle -->
+    <!-- ======================================== -->
+    <!-- LC_ProcessingAlarm                  INFO -->
+    <!-- LC_ProcessingRetraction             INFO -->
+    <!-- LC_ProcessingSevChange              INFO -->
+    <!-- LC_UpdateOfGroup                    ????? To Check-->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.pd.core.internal.PD_Lifecycle" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.tp.core.internal.TP_Lifecycle -->
+    <!-- ======================================== -->
+    <!-- LC_ProcessingAlarm                  INFO -->
+    <!-- LC_ProcessingRetraction             INFO -->
+    <!-- LC_ProcessingSevChange              INFO -->
+    <!-- LC_UpdateOfGroup                    INFO To Pass to DEBUG ???-->
+    <!-- LC_ForwardingState                  INFO -->
+    <!-- LC_TopologyContextReport            INFO -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.tp.core.internal.TP_Lifecycle" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- Class: com.hpe.uca.expert.vp.auto.core.internal.AutomationLifecycle -->
+    <!-- ======================================== -->
+    <!-- LC_ProcessingAlarm                 INFO -->
+    <!-- ######################################## -->
+    <logger name="com.hpe.uca.expert.vp.auto.core.internal.AutomationLifecycle" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.pd.core.PD_Initialization -->
+    <!-- ======================================== -->
+    <!-- LC_Resynch                 		DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.pd.core.PD_Initialization" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.vp.tp.core.TP_Initialization" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>		
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Navigation                  -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.pd.core.internal.PD_Navigation -->
+    <!-- ======================================== -->
+    <!-- UI_Navigation                       INFO -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.pd.core.internal.PD_Navigation" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.tp.core.internal.TP_Navigation -->
+    <!-- ======================================== -->
+    <!-- UI_Navigation                      TRACE -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.tp.core.internal.TP_Navigation" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>	
+		
+    <!-- ######################################## -->
+    <!-- OLV Markers: Orchestra -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.orchestra.Orchestra -->
+    <!-- ======================================== -->
+    <!-- O_CopyEvent                        DEBUG -->
+    <!-- O_DelegateEvent                    DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.orchestra" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: UMB -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.umb.adapter.BaseAdapter    -->
+    <!-- ======================================== -->
+    <!-- U_AdapterStatus                     INFO -->
+    <!-- ======================================== -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.umb.adapter.consumer.internal.BaseConsumerFlow -->
+    <!-- ======================================== -->
+    <!-- U_ConsumerFlow                      INFO -->
+    <!-- ======================================== -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.umb.adapter.internal.configuration.AdapterProxyAndConfigurationListener -->
+    <!-- ======================================== -->
+    <!-- U_KnownAdapters                     INFO -->
+    <!-- ======================================== -->
+    <logger name="com.hp.umb" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+        <appender-ref ref="UCAEBCADAPTER" />
+    </logger>
+
+
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Model -->
+    <!-- ######################################## -->
+    <!-- Class: com.hpe.uca.expert.model.query.AbstractCypherQueryForModels-->
+    <!-- ======================================== -->
+    <!-- M_ModelQuery                       DEBUG -->
+    <!-- M_ModelLoader                      TODO  -->    
+    <!-- ######################################## -->
+    <logger name="com.hpe.uca.expert.model" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.vp.tp.config.PropagationPoliciesModelExtractor-->
+    <!-- ======================================== -->
+    <!-- M_TSP_Extract                      DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp.tp.config.PropagationPoliciesModelExtractor" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>    
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Automation -->
+    <!-- ######################################## -->
+    <!-- Class: com.hpe.uca.expert.vp.auto.services.AutomationServiceAlarm -->
+    <!-- ======================================== -->
+    <!-- AU_EndOfTraversal                   INFO -->
+    <!-- AU_SimuActions                     TRACE -->
+    <!-- AU_EnrichAlarm                     TRACE -->
+    <!-- AU_FetchDT                         TRACE -->
+    <!-- ######################################## -->
+    <logger name="com.hpe.uca.expert.vp.auto" additivity="false">
+        <level value="TRACE" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: WorkingMemory -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.rulesession.internal.WMAgendaEventListener -->
+    <!-- ======================================== -->
+    <!-- WM_RuleActivation                  DEBUG -->
+    <!-- WM_RuleBegin                       DEBUG -->
+    <!-- WM_RuleCancelation                 DEBUG -->
+    <!-- WM_RuleEnd                         DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.rulesession.internal.WMAgendaEventListener" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.rulesession.internal.WMEventListener -->
+    <!-- ======================================== -->
+    <!-- WM_Insert                          DEBUG -->
+    <!-- WM_Update                          DEBUG -->
+    <!-- WM_Update_RecurrentFlag            DEBUG -->
+    <!-- WM_Retract                         DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.rulesession.internal.WMEventListener" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.rulesession.internal.RuleSession" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: Notifications               -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.gui.notification.NotificationServices -->
+    <!-- ======================================== -->
+    <!-- UI_Notification                    DEBUG -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.gui.notification.NotificationServices" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- OLV Markers: JUnit -->
+    <!-- ######################################## -->
+    <!-- Class: com.hp.uca.expert.testmaterial.AbstractJunitIntegrationTest -->
+    <!-- ======================================== -->
+    <!-- JU_Closure                        INFO -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.testmaterial.AbstractJunitIntegrationTest" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- Detailed Traces for Topology Dataload    -->
+    <!-- ######################################## -->
+
+    <!-- Neo4J CSV Loader (client) -->
+    <logger name="com.hpe.uca.expert.topology.loader" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <!-- Neo4J CSV Loader (APOC) -->
+    <logger name="org.neo4j.kernel.impl.proc.Procedures" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <!-- Neo4J CSV Loader (APOC) - tests -->
+    <logger name="com.hpe.uca.expert.graphdb" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <!-- Neo4J Batch Loader -->
+    <logger name="com.hpe.uca.expert.graphdb.service.Neo4jBatchLoader" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- Events                                   -->
+    <!-- ######################################## -->
+
+    <logger name="UCAEBC.Dispatcher" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="ASYNCDISPATCHEDMSG" />
+    </logger>
+    <logger name="UCAEBC.Collector" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="ASYNCINCOMINGMSG" />
+    </logger>
+    <logger name="UCAEBC.Collector.Rejected" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="ASYNCREJECTEDMSG" />
+    </logger>
+    <logger name="UCAEBC.AdapterCollectedEvents" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="UMBASYNCINCOMINGMSG" />
+    </logger>
+
+
+    <!-- ######################################## -->
+    <!-- Detailed Traces for Value Pack Scenarios -->
+    <!-- ######################################## -->
+    <logger name="com.hp.uca.expert.vp" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <logger name="com.hp.uca.expert.vp.internal.ValuePackLoader" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.scenario.internal.ScenarioImpl" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ######################################## -->
+    <!-- Detailed Traces for UCA Main Components  -->
+    <!-- ######################################## -->
+    <logger name="com.hp" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <logger name="com.hpe.uca.eml" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <logger name="com.hp.uca.common.trace.SpecificLogManager" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <logger name="org.neo4j" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <logger name="org.springframework.beans" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!--
+        Please, do not modify this logger, it is used by uca-expert and
+        uca-expert_stop tools
+    -->
+    <logger name="com.hp.uca.expert.engine.Bootstrap" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <logger name="com.hp.uca.expert.engine.PropertyWrapper" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+
+    <!-- ############################ -->
+    <!-- Detailed Traces for UI -->
+    <!-- ############################ -->
+
+    <logger name="com.hp.uca.expert.ui" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.GraphDisplay" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hpe.ucaautomation" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hp.uca.expert.rest" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="com.hpe.uca.eml.jaxrs" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+
+    <!-- ############################ -->
+    <!-- Detailed Traces Jetty / ServletContexts -->
+    <!-- ############################ -->
+
+    <logger name="org.eclipse.jetty" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/db/manage" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/db/data" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/browser" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/javadoc" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/uca" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/uca-ebc-rest-api" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/uca-auto-ui" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+    <logger name="/graphdisplay" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </logger>
+	
+    <!-- #### -->
+    <!-- Root -->
+    <!-- #### -->
+    <root>
+        <level value="ERROR" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="SOCKET" />
+    </root>
+
+</log4j:configuration>
+<!--
+        Log4J Configuration Quick Reference:
+        ==================================== 
+        Priority order is DEBUG < INFO < WARN < ERROR < FATAL 
+-->

@@ -1,0 +1,47 @@
+<assembly>
+
+    <id>vp assembly</id>
+
+    <formats>
+        <format>zip</format>
+    </formats>
+    <baseDirectory>IP_CEN_01-1.0</baseDirectory>
+    <includeBaseDirectory>true</includeBaseDirectory>
+
+    <dependencySets>
+
+        <!--  valuepack jar and dependencies-->
+        <dependencySet>
+            <useTransitiveFiltering>true</useTransitiveFiltering>
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>  
+            <scope>runtime</scope>
+            <fileMode>0644</fileMode>
+            <directoryMode>0755</directoryMode>
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+
+       	<!--  valuepack libs -->
+        <fileSet>
+            <outputDirectory>lib</outputDirectory>
+            <directory>lib</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <fileMode>0644</fileMode>
+            <directoryMode>0755</directoryMode>
+        </fileSet>
+                
+        <!--  valuepack configuration -->
+        <fileSet>
+            <outputDirectory>.</outputDirectory>
+            <directory>target/valuepack</directory>
+            <fileMode>0644</fileMode>
+            <directoryMode>0755</directoryMode>
+        </fileSet>
+
+    </fileSets>
+</assembly>

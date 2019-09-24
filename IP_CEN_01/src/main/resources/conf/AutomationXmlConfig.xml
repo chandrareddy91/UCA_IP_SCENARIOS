@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AutomationPolicies xmlns="http://config.auto.vp.expert.uca.hp.com/" xmlns:p1="http://config.im.vp.expert.uca.hp.com/">
+	<mainPolicy>
+		<global>
+			<allowActionRetry>false</allowActionRetry>
+			<diagnosticInfoDateFormat>dd-MM-yyyy hh:mm:ss</diagnosticInfoDateFormat>
+		</global>
+	</mainPolicy>
+			
+	<automationPolicy name="AutomationDefault">
+		<automationAlarm>
+			<goForAutomation>true</goForAutomation>
+			<manualMode>false</manualMode>
+		</automationAlarm>
+
+		<strings>
+			<p1:string key="jdbcAutoEventForwarder">
+				<p1:value>autoEventForwarder</p1:value>
+			</p1:string>
+		</strings>		
+	</automationPolicy>
+</AutomationPolicies>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns="http://decisiontree.model.expert.uca.hpe.com" targetNamespace="http://decisiontree.model.expert.uca.hpe.com" elementFormDefault="qualified" version="1.0" jaxb:version="1.0">													
+	<xs:element name="automation_topology">
+		<xs:complexType>
+			<xs:sequence>
+				
+				<xs:element ref="correlKeys"/>
+				<xs:element ref="actions"/>
+				<xs:element ref="DecisionTree" minOccurs="1" maxOccurs="unbounded"/>
+				
+			</xs:sequence>
+			<xs:attribute name="packageName" type="xs:string"></xs:attribute>
+            <xs:attribute name="packageVersion" type="xs:string"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="correlKeys">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="correlKey" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="correlKey">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="id" type="xs:int"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="actions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="action" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="action">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="id" type="xs:int"/>
+				<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="actionMode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="dispatchType" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="troubleTicketAction" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="alarmAction" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="scriptName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="outputParser" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="cost" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="actionReference" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="parameters"/>
+				<xs:element ref="actionOutcomes"/>
+				<xs:element ref="simulationActionResult" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="parameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="parameter">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="attribute" type="xs:string"/>
+				<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attribute name="type" type="parameterType" use="required"/>
+			<xs:attribute name="kind" type="parameterKind" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="parameterKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Constant"/>
+			<xs:enumeration value="Mapper"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="parameterType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Input"/>
+			<xs:enumeration value="Output"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="actionOutcomes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="actionOutcome" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="actionOutcome">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="id" type="xs:int"/>
+				<xs:element name="result" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DecisionTree">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="flow" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="flow">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element ref="operation" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="operation" >
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element ref="nextAction" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="nextAction">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="actionOutcome"/>
+				<xs:element ref="subAction"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name = "simulationActionResult">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="actionStatus" type="xs:string"/>
+				<xs:element name="actionValue" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="subAction">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="externalId" type="xs:string"/>
+				<xs:element ref="nextAction" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

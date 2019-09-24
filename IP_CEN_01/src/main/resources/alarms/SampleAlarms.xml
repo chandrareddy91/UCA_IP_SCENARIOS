@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Alarms xmlns="http://hp.com/uca/expert/x733Alarm">
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>PROG_145.063.075.078_Unregistered_4</identifier>
+        <sourceIdentifier>Prognosis</sourceIdentifier>
+        <targetValuePack>can-physical-im-3.2-SP3-SNAPSHOT##dummy</targetValuePack>
+        <originatingManagedEntity>PHONE 145.063.075.078::LEVEL1</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="PHONE" instance="145.063.075.078" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Phone Unregistered</probableCause>
+        <perceivedSeverity>WARNING</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>145.063.075.078:Phone Unregistered</additionalInformation>
+        <additionalText></additionalText>
+        <customFields>
+            <customField name="bcfCustomer" value="BNC" />
+            <customField name="bcfSourceType" value="Spectrum" />
+            <customField name="bcfIsTrigger" value="true" />
+        </customFields>
+    </AlarmCreationInterface>
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>PROG_145.063.075.078_Unregistered_3</identifier>
+        <sourceIdentifier>Prognosis</sourceIdentifier>
+        <targetValuePack>can-physical-im-3.2-SP3-SNAPSHOT##dummy</targetValuePack>
+        <originatingManagedEntity>PHONE 145.063.075.078::LEVEL1</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="PHONE" instance="145.063.075.078" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Phone Unregistered</probableCause>
+        <perceivedSeverity>WARNING</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>145.063.075.078:Phone Unregistered</additionalInformation>
+        <additionalText></additionalText>
+        <customFields>
+            <customField name="bcfCustomer" value="BNC" />
+            <customField name="bcfSourceType" value="Spectrum" />
+            <customField name="bcfIsTrigger" value="true" />
+        </customFields>
+    </AlarmCreationInterface>
+
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>PROG_145.063.075.078_Unregistered_1255</identifier>
+        <sourceIdentifier>Prognosis</sourceIdentifier>
+        <targetValuePack>can-physical-im-3.2-SP3-SNAPSHOT##dummy</targetValuePack>
+        <originatingManagedEntity>PHONE 145.063.075.078</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="PHONE" instance="145.063.075.078" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Phone Unregistered</probableCause>
+        <perceivedSeverity>WARNING</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>145.063.075.078:Phone Unregistered</additionalInformation>
+        <additionalText></additionalText>
+        <customFields>
+            <customField name="bcfCustomer" value="BNC" />
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="bcfIsTrigger" value="true" />
+        </customFields>
+    </AlarmCreationInterface>
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>PROG_145.063.075.078_Unregistered_2</identifier>
+        <sourceIdentifier>Prognosis</sourceIdentifier>
+        <targetValuePack>can-physical-im-3.2-SP3-SNAPSHOT##dummy</targetValuePack>
+        <originatingManagedEntity>PHONE 145.063.075.078</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="PHONE" instance="145.063.075.078" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Phone Unregistered</probableCause>
+        <perceivedSeverity>WARNING</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>145.063.075.078:Phone Unregistered</additionalInformation>
+        <additionalText></additionalText>
+        <customFields>
+            <customField name="bcfCustomer" value="BNC" />
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="bcfIsTrigger" value="true" />
+        </customFields>
+    </AlarmCreationInterface>
+
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>PROG_145.063.075.075_Unregistered</identifier>
+        <sourceIdentifier>Prognosis</sourceIdentifier>
+        <targetValuePack>can-physical-im-3.2-SP3-SNAPSHOT##dummy</targetValuePack>
+        <originatingManagedEntity>PHONE 145.063.075.075</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="PHONE" instance="145.063.075.075" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Phone Unregistered</probableCause>
+        <perceivedSeverity>WARNING</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>145.063.075.075:Phone Unregistered</additionalInformation>
+        <additionalText></additionalText>
+        <customFields>
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="bcfIsTrigger" value="true" />
+        </customFields>
+    </AlarmCreationInterface>
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>PROG_145.063.075.079_Unregistered</identifier>
+        <sourceIdentifier>Prognosis</sourceIdentifier>
+        <targetValuePack>can-physical-im-3.2-SP3-SNAPSHOT##dummy</targetValuePack>
+        <originatingManagedEntity>PHONE 145.063.075.079</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="PHONE" instance="145.063.075.079" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Phone Unregistered</probableCause>
+        <perceivedSeverity>WARNING</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>145.063.075.079:Phone Unregistered</additionalInformation>
+        <additionalText></additionalText>
+        <customFields>
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="bcfIsTrigger" value="true" />
+        </customFields>
+    </AlarmCreationInterface>
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>PROG_145.063.075.078_Unregistered</identifier>
+        <sourceIdentifier>Prognosis</sourceIdentifier>
+        <targetValuePack>can-physical-im-3.2-SP3-SNAPSHOT##dummy</targetValuePack>
+        <originatingManagedEntity>PHONE 145.063.075.078</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="PHONE" instance="145.063.075.078" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Phone Unregistered</probableCause>
+        <perceivedSeverity>WARNING</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>145.063.075.078:Phone Unregistered</additionalInformation>
+        <additionalText></additionalText>
+        <customFields>
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="bcfIsTrigger" value="true" />
+        </customFields>
+    </AlarmCreationInterface>
+
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>Smarts::UCA-MSB-SAMa::NOTIFICATION-Switch_G_SWITCH3_Down</identifier>
+        <sourceIdentifier>Smarts</sourceIdentifier>
+        <originatingManagedEntity>SWITCH G_SWITCH3</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="Switch" instance="G_SWITCH3" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Switch Down</probableCause>
+        <perceivedSeverity>CRITICAL</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>G_SWITCH3:Switch Down</additionalInformation>
+        <parents></parents>
+        <customFields>
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="userText" value="" />
+        </customFields>
+    </AlarmCreationInterface>
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>Smarts::UCA-MSB-SAMa::NOTIFICATION-Switch_NB_SWITCH_D_Down</identifier>
+        <sourceIdentifier>Smarts</sourceIdentifier>
+        <originatingManagedEntity>SWITCH NB_SWITCH_D</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="Switch" instance="NB_SWITCH_D" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Switch Down</probableCause>
+        <perceivedSeverity>CRITICAL</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>NB_SWITCH_D:Switch Down</additionalInformation>
+        <parents></parents>
+        <customFields>
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="userText" value="" />
+        </customFields>
+    </AlarmCreationInterface>
+
+
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>Smarts::UCA-MSB-SAMa::NOTIFICATION-Switch_NB_SWITCH_G_Down</identifier>
+        <sourceIdentifier>Smarts</sourceIdentifier>
+        <originatingManagedEntity>SWITCH NB_SWITCH_G</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="Switch" instance="NB_SWITCH_G" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Switch Down</probableCause>
+        <perceivedSeverity>CRITICAL</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>NB_SWITCH_G:Switch Down</additionalInformation>
+        <parents></parents>
+        <customFields>
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="userText" value="" />
+        </customFields>
+    </AlarmCreationInterface>
+
+    <!-- used for cross domain correlation on SDH domain -->
+    <AlarmCreationInterface xmlns="http://hp.com/uca/expert/x733Alarm">
+        <identifier>Smarts::UCA-MSB-SAMa::NOTIFICATION-Switch_A_SWITCH1_Down</identifier>
+        <sourceIdentifier>Smarts</sourceIdentifier>
+        <originatingManagedEntity>SWITCH A_SWITCH1</originatingManagedEntity>
+        <originatingManagedEntityStructure>
+            <classInstance clazz="Switch" instance="A_SWITCH1" />
+        </originatingManagedEntityStructure>
+        <alarmType>COMMUNICATIONS_ALARM</alarmType>
+        <probableCause>Switch Down</probableCause>
+        <perceivedSeverity>CRITICAL</perceivedSeverity>
+        <networkState>NOT_CLEARED</networkState>
+        <operatorState>NOT_ACKNOWLEDGED</operatorState>
+        <problemState>NOT_HANDLED</problemState>
+        <problemInformation></problemInformation>
+        <additionalInformation>A_SWITCH1:Switch Down</additionalInformation>
+        <parents></parents>
+        <customFields>
+            <customField name="bcfSourceType" value="Smarts" />
+            <customField name="userText" value="" />
+        </customFields>
+    </AlarmCreationInterface>
+
+</Alarms>

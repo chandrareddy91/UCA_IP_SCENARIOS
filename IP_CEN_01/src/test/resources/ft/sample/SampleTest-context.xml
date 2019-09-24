@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <!-- ================================================================================= -->
+    <!-- ========= Test inherited context                                        ========= -->
+    <!-- ================================================================================= -->
+
+    <!-- Import UCA application context -->
+    <import resource="classpath:application-context.xml" />
+
+    <!-- Import JUnit context -->
+    <import resource="classpath:beans/junit-context.xml" />
+
+    <!-- Import VP application context - then override if necessary -->
+    <import resource="classpath:conf/context.xml" />
+
+    <!-- ================================================================================= -->
+    <!-- ========= Test overridden context                                       ========= -->
+    <!-- ================================================================================= -->
+
+    <!--     <bean id="actionsProperties" class="com.hp.uca.expert.vp.im.actions.ActionsProperties" /> -->
+
+    <!--     <bean id="problemsFactory" class="com.hp.uca.expert.vp.pd.core.ProblemsFactory"> -->
+    <!--         <property name="problemPackageName" value="com.hp.uca.expert.vp.pd.problem." /> -->
+    <!--         <property name="problemClassNamePrefix" value="Problem_" /> -->
+    <!--         <property name="problemClassName" value="MyProblemDefault" /> -->
+    <!--         <property name="generalBehaviorClassName" value="MyGeneralBehavior" /> -->
+    <!--         <property name="xmlProblemClassName" value="XmlProblem" /> -->
+    <!--         <property name="xmlGenericDefaultPrefix" value="XmlGeneric_" /> -->
+    <!--         <property name="problemContextPackage" value="com.hpe.uca.vp.IP_CEN_01.pd.core." /> -->
+    <!--         <property name="configurationFile" value="target/classes/conf/ProblemXmlConfig.xml" /> -->
+    <!--     </bean> -->
+
+    <!--     <bean id="propagationsFactory" class="com.hp.uca.expert.vp.tp.core.PropagationsFactory"> -->
+    <!--         <property name="propagationPackageName" value="com.hp.uca.expert.vp.tp.propagation." /> -->
+    <!--         <property name="propagationClassNamePrefix" value="Propagation_" /> -->
+    <!--         <property name="propagationClassName" value="MyPropagation" /> -->
+    <!--         <property name="generalBehaviorClassName" value="MyGeneralBehavior" /> -->
+    <!--         <property name="xmlPropagationClassName" value="XmlPropagation" /> -->
+    <!--         <property name="xmlGenericDefaultPrefix" value="Xml_" /> -->
+    <!--         <property name="propagationContextPackage" value="com.hpe.uca.vp.IP_CEN_01.tp.core." /> -->
+    <!--         <property name="configurationFile" value="target/classes/conf/PropagationXmlConfig.xml" /> -->
+    <!--     </bean> -->
+
+    <!--     <bean id="automationsFactory" class="com.hpe.uca.expert.vp.auto.core.AutomationsFactory"> -->
+    <!--         <property name="automationPackageName" value="com.hp.uca.expert.vp.auto.automation." /> -->
+    <!--         <property name="automationClassNamePrefix" value="Automation_" /> -->
+    <!--         <property name="automationClassName" value="MyAutomationDefault" /> -->
+    <!--         <property name="generalBehaviorClassName" value="MyGeneralBehavior" /> -->
+    <!--         <property name="automationContextPackage" value="com.hpe.uca.vp.IP_CEN_01.auto.core." /> -->
+    <!--         <property name="configurationFile" value="target/classes/conf/AutomationXmlConfig.xml" /> -->
+    <!--     </bean> -->
+
+    <!--     <bean id="troubleTicketsFactory" class="com.hpe.uca.expert.vp.tt.core.TroubleTicketsFactory"> -->
+    <!--         <property name="actionsProperties" ref="actionsProperties"/> -->
+    <!--     </bean> -->
+
+    <!-- ================================================================================= -->
+    <!-- ========= Test bootstrap                                                ========= -->
+    <!-- ================================================================================= -->
+
+    <bean id="modelLoaderBootstrap" class="com.hpe.uca.expert.vp.im.testmaterial.ModelLoaderTestBootstrap">
+        <property name="serviceDefinitionModelFile" value="target/classes/conf/UCA_ServiceDefinition_ManagedServices.xml" />
+        <property name="serviceAssuranceModelFile" value="target/classes/conf/UCA_ServiceAssurance_ManagedServices.xml" />
+    </bean>
+
+    <bean id="vpBootstrap" depends-on="modelLoaderBootstrap" class="com.hp.uca.expert.testmaterial.ValuePackTestBootsrap">
+        <property name="configurationFile" value="target/classes/conf/ValuePackConfiguration.xml" />
+    </bean>
+
+</beans>

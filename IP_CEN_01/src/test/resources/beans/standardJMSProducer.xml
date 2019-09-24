@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+	<!-- JMS Producer Configuration -->
+    <bean id="jmsProducerConnectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory"
+          depends-on="broker"
+          p:reconnectOnException="true"
+          p:targetConnectionFactory-ref="jmsFactory" />
+
+    <bean id="jmsProducerTemplate" class="org.springframework.jms.core.JmsTemplate"
+          p:connectionFactory-ref="jmsProducerConnectionFactory"
+          p:defaultDestination-ref="destination" />
+
+    <bean id="jmsProducer" class="com.hp.uca.expert.testmaterial.EventMessageProducerSpring">
+ 		<property name="template" ref="jmsProducerTemplate"/>
+  	</bean>
+
+    <bean id="jmsEventProducerTemplate" class="org.springframework.jms.core.JmsTemplate"
+          p:connectionFactory-ref="jmsProducerConnectionFactory"
+          p:defaultDestination-ref="destinationEvent" />
+
+    <bean id="jmsEventProducer" class="com.hp.uca.expert.testmaterial.EventBoxMessageProducerSpring" >
+        <property name="template" ref="jmsEventProducerTemplate"/>
+    </bean>
+
+</beans>                          
+                                               

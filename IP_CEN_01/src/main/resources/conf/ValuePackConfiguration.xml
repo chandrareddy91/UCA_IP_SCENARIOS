@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valuePackConfiguration xmlns="http://hp.com/uca/expert/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="IP_CEN_01" version="1.0" remoteAccess="false">
+
+    <scenarios>
+        <scenario name="com.hpe.uca.expert.vp.ed.EnrichmentDispatcher">
+            <actionRetractedAutomaticallyWhenCompleted>true</actionRetractedAutomaticallyWhenCompleted>
+            <alarmEligibilityPolicy>true</alarmEligibilityPolicy>
+            <asyncActionPeriod>1000</asyncActionPeriod>
+            <clockTypeMode>NORMAL</clockTypeMode>
+            <filterFiles>
+                <filterFile>ed/EnrichmentDispatcher_filters.xml</filterFile>
+            </filterFiles>
+            <mapperFiles>
+                <mapperFile>ed/EnrichmentDispatcher_mappers.xml</mapperFile>
+            </mapperFiles>
+            <fireAllRulePeriod>1000</fireAllRulePeriod>
+            <fireAllRulesDuringResynchronization>false</fireAllRulesDuringResynchronization>
+            <fireAllRulesPolicy>EACH_ACCESS</fireAllRulesPolicy>
+            <globals />
+            <processingMode>STREAM</processingMode>
+            <rulesFiles>
+                <rulesFile>
+                    <filename>ed/EnrichmentDispatcher_Rules.pkg</filename>
+                    <name>Enrichment Dispatcher Rules</name>
+                    <ruleFileType>PKG</ruleFileType>
+                </rulesFile>
+            </rulesFiles>
+            <tickPeriod>30000</tickPeriod>
+            <customLifeCycleClass>com.hpe.uca.expert.vp.ed.im.lifecycle.InferenceMachineLifeCycleExtended</customLifeCycleClass>
+            <customInitializationClass>com.hpe.uca.expert.vp.ed.core.ED_Initialization</customInitializationClass>
+            <compressionMode>false</compressionMode>
+            <compressionPeriod>1000</compressionPeriod>
+        </scenario>
+
+        <scenario name="com.hp.uca.expert.vp.pd.ProblemDetection">
+            <actionRetractedAutomaticallyWhenCompleted>true</actionRetractedAutomaticallyWhenCompleted>
+            <alarmEligibilityPolicy>
+            <!-- <![CDATA[(ProblemState == "HANDLED") || (  ProblemState == "NOT_HANDLED"  && (OperatorState != "TERMINATED" && NetworkState != "CLEARED") )]]> -->
+            <![CDATA[(OperatorState != "TERMINATED")]]>
+            </alarmEligibilityPolicy>
+            <asyncActionPeriod>1000</asyncActionPeriod>
+            <clockTypeMode>NORMAL</clockTypeMode>
+            <eligibleForBroadcast>false</eligibleForBroadcast>
+            <filterFiles>
+                <filterFile>pd/ProblemDetection_filters.xml</filterFile>
+            </filterFiles>
+            <mapperFiles>
+                <mapperFile>pd/ProblemDetection_mappers.xml</mapperFile>
+            </mapperFiles>
+            <fireAllRulePeriod>1000</fireAllRulePeriod>
+            <fireAllRulesDuringResynchronization>false</fireAllRulesDuringResynchronization>
+            <fireAllRulesPolicy>WATCHDOG</fireAllRulesPolicy>
+            <globals />
+            <processingMode>CLOUD</processingMode>
+            <rulesFiles>
+                <rulesFile>
+                    <filename>pd/ProblemDetection_Rules.pkg</filename>
+                    <name>Problem Detection Rules</name>
+                    <ruleFileType>PKG</ruleFileType>
+                </rulesFile>
+            </rulesFiles>
+            <tickPeriod>30000</tickPeriod>
+            <!-- <customLifeCycleClass>com.hp.uca.expert.vp.pd.im.lifecycle.InferenceMachineLifeCycleExtended</customLifeCycleClass> -->
+            <customLifeCycleClass>com.hp.uca.vp.IP_CEN_01.pd.lifecycle.CustomInferenceMachineLifeCycleExtended</customLifeCycleClass>
+            <customInitializationClass>com.hp.uca.expert.vp.pd.core.PD_Initialization</customInitializationClass>
+            <compressionMode>true</compressionMode>
+            <compressionPeriod>1000</compressionPeriod>
+        </scenario>
+
+        <!-- <scenario name="com.hp.uca.expert.vp.tp.TopologyPropagation">
+            <actionRetractedAutomaticallyWhenCompleted>true</actionRetractedAutomaticallyWhenCompleted>
+            <alarmEligibilityPolicy><![CDATA[(ProblemState == "HANDLED") || (  ProblemState == "NOT_HANDLED"  && (OperatorState != "TERMINATED" && NetworkState != "CLEARED") )]]></alarmEligibilityPolicy>
+            <asyncActionPeriod>1000</asyncActionPeriod>
+            <clockTypeMode>NORMAL</clockTypeMode>
+            <eligibleForBroadcast>false</eligibleForBroadcast>
+            <filterFiles>
+                <filterFile>tp/TopologyPropagation_filters.xml</filterFile>
+            </filterFiles>
+            <mapperFiles>
+                <mapperFile>tp/TopologyPropagation_mappers.xml</mapperFile>
+            </mapperFiles>
+            <fireAllRulePeriod>1000</fireAllRulePeriod>
+            <fireAllRulesDuringResynchronization>false</fireAllRulesDuringResynchronization>
+            <fireAllRulesPolicy>EACH_ACCESS</fireAllRulesPolicy>
+            <globals />
+            <processingMode>CLOUD</processingMode>
+            <rulesFiles>
+                <rulesFile>
+                    <filename>tp/TopologyPropagation_Rules.pkg</filename>
+                    <name>Topology Propagation Rules</name>
+                    <ruleFileType>PKG</ruleFileType>
+                </rulesFile>
+            </rulesFiles>
+            <tickPeriod>30000</tickPeriod>
+            <customLifeCycleClass>com.hp.uca.expert.vp.tp.im.lifecycle.InferenceMachineLifeCycleExtended</customLifeCycleClass>
+            <customInitializationClass>com.hp.uca.expert.vp.tp.core.TP_Initialization</customInitializationClass>
+            <compressionMode>false</compressionMode>
+            <compressionPeriod>1000</compressionPeriod>
+        </scenario>
+
+        <scenario name="com.hp.uca.expert.vp.auto.Automation">
+            <actionRetractedAutomaticallyWhenCompleted>false</actionRetractedAutomaticallyWhenCompleted>
+            <alarmEligibilityPolicy><![CDATA[(ProblemState == "HANDLED") || (  ProblemState == "NOT_HANDLED"  && (OperatorState != "TERMINATED" && NetworkState != "CLEARED") )]]></alarmEligibilityPolicy>
+            <asyncActionPeriod>1000</asyncActionPeriod>
+            <clockTypeMode>NORMAL</clockTypeMode>
+            <eligibleForBroadcast>false</eligibleForBroadcast>
+            <filterFiles>
+                <filterFile>auto/Automation_filters.xml</filterFile>
+            </filterFiles>
+            <mapperFiles>
+                <mapperFile>auto/Automation_mappers.xml</mapperFile>
+            </mapperFiles>
+            <fireAllRulePeriod>1000</fireAllRulePeriod>
+            <fireAllRulesDuringResynchronization>false</fireAllRulesDuringResynchronization>
+            <fireAllRulesPolicy>WATCHDOG</fireAllRulesPolicy>
+            <globals />
+            <processingMode>CLOUD</processingMode>
+            <rulesFiles>
+                <rulesFile>
+                    <filename>auto/Automation_Rules.pkg</filename>
+                    <name>Automation Rules</name>
+                    <ruleFileType>PKG</ruleFileType>
+                </rulesFile>
+            </rulesFiles>
+            <tickPeriod>30000</tickPeriod>
+            <customLifeCycleClass>com.hpe.uca.expert.vp.auto.im.lifecycle.InferenceMachineLifeCycleExtended</customLifeCycleClass>
+            <customInitializationClass>com.hpe.uca.expert.vp.auto.core.AutomationInitialization</customInitializationClass>
+            <compressionMode>false</compressionMode>
+            <compressionPeriod>1000</compressionPeriod>
+        </scenario>
+        <scenario name="com.hpe.uca.expert.vp.tt.TroubleTicketing">
+            <actionRetractedAutomaticallyWhenCompleted>true</actionRetractedAutomaticallyWhenCompleted>
+            <alarmEligibilityPolicy><![CDATA[(ProblemState == "HANDLED") || (  ProblemState == "NOT_HANDLED"  && OperatorState != "TERMINATED" )]]></alarmEligibilityPolicy>
+            <asyncActionPeriod>1000</asyncActionPeriod>
+            <clockTypeMode>NORMAL</clockTypeMode>
+            <eligibleForBroadcast>false</eligibleForBroadcast>
+            <filterFiles>
+                <filterFile>tt/TroubleTicketing_filters.xml</filterFile>
+            </filterFiles>
+            <fireAllRulePeriod>1000</fireAllRulePeriod>
+            <fireAllRulesDuringResynchronization>false</fireAllRulesDuringResynchronization>
+            <fireAllRulesPolicy>WATCHDOG</fireAllRulesPolicy>
+            <globals />
+            <processingMode>CLOUD</processingMode>
+            <rulesFiles>
+                <rulesFile>
+                    <filename>tt/TroubleTicketing_Rules.pkg</filename>
+                    <name>Trouble Ticketing Rules</name>
+                    <ruleFileType>PKG</ruleFileType>
+                </rulesFile>
+            </rulesFiles>
+            <tickPeriod>1500</tickPeriod>
+            <customLifeCycleClass>com.hpe.uca.expert.vp.tt.im.lifecycle.InferenceMachineLifeCycleExtended</customLifeCycleClass>
+            <customInitializationClass>com.hpe.uca.expert.vp.tt.core.TT_Initialization</customInitializationClass>
+            <compressionMode>true</compressionMode>
+            <compressionPeriod>1000</compressionPeriod>
+        </scenario> -->
+    </scenarios>
+
+    <mediationFlows>
+        <!-- <UMBmediationFlow automaticStart="true" name="TopologyUpdateFlow" targetAdapterName="Topology" targetFlowName="TopologyStaticFlow" /> -->
+        
+       <!-- <UMBmediationFlow automaticStart="true" name="temipFlow_.vil.nnmapp01.id_nnm_ip_test_oc" targetAdapterName="temip_uca42_grp" targetFlowName="TeMIPDynamicFlow">
+    	    <flowParameters>
+        	      <flowParameter key="operationContext" value=".vil.nnmapp01.id_nnm_ip_test_oc"/>        	      
+        	</flowParameters>
+        </UMBmediationFlow> -->
+		<UMBmediationFlow automaticStart="true" name="temipFlow_IP_Scenario_umbFlow_.vil.nnmapp01.id_nnm_ip_oc_and_rca_oc" targetAdapterName="TeMIP_vtemipamfm17" targetFlowName="TeMIPDynamicFlow">
+    	    <flowParameters>
+        	<flowParameter key="operationContext" value=".vil.nnmapp01.id_nnm_ip_oc"/>
+			<flowParameter key="operationContext" value=".vil.nnmapp01.id_nnm_ip_rca_oc"/>   
+			<!--flowParameter key="operationContext" value=".vil.nnmapp01.id_nnm_ip_test_oc"/-->
+        	</flowParameters>
+        </UMBmediationFlow>
+        
+         <!--UMBmediationFlow automaticStart="true" name="temipFlow_.vil.nnmapp01.ID_NNM_IP_OC" targetAdapterName="temip_uca42_grp" targetFlowName="TeMIPDynamicFlow">
+            <flowParameters>
+                      <flowParameter key="operationContext" value=".vil.nnmapp01.ID_NNM_IP_OC"/>
+                </flowParameters>
+        </UMBmediationFlow>
+ <UMBmediationFlow automaticStart="true" name="temipFlow_.vil.nnmapp01.ID_NNM_IP_OC" targetAdapterName="temip_uca42_grp" targetFlowName="TeMIPDynamicFlow">
+            <flowParameters>
+                      <flowParameter key="operationContext" value=".vil.nnmapp01.ID_NNM_IP_OC"/>
+                </flowParameters>
+        </UMBmediationFlow-->
+        
+        <!-- 
+        <UMBmediationFlow name="TeMIP" targetAdapterName="TeMIP" targetFlowName="TeMIPDynamicFlow" automaticStart="true">
+            <flowParameters>
+                <flowParameter key="operationContext" value="uca_service" />
+                <flowParameter key="operationContext" value="uca_problem" />
+                <flowParameter key="operationContext" value="uca_network" />
+            </flowParameters>
+        </UMBmediationFlow>
+        -->
+        <!-- 
+        <UMBmediationFlow name="Smarts" targetAdapterName="NmsSimulator" targetFlowName="Smarts" automaticStart="true" />
+        <UMBmediationFlow name="Prognosis" targetAdapterName="NmsSimulator" targetFlowName="Prognosis" automaticStart="true" />
+        <UMBmediationFlow name="Service Manager" targetAdapterName="TTSSimulator" targetFlowName="ServiceManager" automaticStart="true" />
+         -->
+    </mediationFlows>
+
+    <!--dbFlows>
+        <dbFlow name="scenarioDBFlow" dbNotifierName="dbNotifier" sourceIdentifier="AnyUCA" lastEventReceivedFirstDuringResynchronization="false" selfFeed="true" automaticStart="true">
+            <eligibilityScope>true</eligibilityScope>
+        </dbFlow>
+        <dbFlow name="scenarioAEDBFlow"  dbNotifierName="autoEventNotifier"  sourceIdentifier="UCA-EBC" selfFeed="true"  lastEventReceivedFirstDuringResynchronization="false" automaticStart="true">
+            <eligibilityScope>true</eligibilityScope>
+        </dbFlow>        
+    </dbFlows-->
+
+</valuePackConfiguration>

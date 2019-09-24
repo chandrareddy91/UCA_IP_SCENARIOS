@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Orchestra Filters to be used in filtering event cascading in routes defined in OrchestraConfiguration.xml -->
+<filters xmlns="http://hp.com/uca/expert/filter">
+
+	<topFilter name="ED -> PD">
+		<anyCondition>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>NetworkAlarm</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>ProblemAlarmCreatedByPD</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+            <orchestrationTypeFilterStatement>
+                <orchestrationTypeValue>TopologyContextReport</orchestrationTypeValue>
+            </orchestrationTypeFilterStatement>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>PlannedMaintenanceEvent</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+		</anyCondition>
+	</topFilter>
+
+	<topFilter name="ED -> TP">
+		<anyCondition>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>ProblemAlarmCreatedByPD</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>ServiceAlarmCreatedByTSP</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>TopologyEvent</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+		</anyCondition>
+	</topFilter>
+
+	<topFilter name="ED -> TT">
+		<anyCondition>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>TroubleTicket</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+		</anyCondition>
+	</topFilter>
+
+	<topFilter name="ED -> AUTO">
+		<anyCondition>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>ProblemAlarmCreatedByPD</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>ServiceAlarmCreatedByTSP</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>AutomationEvent</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+		</anyCondition>
+	</topFilter>
+
+	<topFilter name="ED -> ALL">
+		<anyCondition>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>SynchronizationEvent</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+			<orchestrationTypeFilterStatement>
+				<orchestrationTypeValue>RawEvent</orchestrationTypeValue>
+			</orchestrationTypeFilterStatement>
+		</anyCondition>
+	</topFilter>
+
+</filters>

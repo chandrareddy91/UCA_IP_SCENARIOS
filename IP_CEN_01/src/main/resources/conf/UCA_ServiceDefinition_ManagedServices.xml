@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hewlett Packard Enterprise -->
+<serviceDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://servicedefinition.model.expert.uca.hpe.com"
+    packageName="IP_CEN_01" packageVersion="1.0">
+    <description>Package for Managed Services</description>
+    <serviceComponentDefinitions>
+        <serviceComponentDefinition id="customer" name="Customer" category="Logical" indexName="CUSTOMER"
+            iconName="images/testimonials.png">
+            <description>The customer</description>
+            <scdAttributes>
+                <attribute id="CountryId" name="Country" type="String" />
+                <attribute id="CodeId" name="Code" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="service" name="Service" category="Logical" iconName="images/engine.png">
+            <description>A service as seen from customer point of view</description>
+            <scdAttributes>
+                <attribute id="technology" type="String" />
+                <attribute id="subType" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="location" name="Location" category="Physical" iconName="images/companies.png">
+            <description>A location, basically a building or a site</description>
+            <scdAttributes>
+                <attribute id="country" isMandatory="false" />
+                <attribute id="region" />
+                <attribute id="city" />
+                <attribute id="address" isMandatory="false" />
+                <attribute id="coordinates" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="phonePool" name="Pool" category="Logical" iconName="images/pool.png">
+            <description>A pool of IP phones</description>
+            <scdAttributes>
+                <attribute id="Level" />
+                <attribute id="Team" isMandatory="false" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="ipPhone" name="Phone" category="Physical" iconName="images/Telephone.png">
+            <description>An IP phone</description>
+            <scdAttributes>
+                <attribute id="Surname" isMandatory="false" />
+                <attribute id="FirstName" isMandatory="false" />
+                <attribute id="TelNumber" indexName="TEL_NUMBER" isMandatory="false" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="switch" name="Switch" category="Physical" iconName="images/switch_2.png">
+            <description>A switch where IP Phone or Server are connected</description>
+            <scdAttributes>
+                <attribute id="Brand" isMandatory="false" />
+                <attribute id="PortNumber" isMandatory="false" type="Integer" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="callServer" name="Call Server" category="Physical"
+            iconName="images/callServer.png">
+            <description>Toudoux</description>
+            <scdAttributes>
+                <attribute id="toudoux" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="server" name="Server" category="Logical" iconName="images/server-19.png">
+            <description>Toudoux</description>
+            <scdAttributes>
+                <attribute id="toudoux" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="vm" name="Virtual Machine" category="Logical"
+            iconName="images/virtualMachine.png">
+            <description>Toudoux</description>
+            <scdAttributes>
+                <attribute id="toudoux" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="serverShelf" name="Server Shelf" category="Physical"
+            iconName="images/server-multiple.png">
+            <description>Toudoux</description>
+            <scdAttributes>
+                <attribute id="toudoux" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="application" name="Application" category="Logical"
+            iconName="images/webservice.png">
+            <description>Toudoux</description>
+            <scdAttributes>
+                <attribute id="toudoux" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+
+        <serviceComponentDefinition id="cer" name="CER" category="Physical" iconName="images/router1.png">
+            <description>The Customer Edge Router that connects a location to a core Network</description>
+            <scdAttributes>
+                <attribute id="Brand" isMandatory="false" />
+                <attribute id="technology" type="String" />
+                <attribute id="subType" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+        <serviceComponentDefinition id="port" name="Port" category="Logical" iconName="images/ip-ethernet-icon2.png">
+            <description>A port (virtual or physical)</description>
+            <scdAttributes>
+                <attribute id="rate" isMandatory="false" />
+                <attribute id="kind" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+
+        <serviceComponentDefinition id="coreNetwork" name="Core Network" category="Logical" iconName="images/cloud.png">
+            <description>Toudoux</description>
+            <scdAttributes>
+                <attribute id="toudoux" type="String" />
+            </scdAttributes>
+        </serviceComponentDefinition>
+
+    </serviceComponentDefinitions>
+    <scdRelationships>
+        <scdRelationship name="hasService">
+            <description>Represents the fact that a Customer is using a Service</description>
+            <fromSCD scdId="customer" />
+            <toSCD scdId="service" />
+            <relAttributes>
+                <attribute id="CL" name="contractLevel" indexName="CTLVL" type="String" />
+                <attribute id="Prio" name="priority" indexName="PRIORITY" type="Integer" />
+            </relAttributes>
+        </scdRelationship>
+        <scdRelationship name="hasLocation">
+            <description>Represents the fact that a Customer is managing multiple locations / Sites</description>
+            <fromSCD scdId="customer" />
+            <toSCD scdId="location" />
+        </scdRelationship>
+        <scdRelationship name="usesPool">
+            <description>A location is using a pool</description>
+            <fromSCD scdId="location" />
+            <toSCD scdId="phonePool" />
+        </scdRelationship>
+        <scdRelationship name="poolContains">
+            <description>A pool is based upon some Phones</description>
+            <fromSCD scdId="phonePool" />
+            <toSCD scdId="ipPhone" />
+        </scdRelationship>
+        <scdRelationship name="connectedTo">
+            <description>A Phone is physically connected to Switch</description>
+            <fromSCD scdId="ipPhone" />
+            <toSCD scdId="switch" />
+        </scdRelationship>
+        <scdRelationship name="switchConnectedToSwitch">
+            <description>A Switch is physically connected to Switch</description>
+            <fromSCD scdId="switch" />
+            <toSCD scdId="switch" />
+        </scdRelationship>
+        <scdRelationship name="switchConnectedToRouter">
+            <description>A Switch is physically connected to CER</description>
+            <fromSCD scdId="switch" />
+            <toSCD scdId="cer" />
+        </scdRelationship>
+
+        <scdRelationship name="usesCallserver">
+            <description>Toudoux</description>
+            <fromSCD scdId="service" />
+            <toSCD scdId="callServer" />
+        </scdRelationship>
+        <scdRelationship name="callServerConnectedToSwitch"> <!-- was missing -->
+            <description>A CallServer is physically connected to Switch</description>
+            <fromSCD scdId="callServer" />
+            <toSCD scdId="switch" />
+        </scdRelationship>
+        <scdRelationship name="runsOnVM"> <!-- was missing -->
+            <description>A CallServer runs on a VirtualMachine</description>
+            <fromSCD scdId="callServer" />
+            <toSCD scdId="vm" />
+        </scdRelationship>
+        <scdRelationship name="servingCall">
+            <description>A CallServer is serving calls to IP Phone</description>
+            <fromSCD scdId="callServer" />
+            <toSCD scdId="ipPhone" />
+        </scdRelationship>
+        <scdRelationship name="phoneServiceUsesPool">
+            <description>A Service uses a PhonePool</description>
+            <fromSCD scdId="service" />
+            <toSCD scdId="phonePool" />
+        </scdRelationship>
+        <scdRelationship name="poolPluggedToSwitch">
+            <description>A PhonePool is plugged to a Switch</description>
+            <fromSCD scdId="phonePool" />
+            <toSCD scdId="switch" />
+        </scdRelationship>
+        <scdRelationship name="usesApplication">
+            <description>A Service uses an Application</description>
+            <fromSCD scdId="service" />
+            <toSCD scdId="application" />
+        </scdRelationship>
+        <scdRelationship name="runsOnVM">
+            <description>An application runs on a VirtualMachine</description>
+            <fromSCD scdId="application" />
+            <toSCD scdId="vm" />
+        </scdRelationship>
+        <scdRelationship name="runsOnServer">
+            <description>A VirtualMachine is hosted by a Server</description>
+            <fromSCD scdId="vm" />
+            <toSCD scdId="server" />
+        </scdRelationship>
+
+        <scdRelationship name="locationHostingShelf">
+            <description>A Location hosting a ServerShelf</description>
+            <fromSCD scdId="location" />
+            <toSCD scdId="serverShelf" />
+        </scdRelationship>
+        <scdRelationship name="locationHostingCallServer"> <!-- was missing -->
+            <description>A Location hosting a CallServer</description>
+            <fromSCD scdId="location" />
+            <toSCD scdId="callServer" />
+        </scdRelationship>
+        <scdRelationship name="shelfContains">
+            <description>A ServerShelf contains a Server</description>
+            <fromSCD scdId="serverShelf" />
+            <toSCD scdId="server" />
+        </scdRelationship>
+        <scdRelationship name="serverConnectedToSwitch">
+            <description>A Server is physically connected to a Switch</description>
+            <fromSCD scdId="server" />
+            <toSCD scdId="switch" />
+        </scdRelationship>
+
+        <scdRelationship name="hasPort">
+            <description>A CustomerEdgeRouter has a port connected to Access domain</description>
+            <fromSCD scdId="cer" />
+            <toSCD scdId="port" />
+        </scdRelationship>
+        <scdRelationship name="hasCore">
+            <description>A CustomerEdgeRouter has a CoreNetwork</description>
+            <fromSCD scdId="cer" />
+            <toSCD scdId="coreNetwork" />
+        </scdRelationship>
+
+    </scdRelationships>
+</serviceDefinition>

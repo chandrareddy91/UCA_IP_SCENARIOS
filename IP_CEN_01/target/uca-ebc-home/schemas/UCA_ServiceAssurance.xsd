@@ -1,0 +1,1093 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns="http://serviceassurance.model.expert.uca.hpe.com" xmlns:annox="http://annox.dev.java.net" jaxb:extensionBindingPrefixes="annox"
+    targetNamespace="http://serviceassurance.model.expert.uca.hpe.com" elementFormDefault="qualified" version="1.0" jaxb:version="1.0">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" />
+	<xs:element name="ServiceAssurance">
+		<xs:annotation>
+			<xs:documentation>Contains one or several Service Quality Analytics  (SQA) models describing real time or quality statuses processing from the collections up to the exposed high level statuses</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Description of this SAA package</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Definitions" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TBC: common KPI and HealthStatus that will be used across different models in this package must be declared here. The global cross packages definition should be regeistered into the Common package</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="HealthStatusDefinitions" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="HealthStatusCategory" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="HealthStatusValues" type="HealthStatusValuesType"/>
+													<xs:element name="description" type="xs:string" minOccurs="0"/>
+												</xs:sequence>
+												<xs:attribute name="id" type="xs:ID" use="required">
+													<xs:annotation>
+														<xs:documentation>Unique identifier of this Health Status category. Unique inside a package. Identifying it form another package must be packageId.HScategoryId</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="isNearRealTime" type="xs:boolean" use="required">
+													<xs:annotation>
+														<xs:documentation>TBC if this status computation property must be set at the health status object definition or rather only at the computation level</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+    												<xs:attribute name="className" type="xs:string" default="com.hp.uca.expert.state.StateBase">
+                                                    <xs:annotation>
+                                                        <xs:documentation>The concrete class name of the generated state that must implement com.hp.uca.expert.state.State
+                                                            interface. Note that the default value is the base class which will match any extended implementation in filters.
+                                                            When dealing with multiple health status categories, it is then recommended to use specific classes for each category.</xs:documentation>
+                                                    </xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="name" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Displayed name</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="HealthStatusType" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="description" type="xs:string" minOccurs="0"/>
+												</xs:sequence>
+												<xs:attribute name="id" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Unique identifier of this Health Status type. Unique inside a package. Identifying it form another package must be packageId.HStypeId (its type is not xs:id to allow same KPI and HS identifier, so that the unicity must be verified during semantic checking)</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="category" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Category this Health Status type belongs to. Must refer a Health Status category defined in this package or by another package</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="fromPackage" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Must be set if and only if the category of this Health Status is defined in another package</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="name" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Displayed name (default to ID when omitted)</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<!--xs:element name="KPIdefinitions" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="KPIcategory" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="description" type="xs:string" minOccurs="0"/>
+												</xs:sequence>
+												<xs:attribute name="id" type="xs:ID" use="required">
+													<xs:annotation>
+														<xs:documentation>Unique identifier of this KPI type category. Unique inside a package. Identifying it form another package must be packageId.KPIcategoryId</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="name" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Displayed name</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="KPItype" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="description" type="xs:string" minOccurs="0"/>
+												</xs:sequence>
+												<xs:attribute name="id" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Unique identifier of this KPI type. Unique inside a package. Identifying it form another package must be packageId.KPItypeId (its type is not xs:id to allow same KPI and HS identifier, so that the unicity must be verified during semantic checking)</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="name" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Displayed name</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="category" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Category this KPI type belongs to. Must refer a KPI category defined in this package or by another package</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="fromPackage" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Must be set if and only if the category of this KPI is defined in another package</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="typeOfValue" type="TypeOfValueType" use="required">
+													<xs:annotation>
+														<xs:documentation>TBC. Type of the KPI value has probabbly to be rather speciifed at the KPI category level than at the KPI type level</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="unit" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Used for the KPI display by the UI</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="isCounter" type="xs:boolean">
+													<xs:annotation>
+														<xs:documentation>TBC. Metric and KPI are considered as Rate except if isCounter is set to true.
+For Rate, the same metric value present in the metric collection period is used as metric value for each (aligned) calculation period. 
+But for Counter, the metric value present in the metric collection period is distributed in each (aligned) calculation period.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element-->
+							<xs:element name="SIAdefinition" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Service Impact Alarm to be notified by the SQA engines when the referring health status value is detected</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descripton" minOccurs="0"/>
+										<xs:element name="Content">
+											<xs:annotation>
+												<xs:documentation>To be completed with Service Impact Alarm content</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id" use="required">
+										<xs:annotation>
+											<xs:documentation>Unique identifier of this SIA type</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ImportedDefinitions" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TBC: Used to declare Health Status type and KPI type referred in this package XML file, when thet are defined in another package XML file. Wheter they belong to the same package id ir not.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="HealthStatusCategory" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:ID" use="required">
+										<xs:annotation>
+											<xs:documentation>Unique identifier of this Health Status category. Unique inside a package. Identifying it form another package must be packageId.HScategoryId</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="fromPackage" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Identifier of the package owner of this definition</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HealthStatusType" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:ID" use="required">
+										<xs:annotation>
+											<xs:documentation>Unique identifier of this Health Status type. Unique inside a package. Identifying it form another package must be packageId.HStypeId</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="category" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Category this Health Status type belongs to. Must refer a Health Status category defined in this package or by another package</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="fromPackage" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Identifier of the package owner of this definition</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<!--xs:element name="KPIcategory" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:ID" use="required">
+										<xs:annotation>
+											<xs:documentation>Unique identifier of this KPI type category. Unique inside a package. Identifying it form another package must be packageId.KPIcategoryId</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="fromPackage" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Identifier of the package owner of this definition</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="KPItype" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:ID" use="required">
+										<xs:annotation>
+											<xs:documentation>Unique identifier of this KPI type. Unique inside a package. Identifying it form another package must be packageId.KPItypeId</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="category" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Category this KPI type belongs to. Must refer a KPI category defined in this package or by another package</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="fromPackage" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Identifier of the package owner of this definition</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element-->
+							<xs:element name="SIAtype" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="id" use="required"/>
+									<xs:attribute name="fromPackage" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Models">
+					<xs:annotation>
+						<xs:documentation>List of models</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="Model">
+								<xs:annotation>
+									<xs:documentation>a SAA model</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="description" minOccurs="0"/>
+										<!--  <xs:element name="ExposedToOthersModels" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Only the exposed elements can be  used to execute an upper KPI or status aggregation specified by others models referring these exposed elements</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence minOccurs="0" maxOccurs="unbounded">
+													<xs:element name="KPI">
+														<xs:complexType>
+															<xs:attribute name="internalId" type="xs:IDREF" use="required">
+																<xs:annotation>
+																	<xs:documentation>Refer to one of the KPI defined in this model. Exposed identification is always (name, category). And the associated SCD id as well the model and package id must be part of the exposure</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="HealthStatus">
+														<xs:complexType>
+															<xs:attribute name="internalId" type="xs:IDREF" use="required">
+																<xs:annotation>
+																	<xs:documentation>Refer to one of the health status defined in this model. Exposed identification is always (name, category). The boolean property isRealTimeStatus must also be part of the exposure. As well as the associated SCDid and the model and package id must be part of the exposure</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element> -->
+										<!--<xs:element name="RequiredHealthStatus" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Specifies the Health Statuses required to compute those described in this model, when they are not defined in this package XML file. Wether they are in another package or in this package but in another XML file. Otherwise required Health Statuses have not to be declared via a Require element and can be refered directly by their internalId as set in this package XML file.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence minOccurs="0" maxOccurs="unbounded">
+													<xs:element name="HealthStatus" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:choice>
+																	<xs:annotation>
+																		<xs:documentation>External required Health Status can be referenced by its category in general (i.e. whatever the Health Status type of this category) or more precisely by its Health Status type </xs:documentation>
+																	</xs:annotation>
+																	<xs:element name="Category">
+																		<xs:complexType>
+																			<xs:attribute name="id" type="xs:string" use="required"/>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="Type">
+																		<xs:complexType>
+																			<xs:attribute name="id" type="xs:string" use="required"/>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:choice>
+																<xs:element name="FromModel" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Optional constraint about what assurance model has defined this sub Health Status</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="packageId" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>If not specified, the referred Health Status must be exposed by another assurance model of this current package. Otherwise identifier of the external package owner of the Health Status must be specified</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="modelId" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>Identifier of the assurance model that specifies this required sub Health Status</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="FromSubSCD">
+																	<xs:annotation>
+																		<xs:documentation>Constraint about what SCD (type or category) must be the SCI owner of this sub Health Status in the instantiated Health Status calculation tree </xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="SCDid" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>Identifier of the subordinate SCD. Possibly from external model and or package. In this case package id and model id owner must be specified</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="SCDcategory" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>Alternative way to identify the subordiante SCD that must be owner of this required sub Health Status: I.e. referencing the category of the SCD rather than its actual type (i.e. SCDid).</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="linkedByRelationshipType" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>To be used to constraint the type of relationship that must link the SCD to this subordinate SCD. If this relationship does not exist between instances of SCD and this sub SCD, the associated enrichment rules will not be applied to this instances tuple.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="packageId" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>Identifier of the service model package containing this SCD</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="internalId" type="xs:ID" use="required">
+																<xs:annotation>
+																	<xs:documentation>unique identifier to be used within this package file to refer the external object actually referred via Health Status name and category</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="isOptional" type="xs:boolean" use="required">
+																<xs:annotation>
+																	<xs:documentation>True to declare an optional sub service component. False for a mandatory SC</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="hasToBeSingleInstance" type="xs:boolean" use="required">
+																<xs:annotation>
+																	<xs:documentation>True to declare a cardinality maximum of instance of this sub service component definition equal to 1. False for a no limited number of instance of this sub SCD</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="fromSCDcategory" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation>Constraint about what SCD category must provide this Health Status</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="fromSCDid" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation>Constraint about what SCD must provide this Health Status. If SCDid is specified, attribute fromSCDcategory must not be specified </xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>-->
+										<!--xs:element name="RequiredKPI" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Specifies the KPIs required to compute those described in this model, when they are not defined in this package XML file. Wether they are in another package or in this package but in another XML file. Otherwise required KPIs  have not to be declared via a Require element and can be refered directly by their internalId as set in this package XML file.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence minOccurs="0" maxOccurs="unbounded">
+													<xs:element name="KPI" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:choice>
+																	<xs:annotation>
+																		<xs:documentation>External required KPI can be referenced by its category in general (i.e. whatever the KPI type of this category) or more precisely by its KPI type </xs:documentation>
+																	</xs:annotation>
+																	<xs:element name="Category">
+																		<xs:complexType>
+																			<xs:attribute name="id" type="xs:string" use="required"/>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="Type">
+																		<xs:complexType>
+																			<xs:attribute name="id" type="xs:string" use="required"/>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:choice>
+																<xs:element name="FromModel" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Optional constraint about what assurance model has defined this sub KPI</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="packageId" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>If not specified, the referred KPI must be exposed by another assurance model of this current package. Otherwise identifier of the external package owner of the KPI must be specified</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="modelId" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>Identifier of the assurance model that specifies this required sub KPI</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="FromSubSCD">
+																	<xs:annotation>
+																		<xs:documentation>Constraint about what SCD (type or category) must be the SCI owner of this sub KPI in the instantiated KPI calculation tree </xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="SCDid" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>Identifier of the subordinate SCD. Possibly from external model and or package. In this case package id and model id owner must be specified</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="SCDcategory" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>Alternative way to identify the subordiante SCD that must be owner of this required sub KPI: I.e. referencing the category of the SCD rather than its actual type (i.e. SCDid).</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="linkedByRelationshipType" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>To be used to constraint the type of relationship that must link the SCD to this subordinate SCD. If this relationship does not exist between instances of SCD and this sub SCD, the associated enrichment rules will not be applied to this instances tuple.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="packageId" type="xs:string">
+																			<xs:annotation>
+																				<xs:documentation>Identifier of the service model package containing this SCD</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="internalId" type="xs:ID" use="required">
+																<xs:annotation>
+																	<xs:documentation>unique identifier to be used within this package file to refer the external object actually referred via KPI name and category</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="isOptional" type="xs:boolean" use="required">
+																<xs:annotation>
+																	<xs:documentation>True to declare an optional sub service component. False for a mandatory SC</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="hasToBeSingleInstance" type="xs:boolean" use="required">
+																<xs:annotation>
+																	<xs:documentation>True to declare a cardinality maximum of instance of this sub service component definition equal to 1. False for a no limited number of instance of this sub SCD</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="fromSCDcategory" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation>Constraint about what SCD category must provide this KPI </xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="fromSCDid" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation>Constraint about what SCD must provide this KPI. If SCDid is specified, attribute fromSCDcategory must not be specified </xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element-->
+										<xs:element name="EnrichmentsForSCDs">
+											<xs:complexType>
+												<xs:sequence maxOccurs="unbounded">
+													<xs:element name="EnrichmentsForSCD">
+														<xs:annotation>
+															<xs:documentation>List of enrichments to be executed against referred Service Elements. The SCD id can refer an abstract SCD. In that case, the SQIE enrichment is supposed to apply these enrichments to any SCD deriving from this abstract SCD. The SQIE enrichment does not support neither multiple inheritance nor cascading inheritance (i.e. abstract SCD deriving from another abstract SCD. Note: If SQA release 1 workload requires simplification, inheritance mechanism can be replaced by specifying the enrichment rules for a SCD category and applied to any SCD of that category.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<!--xs:element name="RetrieveMetricsSample" minOccurs="0" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation>Select the collected metrics, the target resource and the metrics to be assigned to the primary KPIs</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:choice>
+																				<xs:annotation>
+																					<xs:documentation>Note: The SCD attribute used in this data selector is supposed to be declared in the Service model specifiying this SCD. Semantic checking will reject assurance model referencing a SCD that did not specify this attribute in its service model.  </xs:documentation>
+																				</xs:annotation>
+																				<xs:element ref="SelectedBySimpleSelector">
+																					<xs:annotation>
+																						<xs:documentation>Simple selector comparing the attribute of the SCI to the field of a measurement (comparison based on String equality)</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element ref="SelectedByCompositeSelector">
+																					<xs:annotation>
+																						<xs:documentation>Further extension: Composite selector</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																			</xs:choice>
+																			<xs:element name="metricForKPI" maxOccurs="unbounded">
+																				<xs:annotation>
+																					<xs:documentation>KPI to be assigned to the targeted SCI, associated with the specified collected metric</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:sequence maxOccurs="2">
+																							<xs:element name="metrics">
+																								<xs:complexType>
+																									<xs:attribute name="collectedMetricId" type="xs:string" use="required">
+																										<xs:annotation>
+																											<xs:documentation>identifier of the metric. Refer the metricName specified in the related metricDescriptor (see SAA_CollectedDataDescriptors.xsd)</xs:documentation>
+																										</xs:annotation>
+																									</xs:attribute>
+																									<xs:attribute name="timeAggregationFunction" type="xs:string">
+																										<xs:annotation>
+																											<xs:documentation>to be applied when one time period of the primary KPI is computed by n consecutive sampling periods</xs:documentation>
+																										</xs:annotation>
+																									</xs:attribute>
+																								</xs:complexType>
+																							</xs:element>
+																						</xs:sequence>
+																						<xs:element name="function" minOccurs="0">
+																							<xs:annotation>
+																								<xs:documentation>Optional builtin function  to be applied to transfom the collected metric(s) before the assigment to the primary KPI. For instance, compute the complement of a single metric, or compute a ratio from 2 collected metrics</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:attribute name="name" type="builtinMetricFunction" use="required"/>
+																								<xs:attribute name="metricIdForArg1" type="xs:string" use="required"/>
+																								<xs:attribute name="metricIdForArg2" type="xs:string"/>
+																							</xs:complexType>
+																						</xs:element>
+																						<xs:element name="attachPrimaryKPI" type="KPIelementType"/>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																		<xs:attribute name="packageId" type="xs:string"/>
+																		<xs:attribute name="metricsSampleId" type="xs:string" use="required">
+																			<xs:annotation>
+																				<xs:documentation>Id of the metrics sample type. Must match the metricTypeId of an existing MetricRecord. Cannot be a RestrictiveString to keep allowed the minus character</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="AttachSecondaryKPI" minOccurs="0" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="KPI" type="KPIelementType"/>
+																			<xs:element name="computedBy">
+																				<xs:complexType>
+																					<xs:choice>
+																						<xs:element name="builtinFunction">
+																							<xs:complexType>
+																								<xs:attribute name="functionName" type="builtinKPIfunction" use="required">
+																									<xs:annotation>
+																										<xs:documentation>Available builtin function for KPI computation: average, max, min, sum</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																						<xs:element name="customFunction">
+																							<xs:complexType>
+																								<xs:attribute name="packageId" use="required"/>
+																								<xs:attribute name="functionName" use="required">
+																									<xs:annotation>
+																										<xs:documentation>Must refer to a function name declared in this package (see XML schema  SQA_FunctionDescriptors)</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:choice>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="FromArgs">
+																				<xs:annotation>
+																					<xs:documentation>TBC</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+																						<xs:element name="InputArg">
+																							<xs:annotation>
+																								<xs:documentation>To be refactored into a better structured XML element</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:attribute name="formalId" type="xs:string" use="required">
+																									<xs:annotation>
+																										<xs:documentation>Must refer to one of the formal argument identifier declared by the function signature</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="subKPIinternalId" type="xs:IDREF" use="required">
+																									<xs:annotation>
+																										<xs:documentation>internalId of the input KPI. It must refer either a KPI defined in this model or imported from another model using the require XML element. Note: Since several models can be included in a single package file, syntax checking using the type xs:ID is not enough for correctness verification, semantic checking must verify that referencing a KPI defined outside the current model but inside the same package file is done via a require XML element of this model. Named sub KPI to remenber that it cannot be a KPI assigned to an upper SCI in the service element topology. Semantic checking must verify this constraint </xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element-->
+																<xs:element name="AttachHealthStatus" minOccurs="0" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="HealthStatus">
+																				<xs:complexType>
+																					<xs:complexContent>
+																						<xs:extension base="HealthStatusType">
+                                                                                            <xs:sequence>
+        																					   <xs:element name="tag" type="TagType" minOccurs="0" maxOccurs="unbounded" />
+        																					</xs:sequence>
+                                                                                        </xs:extension>
+																					</xs:complexContent>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="computedBy">
+																				<xs:complexType>
+																					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+																						<xs:element name="SubHealthStatus" minOccurs="0" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation>Impacting sub Health Status. It must refer either a Health Status defined in this model or imported from another model using the require XML element. Note: Since several models can be included in a single package file, syntax checking using the type xs:ID is not enough for correctness verification, semantic checking must verify that referencing a Health Status defined outside the current model but inside the same package file is done via a require XML element of this model. Named sub Health Status to remenber that it cannot be a Health Status assigned to an upper SCI in the service element topology. Semantic checking must verify this constraint </xs:documentation>
+																							</xs:annotation>
+                                                                                            <xs:complexType>
+                                                                                                <xs:sequence>
+                                                                                                    <xs:element name="tag" type="TagType" minOccurs="0" maxOccurs="unbounded" />
+                                                                                                </xs:sequence>
+                                                                                                <xs:attribute name="internalId" type="xs:IDREF" use="required" />
+                                                                                                <xs:attribute name="scdRelId" use="optional">
+                                                                                                    <xs:annotation>
+                                                                                                        <xs:documentation>Id of the SCD relationship to use. If not set generated using format 'packageName$packageVersion.fromScdId2packageName$packageVersion.toScdId'</xs:documentation>
+                                                                                                    </xs:annotation>
+                                                                                                    <xs:simpleType>
+                                                                                                        <xs:restriction base="xs:string">
+                                                                                                            <xs:pattern value="[A-Za-z0-9\-_]+" />
+                                                                                                        </xs:restriction>
+                                                                                                    </xs:simpleType>
+                                                                                                </xs:attribute>
+                                                                                            </xs:complexType>
+																						</xs:element>
+																						<xs:element name="RootCause" minOccurs="0" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation>Impacting Root Cause. It must refer a signed event having a 'patternId'.</xs:documentation>
+																							</xs:annotation>
+                                                                                            <xs:complexType>
+                                                                                                <xs:complexContent>
+                                                                                                    <xs:extension base="PatternIdType">
+                                                                                                        <xs:sequence>
+                                                                                                            <xs:element name="tag" type="TagType" minOccurs="0" maxOccurs="unbounded" />
+                                                                                                        </xs:sequence>
+                                                                                                    </xs:extension>
+                                                                                                </xs:complexContent>
+                                                                                            </xs:complexType>
+                                                                                        </xs:element>
+																						<xs:element name="ServiceImpactAlarm" minOccurs="0" maxOccurs="1">
+																							<xs:annotation>
+																								<xs:documentation>Impacting Service Alarm that will be generated for this health status if defined. It must refer a signed event having a 'patternId'.</xs:documentation>
+																							</xs:annotation>
+                                                                                            <xs:complexType>
+                                                                                                <xs:complexContent>
+                                                                                                    <xs:extension base="PatternIdType">
+                                                                                                        <xs:sequence>
+                                                                                                            <xs:element name="tag" type="TagType" minOccurs="0" maxOccurs="unbounded" />
+                                                                                                        </xs:sequence>
+                                                                                                    </xs:extension>
+                                                                                                </xs:complexContent>
+                                                                                            </xs:complexType>
+                                                                                        </xs:element>
+																					</xs:sequence>
+																					<xs:attribute name="package" type="xs:string" use="required"/>
+																					<xs:attribute name="functionName" use="required">
+																						<xs:annotation>
+																							<xs:documentation>The status aggregation function</xs:documentation>
+																						</xs:annotation>
+																						<xs:simpleType>
+																							<xs:restriction base="xs:string">
+																								<xs:enumeration value="WorstChildPercentage"/>
+																								<xs:enumeration value="WorstChildAverage"/>
+																								<xs:enumeration value="LowestChildValue"/>
+																								<xs:enumeration value="HighestChildValue"/>
+																								<xs:enumeration value="FullPercentage"/>
+																								<xs:enumeration value="ProtectionAvailability"/>
+																								<xs:enumeration value="ProtectionHighAvailability"/>
+																								<xs:enumeration value="ProtectionRelativeHighAvailability"/>
+                                                                                                <xs:enumeration value="SPRingHighAvailability">
+                                                                                                    <xs:annotation>
+                                                                                                        <xs:appinfo>
+                                                                                                            <annox:annotate>@java.lang.Deprecated</annox:annotate>
+                                                                                                        </xs:appinfo>
+                                                                                                        <xs:documentation>@deprecated Replaced by SPRing2FHighAvailability since v4.1</xs:documentation>
+                                                                                                    </xs:annotation>
+                                                                                                </xs:enumeration>
+                                                                                                <xs:enumeration value="SPRingSegmentAvailability">
+                                                                                                    <xs:annotation>
+                                                                                                        <xs:appinfo>
+                                                                                                            <annox:annotate>@java.lang.Deprecated</annox:annotate>
+                                                                                                        </xs:appinfo>
+                                                                                                        <xs:documentation>@deprecated Replaced by SPRing2FSegmentAvailability since v4.1</xs:documentation>
+                                                                                                    </xs:annotation>
+                                                                                                </xs:enumeration>
+                                                                                                <xs:enumeration value="SPRingSegmentHighAvailability">
+                                                                                                    <xs:annotation>
+                                                                                                        <xs:appinfo>
+                                                                                                            <annox:annotate>@java.lang.Deprecated</annox:annotate>
+                                                                                                        </xs:appinfo>
+                                                                                                        <xs:documentation>@deprecated Replaced by SPRing2FSegmentHighAvailability since v4.1</xs:documentation>
+                                                                                                    </xs:annotation>
+                                                                                                </xs:enumeration>
+                                                                                                <xs:enumeration value="SPRing2FHighAvailability" />
+                                                                                                <xs:enumeration value="SPRing2FSegmentAvailability" />
+                                                                                                <xs:enumeration value="SPRing2FSegmentHighAvailability" />
+                                                                                                <xs:enumeration value="SPRing4FHighAvailability" />
+                                                                                                <xs:enumeration value="SPRing4FSegmentAvailability" />
+                                                                                                <xs:enumeration value="SPRing4FSegmentHighAvailability" />
+																								<xs:enumeration value="Custom"/>
+																							</xs:restriction>
+																						</xs:simpleType>
+																					</xs:attribute>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="SCDid" type="xs:string" use="required">
+																<xs:annotation>
+																	<xs:documentation>identifier of the service element definition  (as known on both SD sides SD-SP and SD-AA) declared in a ServiceDefinition of this package</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="packageName" type="PackageNameType" use="required"/>
+															<xs:attribute name="packageVersion" type="PackageVersionType" use="required">
+																<xs:annotation>
+																	<xs:documentation>Eventually a specific version of the package can be invoked. Usual usage is to avoid this attribute in order to request the more recent version known for this package ###</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>identifier of this SQA model. This identifier nust be unique within a SQA package</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="name" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>display name of the SQA model</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="PackageNameType" use="required">
+				<xs:annotation>
+					<xs:documentation>Display name of this SQA package</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="version" type="PackageVersionType" use="required">
+				<xs:annotation>
+					<xs:documentation>Version of this SAA package</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SelectedByCompositeSelector">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SelectedBySimpleSelector" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Simple selector comparing the attribute of the SCI to the field of a metric sample (comparison based on String equality)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="SelectedByCompositeSelector" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="logicalOperator" type="logicalOperatorWithNot" use="required">
+				<xs:annotation>
+					<xs:documentation>Logical operator applied to the operand(s) of the assertion. One of: AND, OR.
+At least 2 additional assertion must be specified.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SelectedBySimpleSelector">
+		<xs:annotation>
+			<xs:documentation>Simple selector comparing the attribute of the CI to the field of a measurement (comparison based on String equality in V1)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="collectedField" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Field name of the measurement, the attribute value or the fixed value should be compared with.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="attributeId" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Identifier of one attribute of the CI (Service or Service Component)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fixedValue" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Value to compare with the collected field. Support widcards such as '%' (any character 0 or more times) and '_' (any character exactly one time).
+Can be specified only as part of a composite selector where at least one of the operands is using the syntax with attributeId.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="logicalOperator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AND"/>
+			<xs:enumeration value="OR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="logicalOperatorWithNot">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AND"/>
+			<xs:enumeration value="OR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="KPIelementType">
+		<xs:annotation>
+			<xs:documentation>Vnext will also support an attribute to set the policy when no value can be computed for a period, either NULL or last known value propagation. Current release will force NULL for unknown period value, after a timeout globally configured by the SQIE.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+			<xs:element name="HealthStatus" type="ThresholdToStatusType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Only required when the computed KPI must be transformed into a health status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="internalId" type="xs:ID" use="required">
+			<xs:annotation>
+				<xs:documentation>Unique (in this package XML file) internal identifier of the KPI. It must be used to refer this KPI from the rules defined in this current model, including exposure to the others models</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isExposedToOthersModels" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>Only the exposed elements can be used to execute an upper KPI or status aggregation specified by others models referring these exposed elements</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="KPItype" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Type of the KPI to be attached. Must refer either a KPItype declared within this package XML file, or one of the KPI internalId set and resolved via the require element of this model</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isPublished" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>The SQI engine will only publish KPI flagged with isPublished set to true, on UMB</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="customProperty" type="xs:float">
+			<xs:annotation>
+				<xs:documentation>This optional property of type float can be set when a KPI is assigned to a SCD. It can be then used in the calculation rules</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>TBC: Displayed name that will overwrite the one defined by the KPI type</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ThresholdToStatusType">
+		<xs:sequence>
+			<xs:element name="ThresholdValues" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Sequence of threshold values. Ordered, via levelNumber attribute, from the best status to the worst status. When the first threshold value will be crossed by the KPI value in the direction specified by the attribute  worstComparisonOp the resulting status will be changed from the best status to the next degraded one as specified in the associated HealthStatus object. And so on for the others thresholds values up to the worst defined status </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="levelNumber" type="xs:integer" use="required"/>
+					<xs:attribute name="thresholdDefaultValue" type="xs:float" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="HealthStatusType" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Type of the Health Status to be attached. Must refer either a HStype declared within this package XML file, or one of the HS internalId set and resolved via the require element of this model</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="internalId" type="xs:ID" use="required">
+			<xs:annotation>
+				<xs:documentation>Unique (in this package XML file) internal identifier of the health status result of the thresholding appliance. It must be used to refer this Health Status from the rules defined in this current model, including exposure to the others models</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="worstComparisonOp" type="WorstOperatorType" use="required">
+			<xs:annotation>
+				<xs:documentation>Used to determine the comparison operator (greater or less) to be applied on the KPI values to cross the threshold levels from the best to the worst. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isExposedToOthersModels" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>Only the exposed elements can be  used to execute an upper KPI or status aggregation specified by others models referring these exposed elements</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HealthStatusType">
+		<xs:attribute name="HealthStatusType" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Type of the Health Status to be attached. Must refer either a HStype declared within this package XML file, or one of the HS internalId set and resolved via the require element of this model</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="internalId" type="xs:ID" use="required">
+			<xs:annotation>
+				<xs:documentation>Internal identifier of the health status. To be used to refer this status within this package. But identifying it from external packages must be done with package id, health status category and / or health status name</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>TBC: Displayed name that will overwrite the one defined by the Health Status type</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isExposedToOthersModels" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>Only the exposed elements can be used to execute an upper KPI or status aggregation specified by others models referring these exposed elements</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="poiCategories" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Comma separated values e.g. cat1,cat2,cat3</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="percentageAvailabilityKey" type="xs:string" use="optional" default="percentage"/>
+		<xs:attribute name="statusNameKey" use="optional" default="state"/>
+	</xs:complexType>
+	<xs:complexType name="HealthStatusValuesType">
+		<xs:sequence minOccurs="2" maxOccurs="6">
+			<xs:annotation>
+				<xs:documentation>Sequence of defined statuses. Ordered, via severityOrder attribute, from the best status associated to  the severityOrder 1, up to the worst status associated to the  severityOrder numberOfStatusValues. Must contain at least 2 status values and a maximum defined by attribute  numberOfStatusValues </xs:documentation>
+			</xs:annotation>
+			<xs:element name="StatusValue">
+				<xs:annotation>
+					<xs:documentation> </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="severityOrder" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:integer">
+								<xs:minInclusive value="1"/>
+								<xs:maxInclusive value="6"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="statusDefaultValueName" type="xs:string" use="required"/>
+					<xs:attribute name="perceivedSeverity" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="INDETERMINATE"/>
+								<xs:enumeration value="WARNING"/>
+								<xs:enumeration value="MINOR"/>
+								<xs:enumeration value="MAJOR"/>
+								<xs:enumeration value="CRITICAL"/>
+								<xs:enumeration value="CLEAR"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="availabilityPercentage" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:double">
+								<xs:minInclusive value="0"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="poiImportance" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="None"/>
+								<xs:enumeration value="Low"/>
+								<xs:enumeration value="Medium"/>
+								<xs:enumeration value="High"/>
+								<xs:enumeration value="Critical"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="numberOfStatusValues" use="required">
+			<xs:annotation>
+				<xs:documentation>Maximum status values supported by SAA is 6</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="2"/>
+					<xs:maxInclusive value="6"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="TypeOfValueType">
+		<xs:annotation>
+			<xs:documentation>Type of KPI value.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Boolean"/>
+			<xs:enumeration value="Integer"/>
+			<xs:enumeration value="Float"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WorstOperatorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="less"/>
+			<xs:enumeration value="lessOrEqual"/>
+			<xs:enumeration value="greater"/>
+			<xs:enumeration value="greaterOrEqual"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="builtinKPIfunction">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="average"/>
+			<xs:enumeration value="max"/>
+			<xs:enumeration value="min"/>
+			<xs:enumeration value="sum"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="builtinMetricFunction">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="complement"/>
+			<xs:enumeration value="ratio"/>
+			<xs:enumeration value="min"/>
+			<xs:enumeration value="max"/>
+			<xs:enumeration value="sum"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TagType">
+		<xs:annotation>
+			<xs:documentation>Type of a tag element having 'name' and 'value' attributes.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[A-Za-z0-9.]+"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="value" />
+	</xs:complexType>
+	<xs:complexType name="PatternIdType">
+		<xs:annotation>
+			<xs:documentation>Type of an element having a 'patternId' attribute.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="patternId" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[A-Za-z0-9_]+"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="PackageNameType">
+		<xs:annotation>
+			<xs:documentation>The type the name of a package must match</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z\d_\-\.]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PackageVersionType">
+		<xs:annotation>
+			<xs:documentation>The type the version of a package must match, it is assumed there won't be a service pack number exceeding 99 (XSD does not provide a case-insensitive matching mode)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\d+\.)+\d+(-\w+\d{1,2})?(-[Ss][Nn][Aa][Pp][Ss][Hh][Oo][Tt])?"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

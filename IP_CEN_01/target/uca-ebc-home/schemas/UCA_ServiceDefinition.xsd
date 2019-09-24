@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by Loïc MIGUET (Hewlett Packard Enterprise Com) -->
+<!--Please add namespace attributes, a targetNamespace attribute and import 
+	elements according to your requirements -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns="http://servicedefinition.model.expert.uca.hpe.com" targetNamespace="http://servicedefinition.model.expert.uca.hpe.com"
+    elementFormDefault="qualified" version="1.0" jaxb:version="1.0">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" />
+	<!-- 	<![CDATA[ TEXT ]]>    -->
+    <xs:element name="serviceDefinition">
+        <xs:annotation>
+            <xs:documentation>Specifies the Service Components Definition (i.e. SCD) sub-graph. Could include several SCD or a single one.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="Descriptable">
+                    <xs:sequence>
+						<!-- 					<xs:element name="description" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Description of this Service model</xs:documentation>
+						</xs:annotation>
+					</xs:element> -->
+						<!-- 					<xs:element name="imports" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBC: Only if needed to simplify the semantic checking by declaring the SCD imported from another SD file of this package or from another package</xs:documentation>
+						</xs:annotation>
+					</xs:element> -->
+                        <xs:element name="importedPackages" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Lists all foreign packages that are referenced in this package e.g. the foreign packages
+                                    for referenceing a SCD another SCD in this package derives from.
+                                </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="importedPackage" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="packageName" type="PackageNameType" />
+                                                <xs:element name="packageVersion" type="PackageVersionType" minOccurs="0">
+                                                    <xs:annotation>
+                                                        <xs:documentation>If not defined, the latest version of the package will be used to
+                                                            fully define this foreign package.
+                                                        </xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:element>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="serviceComponentDefinitions" type="ServiceComponentDefinitions" minOccurs="0" />
+                        <xs:element name="scdRelationships" type="ScdRelationships" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>A SCD relationship is either fully defined i.e. with a start node, a end node and
+                                    attributes, or only defines a base made of attributes meant to be used by another SCD relationship by
+                                    derivation
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="packageName" type="PackageNameType" use="required">
+                        <xs:annotation>
+                            <xs:documentation>If different display names are set by eventually different XML files, only the first one will
+                                be taken into account.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="packageVersion" type="PackageVersionType" use="required">
+                        <xs:annotation>
+                            <xs:documentation>Version of the package the mdoel belong to</xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="ServiceComponentDefinitions">
+        <xs:annotation>
+            <xs:documentation>List of Service Component Definitions (SCD) that a Service - complying with this Service Definition - must
+                have
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="serviceComponentDefinition" type="ServiceComponentDefinition" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ScdRelationships">
+        <xs:annotation>
+            <xs:documentation>List of Service Components relationships</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="scdRelationship" type="ScdRelationship" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="baseScdRelationship" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Contains a list of inheritable SCD relationship attributes.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="description" type="xs:string" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Description of this base SCD relationship.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="relAttributes" type="Attributes" />
+                    </xs:sequence>
+                    <xs:attribute name="id" use="required">
+                        <xs:annotation>
+                            <xs:documentation>Id of this base SCD relationship that must be used in derived SCD relationships.
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value="[A-Za-z0-9\-_]+" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ServiceComponentDefinition">
+        <xs:annotation>
+            <xs:documentation>Service component definition that a Service - complying with this Service Definition - must have
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="Descriptable">
+                <xs:sequence>
+                    <xs:element name="derivedFrom" type="ScdEnforcedIdentification" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Phase2: When this SCD is declared as derive from another, all of the attributes defined in the
+                                super SCD are also part of this SCD. And eventually the relationships associated to the super class will be
+                                inherited (refer attribute inheritedByDerivedSCDs of the XML element SCDrelationship)
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="scdAttributes" type="Attributes" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>List of mandatory attributes that a Service Component - complying with this Service Definition
+                                - must have. Allowing extra attributes to be populated in Service Component Instance (SCI) without to be
+                                declared in its SCD. There are 2 implicit service component's attributes that have not be declared there but
+                                have to be populated for any instance of service elements: They are its unique identifier; And its type
+                                (i.e. its SCD id).
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="id" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Identifier of the Service Component Definition. Must be unique within a package</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="[A-Za-z0-9\-_]+" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="category" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>TBC: Category of this SCD. could be used in place of the SCD id during the dynamic composition in
+                            order to refer any SCD that declares to be of this category. Using rather DerivedFrom should be enough provided
+                            that the SQIE enrichment supports hierarchy of SCD inheritance
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="type" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Type of this Service Component Definition. If not set, the id as Lower case will be assigned
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="name" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Display name of this Service Component Definition. If not set, the id will be assigned
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="indexName" use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Label/IndexName to be used. If not set, the id as UpperCase will be assigned </xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="[A-Z0-9_]+" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="isPopulatedByEnrichment" type="xs:boolean" use="optional" default="false">
+                    <xs:annotation>
+                        <xs:documentation>Optional XML attribute to flag service element that will be populated by the UCA topology
+                            enrichment engine (i.e. not directly by the inventories upload)
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="iconName" type="xs:string" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ScdEnforcedIdentification">
+        <xs:annotation>
+            <xs:documentation>Phase2: When this SCD is declared as derive from another, all of the attributes defined in the super SCD are
+                also part of this SCD. And eventually the relationships associated to the super class will be inherited (refer attribute
+                inheritedByDerivedSCDs of the XML element SCDrelationship)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="scdId" type="xs:string" use="required" />
+        <xs:attribute name="packageName" type="PackageNameType" use="required" />
+        <xs:attribute name="packageVersion" type="PackageVersionType">
+            <xs:annotation>
+                <xs:documentation>If not specified, the last deployed version of this package will be applied</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ScdRelationship">
+        <xs:annotation>
+            <xs:documentation>Definition of a Service Component relationship</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Description of this SCD relationship</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fromSCD" type="ScdIdentification">
+                <xs:annotation>
+                    <xs:documentation>Parent Service Component Definition</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="toSCD" type="ScdIdentification">
+                <xs:annotation>
+                    <xs:documentation>Child Service Component Definition</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="derivedFrom" minOccurs="0">
+                <xs:complexType>
+                    <xs:attribute name="baseScdRelId" use="required">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value="[A-Za-z0-9\-_]+" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="packageName" type="PackageNameType" use="required" />
+                    <xs:attribute name="packageVersion" type="PackageVersionType" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="relAttributes" type="Attributes" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The attributes of the relationship.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" use="optional"> <!-- type="xs:ID" -->
+            <xs:annotation>
+                <xs:documentation>Id of the SCD relationship. If not set generated using format
+                    'packageName$packageVersion.fromScdId2packageName$packageVersion.toScdId'
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Za-z0-9\-_]+" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="type" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>type of the relationship. Must be specified if and only if this constraint has to to be verified.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="graphType" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Type of the Relationship from Neo4J point of view. If not Defined, will be automatically generated using
+                    from/to identifier information
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Display name of the relationship</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="inheritedByDerivedSCDs" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>False by default. If explicitly set to true, the SCDs derived from one or both of the SCD refered by this
+                    XML element Relationship will inherite this defined relationship. (e.g. relationship R defined with
+                    inheritedByDerivedSCDs true, for from SCD A to SCD B will be applied to any possible occurrence of A -to- X; X -to- B, X
+                    -to- Y but not Y -to- A, where X derives from A and Y derives from B)
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="isWeightPropertyRequired" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Instances of this relationship must contain the property "weight", because some UCA computation rules
+                    require to get this property in input. By default this boolean is false
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="isPopulatedByEnrichment" type="xs:boolean" use="optional" default="false">
+            <xs:annotation>
+                <xs:documentation>Optional XML attribute to flag relationship that will be populated by the UCA topology enrichment engine
+                    (i.e. not directly by the inventories upload)
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ScdIdentification">
+        <xs:attribute name="scdId" use="required">
+            <xs:annotation>
+                <xs:documentation>Identifier of the Service Component Definition</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Za-z0-9\-_]+" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="packageName" type="PackageNameType" use="optional">
+            <xs:annotation>
+                <xs:documentation>Must be specified if and only if the referred SCD is defined by another package.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="packageVersion" type="PackageVersionType" use="optional">
+            <xs:annotation>
+                <xs:documentation>Must be specified if and only if the referred SCD is defined by another package.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<!-- 		<xs:attribute name="maxCard" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>Maximal cardinality (TBC: Is cardinality to be specified ??)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="minCard" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>Minimal cardinality (TBC: Is cardinality to be specified ??)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute> -->
+    </xs:complexType>
+    <xs:complexType name="Attributes">
+        <xs:sequence>
+            <xs:element name="attribute" type="Attribute" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute that a Service Component - complying with this Service Definition - must have
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Attribute">
+        <xs:attribute name="id" use="required">
+            <xs:annotation>
+                <xs:documentation>Attribute identifier. Must be unique within the SCD</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Za-z0-9\-_\.]+" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Attribute display name. If not specified, the id will be used</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="indexName" use="optional">
+            <xs:annotation>
+                <xs:documentation>Optional: If set, this attribute will be put in such index/Label.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Z0-9_]+" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="type" type="SimpleDataType" use="optional" default="String">
+            <xs:annotation>
+                <xs:documentation>Datatype for this attribute's values. One of String, Integer, Float or Boolean</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="isPopulatedByEnrichment" type="xs:boolean" use="optional" default="false">
+            <xs:annotation>
+                <xs:documentation>Optional XML attribute to flag service element attribute that will be populated by the UCA topology
+                    enrichment engine (i.e. not directly by the inventories upload)
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="isMandatory" type="xs:boolean" use="optional" default="true">
+            <xs:annotation>
+                <xs:documentation>Optional XML attribute to tag the fact that is attribute is optionally filled by the inventories. Default
+                    as true.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="Descriptable">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Description of this Service Component Definition</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="description">
+        <xs:annotation>
+            <xs:documentation>Description of this element</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string" />
+    </xs:simpleType>
+    <xs:simpleType name="SimpleDataType">
+        <xs:annotation>
+            <xs:documentation>Datatype for this attribute's values. One of String, Integer, Float or Boolean</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="String" />
+            <xs:enumeration value="Integer" />
+            <xs:enumeration value="Float" />
+            <xs:enumeration value="Boolean" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PackageNameType">
+        <xs:annotation>
+            <xs:documentation>The type the name of a package must match</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z\d_\-\.]+" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PackageVersionType">
+        <xs:annotation>
+            <xs:documentation>The type the version of a package must match, it is assumed there won't be a service pack number exceeding 99
+                (XSD does not provide a case-insensitive matching mode)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(\d+\.)+\d+(-\w+\d{1,2})?(-[Ss][Nn][Aa][Pp][Ss][Hh][Oo][Tt])?" />
+        </xs:restriction>
+    </xs:simpleType>
+	<!-- Use by Enrichment to create a Service Component or a Relationship -->
+	<!--	<xs:element name="SCCreation">
+		<xs:annotation>
+			<xs:documentation>Service Component definition for creation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="SCInputattributes" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of attributes for creating a Service Component</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="AttributeInput" type="AttributeInput" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Attribute that a Service Component - complying with this Service Definition - must have</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RelationshipCreation">
+		<xs:annotation>
+			<xs:documentation>Relationship definition for creation
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="FromSCD">
+					<xs:annotation>
+						<xs:documentation>Parent Service Component Definition
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="SCDid" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Identifier of the Service Component Definition</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="packageId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Must be specified if and only if the refered SCD is defined by another package (TBC: could be rather spcified by additional Import element in this XSD)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ToSCD">
+					<xs:annotation>
+						<xs:documentation>Parent Service Component Definition</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="SCDid" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Identifier of the Service Component Definition</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="packageId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Must be specified if and only if the refered SCD is defined by another package (TBC: could be rather specified by additional Import element in this XSD)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>-->
+	<!-- 	<xs:complexType name="AttributeInput">
+		<xs:attribute name="id" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Attribute identifier. Must be unique within the SCD</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="value" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>All input as string. Afterwards, code has to take care about translation</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType> -->
+</xs:schema>

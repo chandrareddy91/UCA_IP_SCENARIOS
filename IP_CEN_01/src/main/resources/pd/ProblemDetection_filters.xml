@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<filters xmlns="http://hp.com/uca/expert/filter" >
+
+<topFilter name="Problem_Interface_Down">
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=RCA_pba_interface_down,
+      					ProblemAlarm.Creation.Criteria.Mapper=IsCheckforInterfacedown,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/RCA_pba_interface_down.Title/RCA_pba_interface_down,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=ifParentAlarmNotExist,
+			            Ticket.OnProblemAlarm.Delay=330s,
+						ProblemAlarm.FluctuationWindow=5m">
+			<anyCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca" >				
+	         <patternIdFilterStatement> 
+	            <operator><![CDATA[isEqual]]></operator>
+	            <patternIdValue><![CDATA[interface_down]]></patternIdValue>
+	         </patternIdFilterStatement>
+	        </anyCondition>
+	     </anyCondition>
+         <anyCondition
+			tag="PATTERN_ProblemAlarms,ProblemAlarm">
+			<allCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca">
+				<patternIdFilterStatement>
+					<operator>isEqual</operator>
+					<patternIdValue>pba_Interface_down</patternIdValue>
+				</patternIdFilterStatement>
+			</allCondition>
+		</anyCondition>
+</anyCondition>     
+</topFilter>
+   
+ <topFilter name="Problem_Link_Down" >
+ <anyCondition>
+       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+                         Alarm.RejectTime=24h,
+                         ProblemAlarm.Creation=True,
+                         ProblemAlarm.Creation.Delay=5m,
+                         ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+                         ProblemAlarm.AdditionalText.CustomMapper=RCA_pba_link_down,
+                         ProblemAlarm.Creation.Criteria.Mapper=IsCheckforLinkdown,
+                         ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+                         ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/RCA_pba_link_down.Title/RCA_pba_link_down.Layer_Rate/Link_Rate.Dst_Node_Name/Z_Node.Dst_Node_Type/Z_Node_Type.Service_Label/Service_Label.Link_Alias_Name/Link_Alias.Customer_Name/Cust_Name.Bandwidth/Band_Width.Alarm_Category/RCA_pba_link_down.Impact_Sms/Impact_Sms.Rca_Sms/Rca_Sms.Remarks_Sms/Remarks_Sms.Tt_Requestor/Tt_Requestor.Affected_Object/getLink_Mo,
+                         ProblemAlarm.Enrichment.Query=getNodeAllAttributes_CQ,
+                         ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+                         ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=ifParentAlarmNotExist,
+                         Ticket.OnProblemAlarm.Delay=330s,
+                         ProblemAlarm.FluctuationWindow=5m">
+	        <anyCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca" >
+	         <patternIdFilterStatement> 
+	            <operator><![CDATA[isEqual]]></operator>
+	            <patternIdValue><![CDATA[interface_down]]></patternIdValue>
+	         </patternIdFilterStatement>
+	          <patternIdFilterStatement> 
+	            <operator><![CDATA[isEqual]]></operator>
+	            <patternIdValue><![CDATA[link_down]]></patternIdValue>
+	         </patternIdFilterStatement>
+	        </anyCondition>
+	    </anyCondition>
+        <anyCondition
+			tag="PATTERN_ProblemAlarms,ProblemAlarm">
+			<allCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca">
+				<patternIdFilterStatement>
+					<operator>isEqual</operator>
+					<patternIdValue>pba_Link_down</patternIdValue>
+				</patternIdFilterStatement>
+			</allCondition>
+		</anyCondition>
+</anyCondition>      
+</topFilter>
+   
+   
+<topFilter name="Problem_Protocol_Down" >
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=RCA_protocol_down,
+      					ProblemAlarm.Creation.Criteria.Mapper=IsCheckforProtocolDown,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/RCA_protocol_down.Title/RCA_protocol_down,
+						ProblemAlarm.Enrichment.Query=getNodeAttributes_CQ,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+			            Ticket.OnProblemAlarm.Delay=330s,
+						ProblemAlarm.FluctuationWindow=5m">
+				<anyCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca" >				
+				         <patternIdFilterStatement> 
+				            <operator><![CDATA[isEqual]]></operator>
+				            <patternIdValue><![CDATA[protocol_down]]></patternIdValue>
+				         </patternIdFilterStatement>
+		        </anyCondition>
+		</anyCondition>
+        <anyCondition
+			tag="PATTERN_ProblemAlarms,ProblemAlarm">
+			<allCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca">
+				<patternIdFilterStatement>
+					<operator>isEqual</operator>
+					<patternIdValue>pba_protocol_down</patternIdValue>
+				</patternIdFilterStatement>
+			</allCondition>
+		</anyCondition>
+</anyCondition>
+</topFilter>
+   
+<topFilter name="Problem_Infra_Issue" >
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=RCA_Infra_issue,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/getRCAStandard_Alarm_Name.Title/RCA_Infra_issue,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+			            Ticket.OnProblemAlarm.Delay=330s,
+						ProblemAlarm.FluctuationWindow=5m">
+			<anyCondition tag="ComputeProblemEntityMappers=getGroupingKeyForInfra" >				
+			         <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[high_temp]]></patternIdValue>
+			         </patternIdFilterStatement>
+			          <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[fan_failure]]></patternIdValue>
+			         </patternIdFilterStatement>
+			          <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[power_supply]]></patternIdValue>
+			         </patternIdFilterStatement>
+	        </anyCondition>
+	     </anyCondition>
+        <anyCondition tag="PATTERN_ProblemAlarms,ProblemAlarm">
+			<allCondition tag="ComputeProblemEntityMappers=getGroupingKeyForInfra">
+				<patternIdFilterStatement>
+					<operator>isEqual</operator>
+					<patternIdValue>pba_Infra</patternIdValue>
+				</patternIdFilterStatement>
+			</allCondition>
+		</anyCondition>
+</anyCondition>
+</topFilter>
+   
+<topFilter name="Problem_Device_Resource_Alarm" >
+<anyCondition>
+      	<anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+        				ProblemAlarm.AdditionalText.CustomMapper=RCA_Device_Resource_Alarm,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/RCA_Device_Resource_Alarm.Title/RCA_Device_Resource_Alarm,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+			             Ticket.OnProblemAlarm.Delay=330s">
+				<anyCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca" >				
+				         <patternIdFilterStatement> 
+				            <operator><![CDATA[isEqual]]></operator>
+				            <patternIdValue><![CDATA[cpu_issue]]></patternIdValue>
+				         </patternIdFilterStatement>
+				          <patternIdFilterStatement> 
+				            <operator><![CDATA[isEqual]]></operator>
+				            <patternIdValue><![CDATA[memory_issue]]></patternIdValue>
+				         </patternIdFilterStatement>
+				          <patternIdFilterStatement> 
+				            <operator><![CDATA[isEqual]]></operator>
+				            <patternIdValue><![CDATA[cisco_high_cpu]]></patternIdValue>
+				         </patternIdFilterStatement>
+				         <patternIdFilterStatement> 
+				            <operator><![CDATA[isEqual]]></operator>
+				            <patternIdValue><![CDATA[cpm_cpurising_threshold]]></patternIdValue>
+				         </patternIdFilterStatement>
+		        </anyCondition>
+		    </anyCondition>
+	        <anyCondition tag="PATTERN_ProblemAlarms,ProblemAlarm">
+				<allCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca">
+					<patternIdFilterStatement>
+						<operator>isEqual</operator>
+						<patternIdValue>pba_Device_Resource_Alarm</patternIdValue>
+					</patternIdFilterStatement>
+				</allCondition>
+			</anyCondition>
+</anyCondition>
+</topFilter>
+   
+<topFilter name="Problem_NNM_Issue" >
+<anyCondition>		
+			<anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=RCA_NNM_Issue,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/RCA_NNM_Issue.Title/RCA_NNM_Issue,
+						ProblemAlarm.Enrichment.Query=getNodeAttributes_CQ,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+                        Ticket.OnProblemAlarm.Delay=330s">
+			<anyCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca" >				
+			         <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[nnm_issue]]></patternIdValue>
+			         </patternIdFilterStatement>
+	        </anyCondition>
+	       </anyCondition>
+	       <anyCondition
+				tag="PATTERN_ProblemAlarms,ProblemAlarm">
+				<allCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca">
+					<patternIdFilterStatement>
+						<operator>isEqual</operator>
+						<patternIdValue>pba_nnm_issue</patternIdValue>
+					</patternIdFilterStatement>
+				</allCondition>
+			</anyCondition>
+</anyCondition>      
+</topFilter>
+   
+<topFilter name="Problem_Hardware_Issue" >
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=0m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=Problem_Hardware_Issue,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/Problem_Hardware_Issue.Title/Problem_Hardware_Issue,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+		                Ticket.OnProblemAlarm.Delay=330s">
+				<anyCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca" >				
+				         <patternIdFilterStatement> 
+				            <operator><![CDATA[isEqual]]></operator>
+				            <patternIdValue><![CDATA[Card_Hardware_Fail]]></patternIdValue>
+				         </patternIdFilterStatement>
+		        </anyCondition>
+		  </anyCondition>
+	      <anyCondition tag="PATTERN_SubAlarms,SubAlarm,
+	        				 TimeWindow.After=2m,
+                             TimeWindow.Before=2m,
+							 Alarm.RejectTime=24h">
+					<anyCondition tag="ComputeProblemEntityMappers=retrieveCardName">
+							<patternIdFilterStatement>
+								<operator>isEqual</operator>
+								<patternIdValue>pba_Link_down</patternIdValue>
+							</patternIdFilterStatement>
+							<patternIdFilterStatement>
+								<operator>isEqual</operator>
+								<patternIdValue>pba_Interface_down</patternIdValue>
+							</patternIdFilterStatement>
+					</anyCondition>
+		  </anyCondition>
+	      <anyCondition	tag="PATTERN_ProblemAlarms,ProblemAlarm">
+				<allCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca">
+					<patternIdFilterStatement>
+						<operator>isEqual</operator>
+						<patternIdValue>pba_hardware_issue</patternIdValue>
+					</patternIdFilterStatement>
+				</allCondition>
+		 </anyCondition>
+</anyCondition>
+</topFilter>
+   
+<topFilter name="Problem_Node_Down" >
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=Problem_Node_Down,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/Problem_Node_Down.Title/Problem_Node_Down,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+                        Ticket.OnProblemAlarm.Delay=330s">
+			<anyCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca" >				
+			         <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[Node_Down]]></patternIdValue>
+			         </patternIdFilterStatement>
+	        </anyCondition>
+	     </anyCondition>
+	     <anyCondition	tag="PATTERN_ProblemAlarms,ProblemAlarm">
+				<allCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca">
+					<patternIdFilterStatement>
+						<operator>isEqual</operator>
+						<patternIdValue>pba_Node_Down</patternIdValue>
+					</patternIdFilterStatement>
+				</allCondition>
+		</anyCondition>
+</anyCondition>      
+</topFilter>
+   
+<topFilter name="Problem_Node_Isolation" >
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=Problem_Node_Isolation,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/Problem_Node_Isolation.Title/Problem_Node_Isolation,
+						ProblemAlarm.Creation.Criteria.Mapper=Node_AllLinksDown,
+						ProblemAlarm.Clearance.Criteria.Mapper=IfOneSubAlarmCleared,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+		                Ticket.OnProblemAlarm.Delay=330s">
+			<anyCondition tag="ComputeProblemEntityMappers=getGroupingKeyForNodeIsolation">				
+			         <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[pba_Link_down]]></patternIdValue>
+			         </patternIdFilterStatement>
+			         <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[pba_protocol_down]]></patternIdValue>
+			         </patternIdFilterStatement>
+	        </anyCondition>
+	    </anyCondition>
+        <anyCondition	tag="PATTERN_ProblemAlarms,ProblemAlarm">
+			<allCondition tag="ComputeProblemEntityMappers=getGroupingKeyForNodeIsolation">
+				<patternIdFilterStatement>
+					<operator>isEqual</operator>
+					<patternIdValue>pba_node_isolation</patternIdValue>
+				</patternIdFilterStatement>
+			</allCondition>
+		</anyCondition>
+</anyCondition>      
+</topFilter>
+   
+<topFilter name="Problem_Pop_Down" >
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=Problem_Pop_Down,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/Problem_Pop_Down.Title/Problem_Pop_Down,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Creation.Criteria.Mapper=Pop_AllNodesDown,
+						ProblemAlarm.Clearance.Criteria.Mapper=IfOneNodeisUp,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+		                Ticket.OnProblemAlarm.Delay=330s">
+			<anyCondition tag="ComputeProblemEntityMappers=reterivePopNameWithNodeCount">				
+			         <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[pba_Node_Down]]></patternIdValue>
+			         </patternIdFilterStatement>
+	        </anyCondition>
+	    </anyCondition>
+        <anyCondition	tag="PATTERN_ProblemAlarms,ProblemAlarm">
+			<allCondition tag="ComputeProblemEntityMappers=reterivePopNameWithNodeCount">
+				<patternIdFilterStatement>
+					<operator>isEqual</operator>
+					<patternIdValue>pba_pop_down</patternIdValue>
+				</patternIdFilterStatement>
+			</allCondition>
+		</anyCondition>
+</anyCondition>      
+</topFilter>
+   
+<topFilter name="Problem_Pop_Isolation" >
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=Problem_Pop_Isolation,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/Problem_Pop_Isolation.Title/Problem_Pop_Isolation,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Creation.Criteria.Mapper=Pop_AllWanLinksDown,
+						ProblemAlarm.Clearance.Criteria.Mapper=IfOneWanLinkisUp,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+		                Ticket.OnProblemAlarm.Delay=330s">
+			<anyCondition tag="ComputeProblemEntityMappers=reterivePopNameWithWanLinkCount">				
+			          <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[pba_Link_down]]></patternIdValue>
+			         </patternIdFilterStatement>
+			         <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[pba_protocol_down]]></patternIdValue>
+			         </patternIdFilterStatement>
+	        </anyCondition>
+	     </anyCondition>
+        <anyCondition	tag="PATTERN_ProblemAlarms,ProblemAlarm">
+			<allCondition tag="ComputeProblemEntityMappers=reterivePopNameWithWanLinkCount">
+				<patternIdFilterStatement>
+					<operator>isEqual</operator>
+					<patternIdValue>pba_pop_isolation</patternIdValue>
+				</patternIdFilterStatement>
+			</allCondition>
+		</anyCondition>
+</anyCondition>      
+</topFilter>
+   
+   <!--topFilter name="Problem_SwitchDown" >
+      <anyCondition tag="ProblemAlarm.Creation.AdditionalText=SwitchDown,CypherQuery=GetSwitch,ProblemAlarm.Creation.ProblemEntity=ManagedEntity,ServiceManager" >
+         <patternIdFilterStatement tag="ComputeProblemEntityMappers=retrieveSwitchName,SubAlarm,Trigger" >
+            <operator><![CDATA[isEqual]]></operator>
+            <patternIdValue><![CDATA[caused_by_switch_down]]></patternIdValue>
+         </patternIdFilterStatement>
+         <patternIdFilterStatement tag="CypherQuery=GetSwitchFromPhone,SubAlarm" >
+            <operator><![CDATA[isEqual]]></operator>
+            <patternIdValue><![CDATA[caused_by_phone_unregistered]]></patternIdValue>
+         </patternIdFilterStatement>
+         <patternIdFilterStatement tag="ProblemAlarm" >
+            <operator><![CDATA[isEqual]]></operator>
+            <patternIdValue><![CDATA[pba_switch_down]]></patternIdValue>
+         </patternIdFilterStatement>
+         <orchestrationTypeFilterStatement tag="SubEvent,ComputeProblemEntityMappers=getProblemEntityFromFaultyEntity,ComputeSourceUniqueIdMapper=getProblemEntityFromFaultyEntity">
+            <orchestrationTypeValue><![CDATA[TroubleTicket]]></orchestrationTypeValue>
+         </orchestrationTypeFilterStatement>
+      </anyCondition>
+   </topFilter-->
+   
+   <!--topFilter name="Problem_PhoneUnavailable"  >
+      <anyCondition tag="ProblemAlarm.Creation.AdditionalText=PhoneUnavailable,ProblemAlarm.Creation.MinNbOfAllAlarms=2,CypherQuery=GetPhone,ProblemAlarm.Creation.ProblemEntity=ManagedEntity,ServiceManager"  >
+         <patternIdFilterStatement tag="SubAlarm,ComputeProblemEntityMappers=retrievePhoneName" >
+            <operator><![CDATA[isEqual]]></operator>
+            <patternIdValue><![CDATA[caused_by_phone_unregistered]]></patternIdValue>
+         </patternIdFilterStatement>
+         <patternIdFilterStatement tag="Trigger,SubAlarm,ComputeProblemEntityMappers=retrievePhoneName" >
+            <operator><![CDATA[isEqual]]></operator>
+            <patternIdValue><![CDATA[caused_by_phone_unavailable]]></patternIdValue>
+         </patternIdFilterStatement>
+         <patternIdFilterStatement tag="ProblemAlarm" >
+            <operator><![CDATA[isEqual]]></operator>
+            <patternIdValue><![CDATA[pba_phone_unavailable]]></patternIdValue>
+         </patternIdFilterStatement>
+         <orchestrationTypeFilterStatement tag="SubEvent,ComputeProblemEntityMappers=getProblemEntityFromFaultyEntity,ComputeSourceUniqueIdMapper=getProblemEntityFromFaultyEntity">
+            <orchestrationTypeValue><![CDATA[TroubleTicket]]></orchestrationTypeValue>
+         </orchestrationTypeFilterStatement>
+      </anyCondition>
+   </topFilter-->
+   
+</filters>

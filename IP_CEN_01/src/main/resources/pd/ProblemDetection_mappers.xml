@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mappers xmlns="http://hp.com/uca/expert/instancemapper">
+
+
+<!-- EXTRACTION MAPPERS BEGIN -->
+
+<mapper name="retrievePEFromUserText" >
+      <extract>
+         <fieldName><![CDATA[userText]]></fieldName>
+         <matcher><![CDATA[(?i).*<e>(.*)</e>.*]]></matcher>
+         <mappedTo><![CDATA[$1]]></mappedTo>
+      </extract>
+   </mapper>
+   
+ <mapper name="retrieveIntefaceFromMO">
+        <extract>
+            <fieldName><![CDATA[originatingManagedEntity]]></fieldName>
+            <matcher><![CDATA[(?i)(?s)OSI_SYSTEM.*.\"(.*)\".*]]></matcher>
+            <mappedTo><![CDATA[$1]]></mappedTo>
+        </extract>
+</mapper>
+
+    <mapper name="retrieveNodeNameFromMO">
+        <extract>
+            <fieldName><![CDATA[originatingManagedEntity]]></fieldName>
+            <matcher><![CDATA[(?i)(?s)OSI_SYSTEM.*.\"(.*)\".*?]]></matcher>
+            <mappedTo><![CDATA[$1]]></mappedTo>
+        </extract>
+    </mapper>
+ <mapper name="reteriveStandardAlarmName">
+	  <extract>
+	    <fieldName>standardAlarmName</fieldName>
+	    <matcher>(.*)</matcher>
+	    <mappedTo>$1</mappedTo>
+	  </extract>
+</mapper>
+
+<mapper name='retrieveCardName'>
+   <extract>
+	    <fieldName>cardName</fieldName>
+	    <matcher>(.*)</matcher>
+	    <mappedTo>$1</mappedTo>
+	  </extract>
+</mapper>
+
+<mapper name="hasParentRCA" >
+      <extract>
+         <fieldName><![CDATA[parents]]></fieldName>
+         <matcher><![CDATA[(?s).*MASTER.*]]></matcher>
+         <mappedTo><![CDATA[OK]]></mappedTo>
+      </extract>
+</mapper>
+
+
+<mapper name="reteriveAffectedObject">
+	  <extract>
+	    <fieldName>affectedObject</fieldName>
+	    <matcher>(.*)</matcher>
+	    <mappedTo>$1</mappedTo>
+	  </extract>
+</mapper>
+
+<mapper name="reteriveNodeName">
+	  <extract>
+	    <fieldName>nodeName</fieldName>
+	    <matcher>(.*)</matcher>
+	    <mappedTo>$1</mappedTo>
+	  </extract>
+</mapper>
+
+<mapper name="reterivePopName">
+	  <extract>
+	    <fieldName>popName</fieldName>
+	    <matcher>(.*)</matcher>
+	    <mappedTo>$1</mappedTo>
+	  </extract>
+</mapper> 
+
+<mapper name="retrievePrimaryKeyUca">
+     	<extract>
+        	<fieldName><![CDATA[primaryKeyUca]]></fieldName>
+            <!-- <matcher><![CDATA[(\S+)\|(\S+).*]]></matcher> -->
+            <matcher><![CDATA[(.*)]]></matcher>
+            <mappedTo><![CDATA[$1]]></mappedTo>
+       	</extract>
+  	</mapper>
+ 
+ <mapper name="reteriveNodeNameFromPrimaryKeyUca">
+     	<extract>
+        	<fieldName><![CDATA[primaryKeyUca]]></fieldName>
+            <matcher><![CDATA[(\S+)\|(\S+).*]]></matcher>
+            <mappedTo><![CDATA[$2]]></mappedTo>
+       	</extract>
+  	</mapper>
+
+
+
+<!-- EXTRACTION MAPPERS END -->
+
+
+<!-- MATCH EXPRESSION BEGIN -->
+
+<mapper name="isInterfaceDown">
+      <extract>
+         <fieldName><![CDATA[standardAlarmName]]></fieldName>
+         <matcher><![CDATA[(?s).*INTERFACE DOWN.*]]></matcher>
+         <mappedTo><![CDATA[OK]]></mappedTo>
+      </extract>
+</mapper> 
+
+<mapper name="isMSSC">
+      <extract>
+         <fieldName><![CDATA[nodeType]]></fieldName>
+         <matcher><![CDATA[(?s).*MSSC.*]]></matcher>
+         <mappedTo><![CDATA[OK]]></mappedTo>
+      </extract>
+</mapper>
+<mapper name="isSGSN">
+      <extract>
+         <fieldName><![CDATA[nodeType]]></fieldName>
+         <matcher><![CDATA[(?s).*SGSN.*]]></matcher>
+         <mappedTo><![CDATA[OK]]></mappedTo>
+      </extract>
+</mapper>
+
+<mapper name="CheckInterfaceDetails">
+          <query>
+            <queryName>getInterfaceDetails_CQ</queryName>
+             <matcher>.*COUNT.*=(\d+).*</matcher>
+            <mappedTo>$1</mappedTo>
+          </query>
+</mapper>
+
+<mapper name="calculateLinkCountFromInterface">
+          <query>
+            <queryName>calculateLinkCountFromInterface_CQ</queryName>
+            <matcher>.*COUNT.*=(\d+).*</matcher>
+            <mappedTo>$1</mappedTo>
+          </query>
+</mapper>
+
+<mapper name="caliculateLinkCountFromNode">
+          <query>
+            <queryName>caliculateLinkCountFromNode_CQ</queryName>
+            <matcher>.*COUNT.*=(\d+).*</matcher>
+            <mappedTo>$1</mappedTo>
+          </query>
+</mapper>
+
+<mapper name="caliculateNodeCountFromPop">
+          <query>
+            <queryName>caliculateNodeCountFromPop_CQ</queryName>
+            <matcher>.*COUNT.*=(\d+).*</matcher>
+            <mappedTo>$1</mappedTo>
+          </query>
+</mapper>
+
+<mapper name="caliculateWanLinkCountFromPop">
+          <query>
+            <queryName>caliculateWanLinkCountFromPop_CQ</queryName>
+            <matcher>.*COUNT.*=(\d+).*</matcher>
+            <mappedTo>$1</mappedTo>
+          </query>
+</mapper>
+
+<mapper name="checkCardData">
+          <query>
+            <queryName>checkCardData_CQ</queryName>
+            <matcher>.*COUNT.*=(\S+.*)</matcher>
+            <mappedTo>$1</mappedTo>
+          </query>
+</mapper>
+
+<!-- MATCH EXPRESSION END -->
+
+<!-- BOOLEAN EXPRESSION BEGIN -->
+
+<mapper name="IsCheckforInterfacedown">
+  	<expression>
+     <booleanExpr><![CDATA[ (((The.Trigger.Result.calculateLinkCountFromInterface == 0) && (The.Trigger.Result.CheckInterfaceDetails > 0)) && (The.Trigger.Match.isInterfaceDown)) ]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="IsCheckforLinkdown">
+  	<expression>
+     <booleanExpr><![CDATA[ The.Trigger.Result.calculateLinkCountFromInterface > 0 ]]></booleanExpr>
+    </expression>
+</mapper>
+
+ <mapper name='ifParentAlarmNotExist'>
+  	<expression>
+     <booleanExpr><![CDATA[
+        The.ProblemAlarm.Not.Match.hasParentRCA
+     ]]></booleanExpr>
+    </expression>
+  </mapper> 
+
+
+<mapper name="IsCheckforProtocolDown">
+  	<expression>
+     <booleanExpr><![CDATA[  The.Trigger.Result.calculateLinkCountFromInterface > 0 ]]></booleanExpr>
+    </expression>
+</mapper>
+
+
+<mapper name="isSamePop">
+  	<expression>
+     <booleanExpr><![CDATA[Group.LocalVar(Pop_Type) =="SamePOP"]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="isWan">
+  	<expression>
+     <booleanExpr><![CDATA[ Group.LocalVar(Pop_Type) =="Wan"]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="isSameNodeType">
+  	<expression>
+     <booleanExpr><![CDATA[ Group.LocalVar(Link_Type_A) == Group.LocalVar(Link_Type_B)]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="isNotSameNodeType">
+  	<expression>
+     <booleanExpr><![CDATA[ Group.LocalVar(Link_Type_A) != Group.LocalVar(Link_Type_B)]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="Node_AllLinksDown">
+  	<expression>
+     <booleanExpr><![CDATA[ (Count.SubAlarm.Not.isCleared.Not.isTerminated == The.Trigger.Result.caliculateLinkCountFromNode) && (The.Trigger.Result.caliculateLinkCountFromNode > 0) ]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="Pop_AllNodesDown">
+  	<expression>
+     <booleanExpr><![CDATA[ (Count.SubAlarm.Not.isCleared.Not.isTerminated == The.Trigger.Result.caliculateNodeCountFromPop) &&  (The.Trigger.Result.caliculateNodeCountFromPop > 0)  ]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="Pop_AllWanLinksDown">
+  	<expression>
+     <booleanExpr><![CDATA[ (Count.SubAlarm.Not.isCleared.Not.isTerminated == The.Trigger.Result.caliculateWanLinkCountFromPop) &&  (The.Trigger.Result.caliculateWanLinkCountFromPop > 0) ]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="IfOneSubAlarmCleared">
+  	<expression>
+     <booleanExpr><![CDATA[ One.SubAlarm.isCleared ]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="IfOneNodeisUp">
+  	<expression>
+     <booleanExpr><![CDATA[ One.SubAlarm.isCleared ]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="IfOneWanLinkisUp">
+  	<expression>
+     <booleanExpr><![CDATA[ One.SubAlarm.isCleared ]]></booleanExpr>
+    </expression>
+</mapper>
+
+<mapper name="isTTDelayExpired">
+    <expression>
+                <booleanExpr><![CDATA[ Now > The.ProblemAlarm.LocalVar?(creationTime) + Delay(5m) ]]></booleanExpr>
+    </expression>
+</mapper>
+
+
+
+<!-- BOOLEAN EXPRESSION END -->
+
+<!-- COLLECTION EXPRESSION BEGIN -->
+
+<!-- COLLECTION EXPRESSION END -->
+
+<!-- STRING EXPRESSION BEGIN -->
+
+<mapper name='getGroupingKeyForInfra' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA[This.Result.retrievePrimaryKeyUca+"_"+This.Result.reteriveAffectedObject]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+<mapper name='getGroupingKeyForNodeIsolation' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA[This.Result.retrievePrimaryKeyUca+"_LinkCount_"+This.SubAlarm.Result.caliculateLinkCountFromNode]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+<mapper name='reterivePopNameWithNodeCount' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA[This.Result.reterivePopName+"_NodeCount_"+This.SubAlarm.Result.caliculateNodeCountFromPop]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+<mapper name='reterivePopNameWithWanLinkCount' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA[This.Result.reterivePopName+"_WLcount_"+This.SubAlarm.Result.caliculateWanLinkCountFromPop]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+
+<mapper name='getRcaOC_Interface'>
+  <expression>
+    <stringExpr><![CDATA[(".vil.nnmapp01.id_nnm_ip_rca_oc")]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='getRCAStandard_Alarm_Name' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA["RCA : "+The.Trigger.Result.reteriveStandardAlarmName]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+<mapper name='getNIAStandard_Alarm_Name' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA["NIA : "+The.Trigger.Result.Problem_Pop_Isolation]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+<mapper name='getStandard_Alarm_Name' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA[The.Trigger.Result.reteriveStandardAlarmName]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+<mapper name='calculateProblemEntitytoUpper'>
+  <expression>
+    <stringExpr><![CDATA[
+       This.Field.originatingManagedEntity.toUpper]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='getLink_Mo' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA[The.Trigger.Result.Link_Mo.toUpper]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+<mapper name='getGroupVarSecondary_Assignment_Group'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Secondary_Assignment_Group_Uca)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='getGroupVarLocation'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Location)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='getGroupVarArea'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Area)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='getGroupVarCircle'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Circle)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='getLinkType'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Link_Type)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='getPopType'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Pop_Type)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='getLink_Type_A'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Link_Type_A)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='getLink_Type_B'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Link_Type_B)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+
+
+<mapper name='Link_Rate'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Link_Rate)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='Z_Node'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Z_Node)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='Z_Node_Type'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Z_Node_Type)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='Service_Label'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Service_Label)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+
+<mapper name='Link_Alias'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Link_Alias)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='Cust_Name'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Cust_Name)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='Band_Width'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Band_Width)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='Link_Mo'>
+  <expression>
+    <stringExpr><![CDATA[Group.LocalVar(Link_Mo)]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='Impact_Sms'>
+  <expression>
+    <stringExpr><![CDATA["UNDER INVESTIGATION"]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='Rca_Sms'>
+  <expression>
+    <stringExpr><![CDATA["UNDER INVESTIGATION"]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='Remarks_Sms'>
+  <expression>
+    <stringExpr><![CDATA["UNDER INVESTIGATION"]]>
+    </stringExpr>
+  </expression>
+</mapper>
+<mapper name='Tt_Requestor'>
+  <expression>
+    <stringExpr><![CDATA["RCA"]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+
+
+
+<mapper name='RCA_pba_interface_down'>
+  <expression>
+    <stringExpr><![CDATA["RCA : INTERFACE DOWN"]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='RCA_pba_link_down'>
+  <expression>
+   <stringExpr><![CDATA[
+		
+			(The.Trigger.Match.isMSSC) ? "RCA : MSSC LINK DOWN" : 
+			(The.Trigger.Match.isSGSN) ? "RCA : SGSN LINK DOWN" :
+			((The.Trigger.Match.isSamePop) && (The.Trigger.Match.isNotSameNodeType)) ? "RCA : WLD LINK DOWN" :
+			((The.Trigger.Match.isSamePop) && (The.Trigger.Match.isSameNodeType)) ? "RCA : B2B LINK DOWN" :
+			(The.Trigger.Match.isWan) ? "RCA : WAN LINK DOWN" : "RCA : LINK DOWN"
+
+	]]></stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='RCA_Infra_issue'>
+  <expression>
+   <stringExpr><![CDATA[
+	(The.Trigger.Result.reteriveStandardAlarmName == "INFRA TEMP") ? "RCA : INFRA FAILURE [High Temperature]" :
+	(The.Trigger.Result.reteriveStandardAlarmName == "INFRA POWER") ? "RCA : INFRA FAILURE [Power Supply Failure]" : "RCA : INFRA FAILURE [Fan Failure]"
+	]]></stringExpr>
+  </expression>
+</mapper>
+
+
+<mapper name='RCA_protocol_down'>
+  <expression>
+   <stringExpr><![CDATA[
+			(The.Trigger.Match.isWan) ? "RCA : WAN LINK PROTOCOL DOWN" : "RCA : PROTOCOL DOWN"
+	]]></stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='RCA_Device_Resource_Alarm'>
+  <expression>
+   <stringExpr><![CDATA[
+	
+	(The.Trigger.Result.reteriveStandardAlarmName == "MEMORY ISSUE") ? "RCA : MEMORY ISSUE" : "RCA : CPU ISSUE"
+	
+	]]></stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='RCA_NNM_Issue' separator=",">
+       <expression>
+               <stringExpr>
+                      <![CDATA["RCA : NNMi ISSUE"]]>
+        </stringExpr>
+       </expression>
+</mapper>
+
+<mapper name='Problem_Hardware_Issue'>
+  <expression>
+   <stringExpr><![CDATA["RCA : HARDWARE FAILURE"]]></stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='Problem_Node_Down'>
+  <expression>
+   <stringExpr><![CDATA["RCA : NODE DOWN"]]></stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='Problem_Node_Isolation'>
+  <expression>
+   <stringExpr><![CDATA["RCA : NODE ISOLATION"]]></stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='Problem_Pop_Down'>
+  <expression>
+   <stringExpr><![CDATA["NIA : POP DOWN"]]></stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='Problem_Pop_Isolation'>
+  <expression>
+   <stringExpr><![CDATA["NIA : POP ISOLATION"]]></stringExpr>
+  </expression>
+</mapper>
+
+
+
+<!-- STRING EXPRESSION BEGIN -->
+
+<!-- QUERY MAPPERS BEGIN -->
+
+<!-- QUERY MAPPERS END -->
+
+
+<!-- CYPHER QUERY BEGIN -->
+
+<cypherQuery name='calculateLinkCountFromInterface_CQ'>
+        <query><![CDATA[match (a:IpInterfaceId{externalId:{nodeUniqueId}})<-[r:ip_l2connectionPassesInterface]-(link:Ipl2connectionId) return count(r) as COUNT;]]></query>
+</cypherQuery>
+
+<cypherQuery name='getNodeAttributes_CQ'>
+        <query><![CDATA[match (a:IpInterfaceId{externalId:{neid}})<-[r:ip_l2connectionPassesInterface]-(link:Ipl2connectionId) return link.LinkRelation,link.PopRelation;]]></query>
+</cypherQuery>
+
+
+<cypherQuery name='getNodeAllAttributes_CQ'>
+        <query><![CDATA[match (a:IpInterfaceId{externalId:{neid}})<-[r:ip_l2connectionPassesInterface]-(link:Ipl2connectionId) return link.LinkRelation,link.PopRelation,link.rate,link.node_name,link.node_type,link.Service_Label,link.link_alias_name,link.Customer_Name,link.Bandwidth,link.externalId;]]></query>
+</cypherQuery> 
+
+
+<cypherQuery name='getInterfaceDetails_CQ'>
+        <query><![CDATA[match (a:IpInterfaceId{externalId:{nodeUniqueId}}) return  COUNT(a);]]></query>
+</cypherQuery>
+
+<cypherQuery name='checkCardData_CQ'>
+        <query><![CDATA[match (a:IpPortId{externalId:{nodeUniqueId}}) return  a.CardName as COUNT;]]></query>
+</cypherQuery>
+
+
+
+
+
+<!-- For RCA -->
+
+<cypherQuery name='caliculateNodeCountFromPop_CQ'>
+        <query><![CDATA[match (start:IpNeId{popName:{nodeUniqueId}}) return count(start.externalId) as COUNT;]]></query>
+</cypherQuery> 
+
+<cypherQuery name='caliculateLinkCountFromNode_CQ'>
+        <query><![CDATA[ match (start:IpNeId{externalId:{nodeUniqueId}}) -[r:ip_l2connectionPassesNE] - (end:Ipl2connectionId) return count(r.L2ConnectionId) as COUNT;]]></query>
+        
+</cypherQuery> 
+
+<cypherQuery name='caliculateWanLinkCountFromPop_CQ'>
+        <query><![CDATA[match (a:IpNeId{externalId:{nodeUniqueId}})
+              with a
+              match(b:IpNeId{popName:a.popName})
+                  with b
+              match (b:IpNeId)-[r:ip_l2connectionPassesNE]-(end:Ipl2connectionId) where end.PopRelation='Wan' return count(end.PopRelation) as COUNT;]]></query>
+</cypherQuery>
+
+
+<!-- CYPHER QUERY END -->
+
+</mappers>

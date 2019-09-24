@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jms="http://www.springframework.org/schema/jms" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:amq="http://activemq.apache.org/schema/core"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jms 
+                           http://www.springframework.org/schema/jms/spring-jms.xsd
+                           http://activemq.apache.org/schema/core 
+                           http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <import resource="classpath:/jdbc/datasource.xml" />
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:jdbc/mybatis-config.xml" />
+    </bean>
+
+    <!-- ########################### -->
+    <!-- #    Alarms management    # -->
+    <!-- ########################### -->
+
+    <!-- for PD / TSP / Auto scenarios -->
+
+    <!-- DB Accessor for Alarms, with explicit columns -->
+    <bean id="alarmDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+        <property name="mapperInterface" value="com.hp.uca.expert.alarm.store.AlarmDao" />
+    </bean>
+
+    <!-- Define alarmForwarder => Store and consolidate Alarm Changes in DB         -->
+    <bean id="dbForwarder" class="com.hp.uca.expert.alarm.JDBCAlarmForwarder" init-method="start">
+        <property name="alarmDao" ref="alarmDao" />
+        <property name="store" ref="dbStore" />
+    </bean>
+
+    <!-- Define dbNotifier => Read Alarms changes in DB -->
+    <!-- Usually a DBFlow requires the dbNotifier to listen to these changes -->
+    <bean id="dbNotifier" class="com.hp.uca.expert.alarm.store.AlarmNotifier" scope="singleton">
+        <property name="alarmDao" ref="alarmDao" />
+        <property name="checkTimer" value="1000" />
+    </bean>
+
+    <!-- ########################### -->
+    <!-- #    States management    # -->
+    <!-- ########################### -->
+
+    <!-- for TSP scenarios -->
+
+    <!-- DB Accessor for State, with explicit columns -->
+    <bean id="stateDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+        <property name="mapperInterface" value="com.hp.uca.expert.state.store.StateDao" />
+    </bean>
+
+    <!-- Define dbStateForwarder => Store State Transitions in DB -->
+    <!-- Mainly used for TSP analysis -->
+    <bean id="dbStateForwarder" class="com.hp.uca.expert.event.JDBCEventForwarder" init-method="start">
+        <property name="eventDao" ref="stateDao" />
+        <property name="store" ref="dbStore" />
+    </bean>
+
+    <!-- Define dbStateNotifier => Read States in DB (not needed) -->
+    <!-- <bean id="dbStateNotifier" class="com.hp.uca.expert.event.store.EventNotifier" scope="singleton"> -->
+    <!--     <property name="eventDao" ref="stateDao" /> -->
+    <!--     <property name="checkTimer" value="1000" /> -->
+    <!-- </bean> -->
+
+    <!-- ########################### -->
+    <!-- #    Events management    # -->
+    <!-- ########################### -->
+
+    <!-- DB Accessor for Events, used to store any Basic event (column-less), mainly for tests -->
+    <!-- <bean id="eventDao" class="org.mybatis.spring.mapper.MapperFactoryBean"> -->
+    <!--     <property name="sqlSessionFactory" ref="sqlSessionFactory" /> -->
+    <!--     <property name="mapperInterface" value="com.hp.uca.expert.event.store.EventDao" /> -->
+    <!-- </bean> -->
+
+    <!-- Define dbStateForwarder => Store State Transitions in DB -->
+    <!-- <bean id="dbEventForwarder" class="com.hp.uca.expert.event.JDBCEventForwarder" init-method="start"> -->
+    <!--     <property name="eventDao" ref="eventDao" /> -->
+    <!--     <property name="store" ref="dbStore" /> -->
+    <!-- </bean> -->
+
+    <!-- Define dbEventNotifier => Read Events in DB (not needed) -->
+    <!-- <bean id="dbStateNotifier" class="com.hp.uca.expert.event.store.EventNotifier" scope="singleton"> -->
+    <!--     <property name="eventDao" ref="eventDao" /> -->
+    <!--     <property name="checkTimer" value="1000" /> -->
+    <!-- </bean> -->
+
+    <!-- ########################### -->
+    <!-- #  AutoEvents management  # -->
+    <!-- ########################### -->
+
+    <!-- for Automation scenarios -->
+
+    <bean id="autoEventDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+        <property name="mapperInterface" value="com.hp.uca.expert.autoevent.store.AutoEventDao" />
+    </bean>
+
+    <bean id="autoEventHistoryDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+        <property name="mapperInterface" value="com.hp.uca.expert.autoevent.history.store.AutoEventHistoryDao" />
+    </bean>
+
+    <bean id="autoEventHistory" class="com.hp.uca.expert.autoevent.history.store.AutoEventHistoryInitiator" init-method="start">
+        <property name="autoEventHistoryDao" ref="autoEventHistoryDao" />
+        <property name="store" ref="dbStore" />
+    </bean>
+
+    <bean id="autoEventForwarder" class="com.hp.uca.expert.autoevent.JDBCAutoEventForwarder" init-method="start">
+        <property name="autoEventDao" ref="autoEventDao" />
+        <property name="store" ref="dbStore" />
+    </bean>
+
+    <bean id="autoEventNotifier" class="com.hp.uca.expert.autoevent.store.AutoEventNotifier">
+        <property name="autoEventDao" ref="autoEventDao" />
+        <property name="checkTimer" value="1000" />
+    </bean>
+
+    <bean id="globalParamsDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+        <property name="mapperInterface" value="com.hp.uca.expert.globalparams.store.GlobalParamsDao" />
+    </bean>
+
+    <bean id="globalParam" class="com.hp.uca.expert.globalparams.GlobalParamsInitiator" init-method="start">
+        <property name="globalParamsDao" ref="globalParamsDao" />
+        <property name="store" ref="dbStore" />
+    </bean>
+
+    <bean id="applicationContextProvider" class="com.hp.uca.expert.autoevent.ApplicationContextProvider" />
+
+</beans>                          
+                                                 

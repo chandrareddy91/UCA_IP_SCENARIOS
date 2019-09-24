@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--================================================================================-->
+	<!--===== DataSource: Can be tuned from in-memory or file or TCP access       ======-->
+	<!--================================================================================-->
+	<!-- In-Memory (No persistence on file), w/wo external access using TCP port        -->
+	<!--................................................................................-->
+	<!-- No external Access:                                                            -->
+	<!--        [dataSource url]        : jdbc:h2:mem:h2DB                              -->
+	<!--        [h2Server]              : Not present, commented in this file           -->
+	<!--................................................................................-->
+	<!-- External Access:                                                               -->
+	<!--        [dataSource url]        : jdbc:h2:mem:h2DB                              -->
+	<!--        [h2Server tcpPort]      : 9101                                          -->
+	<!--                                                                                -->
+	<!--  Accessible using: [jdbc:h2:tcp://localhost:9101/mem:h2DB]                     -->
+	<!--================================================================================-->
+	<!-- In-Memory + File (persistence on file), w/wo external access using TCP port    -->
+	<!--   In this example, the DB file is then located at the root of the classpath    -->
+	<!--   So for a JUnit, the best is to define <myPath> such 'target/h2db_files'      -->
+	<!--   The DB file will be then: 'myProject/target/h2db_files/h2DB.h2.db'           -->
+	<!--................................................................................-->
+	<!-- No external Access:                                                            -->
+	<!--        [dataSource url]        : jdbc:h2:file:/<myPath>/h2DB                   -->
+	<!--        [h2Server]              : Not present, commented in this file           -->	
+	<!--................................................................................-->
+	<!-- External Access:                                                               -->
+	<!--        [dataSource url]        : jdbc:h2:file:/<myPath>/h2DB                   -->
+	<!--        [h2Server tcpPort]      : 9101                                          -->
+	<!--                                                                                -->
+	<!--  Accessible using: [jdbc:h2:tcp://localhost:9101/file:/<myPath>/h2DB]          -->
+	<!--================================================================================-->
+	<!-- Remote, connected to a external H2 server using TCP port                       -->
+	<!--   In the external H2 server launcher , you need to add:                        --> 
+	<!--               .... org.h2.tools.Console -tcp -tcpAllowOthers  -tcpPort 9101    -->
+	<!--                                                                                -->
+	<!--   In this example, the DB file is then located at the root of the classpath    -->
+	<!--   of the H2 Server. If H2 is started from /opt/Tools/H2/bin, and <myPath> is   -->
+	<!--   defined such 'h2db_files' then the DB file will be located at:               -->
+	<!--                    '/opt/Tools/H2/bin/h2db_files/h2DB.h2.db'                   -->
+	<!--................................................................................-->
+	<!-- External Access:                                                               -->
+	<!--        [dataSource url]        : jdbc:h2:tcp://localhost:9101/<myPath>/h2DB    -->
+	<!--        [h2Server]              : Not present, commented in this file           -->
+	<!--                                                                                -->
+	<!--  Accessible using: [jdbc:h2:tcp://localhost:9101/file:/<myPath>/h2DB]          -->
+	<!--================================================================================-->
+
+    <!--================================================================================-->
+    <!--  Uncomment the following lines if H2 server external access is needed          -->
+    <!--================================================================================-->
+
+    <!-- <bean id="h2Server" class="org.h2.tools.Server"                                -->
+    <!--         factory-method="createTcpServer"                                       -->
+    <!--         init-method="start" destroy-method="stop">                             -->
+    <!--     <constructor-arg>                                                          -->
+    <!--         <array>                                                                -->
+    <!--             <value>-tcp</value>                                                -->
+    <!--             <value>-tcpAllowOthers</value>                                     -->
+    <!--             <value>-tcpPort</value>                                            -->
+    <!--             <value>9101</value>                                                -->
+    <!--         </array>                                                               -->
+    <!--     </constructor-arg>                                                         -->
+    <!-- </bean>                                                                        -->
+
+    <!--================================================================================-->
+    <!--  Uncomment the following lines if H2Console is needed: http://localhost:8082/  -->
+    <!--================================================================================-->
+
+    <!-- <bean id="h2WebServer" class="org.h2.tools.Server"                             -->
+    <!--         factory-method="createWebServer"                                       -->
+    <!--         init-method="start" destroy-method="stop" depends-on="h2Server">       -->
+    <!--     <constructor-arg>                                                          -->
+    <!--         <array>                                                                -->
+    <!--             <value>-web</value>                                                -->
+    <!--             <value>-webAllowOthers</value>                                     -->
+    <!--             <value>-webPort</value>                                            -->
+    <!--             <value>8082</value>                                                -->
+    <!--         </array>                                                               -->
+    <!--     </constructor-arg>                                                         -->
+    <!-- </bean>                                                                        -->
+
+
+    <!--================================================================================-->
+    <!--===== DataSource definition                                               ======-->
+    <!--================================================================================-->
+
+    <!-- DataSource Configuration, add 'depends-on="h2Server"' if h2Server is not commented -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver" />
+        <property name="username" value="sa" />
+        <property name="password" value="" />
+		<!-- For In-Memory access -->
+        <property name="url" value="jdbc:h2:mem:h2DB" />
+        <!-- For file access -->
+        <!-- <property name="url" value="jdbc:h2:file:/<myPath>/h2DB" /> -->
+        <!-- For remote TCP access -->
+        <!-- <property name="url" value="jdbc:h2:tcp://localhost:9101/<myPath>/h2DB" /> -->
+    </bean>
+
+	<!--================================================================================-->
+	<!--===== SqlStore type definition                                            ======-->
+	<!--================================================================================-->
+    <!-- Default managed values are: hsqldb, voltdb, vertica, oracle, sqlite, h2        -->
+    <!--================================================================================-->
+
+    <bean id="dbStore" class="com.hp.uca.expert.store.sql.SqlStore">
+        <property name="name" value="h2" />
+    </bean>
+
+</beans>

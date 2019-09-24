@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by Loïc MIGUET (Hewlett Packard Enterprise Com) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns="http://composition.model.expert.uca.hpe.com" targetNamespace="http://composition.model.expert.uca.hpe.com" elementFormDefault="qualified" version="1.0" jaxb:version="1.0">
+	<xs:element name="ModelCompositionDescriptor">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Junctions">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Junction" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="BindingHealthStatus">
+											<xs:complexType>
+												<xs:attribute name="id" use="required"/>
+												<xs:attribute name="package" use="required"/>
+												<xs:attribute name="version" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="BoundHealthStatus">
+											<xs:complexType>
+												<xs:attribute name="id" use="required"/>
+												<xs:attribute name="package" use="required"/>
+												<xs:attribute name="version" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

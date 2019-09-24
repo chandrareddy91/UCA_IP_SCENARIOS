@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PropagationPolicies xmlns="http://config.tp.vp.expert.uca.hp.com/" xmlns:cm="http://config.im.vp.expert.uca.hp.com/">
+
+    <mainPolicy />
+
+    <propagationPolicy name="PropagationDefault">
+        <serviceAlarm>
+            <enableServiceAlarmCreation>false</enableServiceAlarmCreation>
+            <delayForServiceAlarmCreation>0</delayForServiceAlarmCreation>
+            <delayForServiceAlarmClearance>10000</delayForServiceAlarmClearance>
+            <attachWholeSubTreeRootCauses>true</attachWholeSubTreeRootCauses>
+        </serviceAlarm>
+        <troubleTicket>
+            <cm:automaticTroubleTicketCreation>false</cm:automaticTroubleTicketCreation>
+            <cm:propagateTroubleTicketToSubAlarms>false</cm:propagateTroubleTicketToSubAlarms>
+            <cm:propagateTroubleTicketToMasterAlarm>false</cm:propagateTroubleTicketToMasterAlarm>
+            <cm:delayForTroubleTicketCreation>60000</cm:delayForTroubleTicketCreation>
+        </troubleTicket>
+        <groupTickFlagAware>false</groupTickFlagAware>
+        <propagationRule>
+            <rule><![CDATA[WorstChildPercentage]]></rule>
+        </propagationRule>
+        <thresholdValues>
+            <OK name="OK">
+                <perceivedSeverity><![CDATA[CLEAR]]></perceivedSeverity>
+                <availabilityPercentage>100.0</availabilityPercentage>
+                <poiImportance><![CDATA[None]]></poiImportance>
+            </OK>
+            <LOW name="LOW">
+                <perceivedSeverity><![CDATA[WARNING]]></perceivedSeverity>
+                <availabilityPercentage>99.9999999999</availabilityPercentage>
+                <poiImportance><![CDATA[Low]]></poiImportance>
+            </LOW>
+            <MEDIUM name="MED">
+                <perceivedSeverity><![CDATA[MINOR]]></perceivedSeverity>
+                <availabilityPercentage>75.0</availabilityPercentage>
+                <poiImportance><![CDATA[Medium]]></poiImportance>
+            </MEDIUM>
+            <HIGH name="HIGH">
+                <perceivedSeverity><![CDATA[MAJOR]]></perceivedSeverity>
+                <availabilityPercentage>50.0</availabilityPercentage>
+                <poiImportance><![CDATA[High]]></poiImportance>
+            </HIGH>
+            <CRITICAL name="CRITICAL">
+                <perceivedSeverity><![CDATA[CRITICAL]]></perceivedSeverity>
+                <availabilityPercentage>25.0</availabilityPercentage>
+                <poiImportance><![CDATA[Critical]]></poiImportance>
+            </CRITICAL>
+            <DOWN name="DOWN">
+                <perceivedSeverity><![CDATA[CRITICAL]]></perceivedSeverity>
+                <availabilityPercentage>0.0</availabilityPercentage>
+                <poiImportance><![CDATA[Critical]]></poiImportance>
+            </DOWN>
+        </thresholdValues>
+        <statusName><![CDATA[Availability.state]]></statusName>
+        <percentageAvailabilityKey><![CDATA[Availability.percentage]]></percentageAvailabilityKey>
+        <tags>
+            <!-- TeMIP OC for ServiceAlarms if not defined in ActionsFactories.xml -->
+            <!-- <cm:tag name="ServiceAlarm.Creation.OC"> -->
+            <!--     <cm:value>.uca_service</cm:value> -->
+            <!-- </cm:tag> -->
+        </tags>
+    </propagationPolicy>
+
+</PropagationPolicies>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- edited with XMLSpy v2017 rel. 3 (x64) (http://www.altova.com) by Anzile (Hewlett Packard Enterprise Com) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://hp.com/uca/expert/vp/resource"
+    targetNamespace="http://hp.com/uca/expert/vp/resource" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+    <xsd:element name="resources">
+        <xsd:annotation>
+            <xsd:documentation>
+                Lists the resource roots of this module (optional).
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:annotation>
+                <xsd:documentation>
+                    A list of zero or more resource roots for this deployment.
+                </xsd:documentation>
+            </xsd:annotation>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="resource-root" type="resourceType">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            A resource root within this deployment.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="resourceType">
+        <xsd:annotation>
+            <xsd:documentation>
+                A resource root within a deployment.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="name" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The name of this resource root (optional). If not specified, defaults to the value of the path
+                    attribute.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="path" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The path of this resource root, relative to the ValuePack folder, or ${UCA_EBC_DATA}, or ${UCA_EBC_HOME}.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+</xsd:schema>
