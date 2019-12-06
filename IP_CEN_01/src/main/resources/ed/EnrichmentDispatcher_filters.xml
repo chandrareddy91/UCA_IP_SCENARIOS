@@ -55,11 +55,28 @@
                     </stringFilterStatement>
                 </allCondition>
                  <allCondition tag="CategoryId=Protocol">
-                    <stringFilterStatement tag="PatternId=protocol_down">
+                   <anyCondition tag="PatternId=protocol_down">
+                   <stringFilterStatement>
                         <fieldName><![CDATA[standardAlarmName]]></fieldName>
                         <operator><![CDATA[matches]]></operator>
                         <fieldValue><![CDATA[PROTOCOL DOWN]]></fieldValue>
                     </stringFilterStatement>
+                    <stringFilterStatement>
+                        <fieldName><![CDATA[additionalText]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[(?s).*RPD_ISIS_ADJDOWN.*]]></fieldValue>
+                    </stringFilterStatement>
+                     <stringFilterStatement>
+                        <fieldName><![CDATA[additionalText]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[(?s).*RPD_RSVP_NBRDOWN.*]]></fieldValue>
+                    </stringFilterStatement>
+                     <stringFilterStatement>
+                        <fieldName><![CDATA[additionalText]]></fieldName>
+                        <operator><![CDATA[matches]]></operator>
+                        <fieldValue><![CDATA[(?s).*RPD_OSPF_NBRDOWN.*]]></fieldValue>
+                    </stringFilterStatement>
+                    </anyCondition>
                 </allCondition>
                  <allCondition tag="CategoryId=Infra">
 	                 <anyCondition>
@@ -157,29 +174,29 @@
 		                	 	<stringFilterStatement>
 		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
 		                    	<operator><![CDATA[matches]]></operator>
-		                    	<fieldValue><![CDATA[RCA : INTERFACE DOWN]]></fieldValue>
+		                    	<fieldValue><![CDATA[RCA : Interface Down]]></fieldValue>
 		                 	 	</stringFilterStatement>
 		          </anyCondition>
 		          <anyCondition  tag="ComputeSourceUniqueIdMapper=reteriveNodeNameFromPrimaryKeyUca, PatternId=pba_Link_down, CategoryId=Link">
 		                	 	<stringFilterStatement>
 		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
 		                    	<operator><![CDATA[matches]]></operator>
-		                    	<fieldValue><![CDATA[RCA : LINK DOWN]]></fieldValue>
+		                    	<fieldValue><![CDATA[RCA : Link Down]]></fieldValue>
 		                 	 	</stringFilterStatement>
 		                 	 	<stringFilterStatement>
 		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
 		                    	<operator><![CDATA[matches]]></operator>
-		                    	<fieldValue><![CDATA[RCA : WAN LINK DOWN]]></fieldValue>
+		                    	<fieldValue><![CDATA[RCA : Wan Link Down]]></fieldValue>
 		                 	 	</stringFilterStatement>
 		                 	 	<stringFilterStatement>
 		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
 		                    	<operator><![CDATA[matches]]></operator>
-		                    	<fieldValue><![CDATA[RCA : WLD LINK DOWN]]></fieldValue>
+		                    	<fieldValue><![CDATA[RCA : WLD Link Down]]></fieldValue>
 		                 	 	</stringFilterStatement>
 		                 	 	<stringFilterStatement>
 		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
 		                    	<operator><![CDATA[matches]]></operator>
-		                    	<fieldValue><![CDATA[RCA : B2B LINK DOWN]]></fieldValue>
+		                    	<fieldValue><![CDATA[RCA : B2B Link Down]]></fieldValue>
 		                 	 	</stringFilterStatement>
 		                 	 	<stringFilterStatement>
 		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
@@ -244,7 +261,7 @@
 		                	 	<stringFilterStatement>
 		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
 		                    	<operator><![CDATA[matches]]></operator>
-		                    	<fieldValue><![CDATA[RCA : HARDWARE FAILURE]]></fieldValue>
+		                    	<fieldValue><![CDATA[RCA : Module Down]]></fieldValue>
 		                 	 	</stringFilterStatement>
 		          </anyCondition>
 		          <anyCondition  tag="ComputeSourceUniqueIdMapper=reterivePopName, PatternId=pba_Node_Down, CategoryId=NodeDown">

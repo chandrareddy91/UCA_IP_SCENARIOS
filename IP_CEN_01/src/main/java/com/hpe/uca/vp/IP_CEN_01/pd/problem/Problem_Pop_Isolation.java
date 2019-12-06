@@ -41,6 +41,14 @@ public class Problem_Pop_Isolation extends ProblemDefault implements ProblemInte
 		// TODO Auto-generated method stub
 		boolean ret = super.isAllCriteriaForProblemAlarmCreation(group);
 		LOG.debug(" Returned value from isAllCriteriaForProblemAlarmCreation enter : "+ret);
+		if(ret)
+		{
+			Alarm Trigger = group.getTriggerAlarm();
+			String reteriveGlobalClassName = MapperUtils.doMapping(Trigger,"reteriveGlobalClassName");
+			String retrievePrimaryKeyUca = MapperUtils.doMapping(Trigger,"retrievePrimaryKeyUca");
+			String caliculateMo = reteriveGlobalClassName+" \""+retrievePrimaryKeyUca+"\"";
+			group.getVar().put("caliculateMo",caliculateMo);
+		}
 		LOG.debug(" Returned value from isAllCriteriaForProblemAlarmCreation exit : "+ret);
 		return ret;
 	}

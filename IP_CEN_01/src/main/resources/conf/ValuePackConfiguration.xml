@@ -159,46 +159,37 @@
     </scenarios>
 
     <mediationFlows>
-        <!-- <UMBmediationFlow automaticStart="true" name="TopologyUpdateFlow" targetAdapterName="Topology" targetFlowName="TopologyStaticFlow" /> -->
+         <UMBmediationFlow name=".vil.panind.vil_pan_wandl_cen_oc"  automaticStart="true"  targetAdapterName="temip_uca42_grp"  targetFlowName="TeMIPDynamicFlow" >
+         <flowParameters>
+            <flowParameter key="operationContext"  value=".vil.panind.vil_pan_wandl_cen_oc" />
+         </flowParameters>
+      </UMBmediationFlow>
+      <UMBmediationFlow name=".vil.panind.vil_pan_wandl_cen_rca_oc"  automaticStart="true"  targetAdapterName="temip_uca42_grp"  targetFlowName="TeMIPDynamicFlow" >
+         <flowParameters>
+            <flowParameter key="operationContext"  value=".vil.panind.vil_pan_wandl_cen_rca_oc" />
+         </flowParameters>
+      </UMBmediationFlow>
+         <UMBmediationFlow name=".vil.nnmapp01.id_nnm_ip_rca_oc"  automaticStart="true"  targetAdapterName="temip_uca42_grp"  targetFlowName="TeMIPDynamicFlow" >
+         <flowParameters>
+            <flowParameter key="operationContext"  value=".vil.nnmapp01.id_nnm_ip_rca_oc" />
+         </flowParameters>
+      </UMBmediationFlow>
+        <UMBmediationFlow name=".vil.nnmapp03.id_pan_flds_oc"  automaticStart="true"  targetAdapterName="temip_uca42_grp"  targetFlowName="TeMIPDynamicFlow" >
+         <flowParameters>
+            <flowParameter key="operationContext"  value=".vil.nnmapp03.id_pan_flds_oc" />
+         </flowParameters>
+      </UMBmediationFlow>
+<UMBmediationFlow name=".vil.nnmapp04.id_pan_flds_oc"  automaticStart="true"  targetAdapterName="temip_uca42_grp"  targetFlowName="TeMIPDynamicFlow" >
+         <flowParameters>
+            <flowParameter key="operationContext"  value=".vil.nnmapp04.id_pan_flds_oc" />
+         </flowParameters>
+</UMBmediationFlow>
+<UMBmediationFlow name=".vil.nnmapp03.vil_pan_flds_rca_oc"  automaticStart="true"  targetAdapterName="temip_uca42_grp"  targetFlowName="TeMIPDynamicFlow" >
+         <flowParameters>
+            <flowParameter key="operationContext"  value=".vil.nnmapp03.vil_pan_flds_rca_oc" />
+         </flowParameters>
+</UMBmediationFlow>
         
-       <!-- <UMBmediationFlow automaticStart="true" name="temipFlow_.vil.nnmapp01.id_nnm_ip_test_oc" targetAdapterName="temip_uca42_grp" targetFlowName="TeMIPDynamicFlow">
-    	    <flowParameters>
-        	      <flowParameter key="operationContext" value=".vil.nnmapp01.id_nnm_ip_test_oc"/>        	      
-        	</flowParameters>
-        </UMBmediationFlow> -->
-		<UMBmediationFlow automaticStart="true" name="temipFlow_IP_Scenario_umbFlow_.vil.nnmapp01.id_nnm_ip_oc_and_rca_oc" targetAdapterName="TeMIP_vtemipamfm17" targetFlowName="TeMIPDynamicFlow">
-    	    <flowParameters>
-        	<flowParameter key="operationContext" value=".vil.nnmapp01.id_nnm_ip_oc"/>
-			<flowParameter key="operationContext" value=".vil.nnmapp01.id_nnm_ip_rca_oc"/>   
-			<!--flowParameter key="operationContext" value=".vil.nnmapp01.id_nnm_ip_test_oc"/-->
-        	</flowParameters>
-        </UMBmediationFlow>
-        
-         <!--UMBmediationFlow automaticStart="true" name="temipFlow_.vil.nnmapp01.ID_NNM_IP_OC" targetAdapterName="temip_uca42_grp" targetFlowName="TeMIPDynamicFlow">
-            <flowParameters>
-                      <flowParameter key="operationContext" value=".vil.nnmapp01.ID_NNM_IP_OC"/>
-                </flowParameters>
-        </UMBmediationFlow>
- <UMBmediationFlow automaticStart="true" name="temipFlow_.vil.nnmapp01.ID_NNM_IP_OC" targetAdapterName="temip_uca42_grp" targetFlowName="TeMIPDynamicFlow">
-            <flowParameters>
-                      <flowParameter key="operationContext" value=".vil.nnmapp01.ID_NNM_IP_OC"/>
-                </flowParameters>
-        </UMBmediationFlow-->
-        
-        <!-- 
-        <UMBmediationFlow name="TeMIP" targetAdapterName="TeMIP" targetFlowName="TeMIPDynamicFlow" automaticStart="true">
-            <flowParameters>
-                <flowParameter key="operationContext" value="uca_service" />
-                <flowParameter key="operationContext" value="uca_problem" />
-                <flowParameter key="operationContext" value="uca_network" />
-            </flowParameters>
-        </UMBmediationFlow>
-        -->
-        <!-- 
-        <UMBmediationFlow name="Smarts" targetAdapterName="NmsSimulator" targetFlowName="Smarts" automaticStart="true" />
-        <UMBmediationFlow name="Prognosis" targetAdapterName="NmsSimulator" targetFlowName="Prognosis" automaticStart="true" />
-        <UMBmediationFlow name="Service Manager" targetAdapterName="TTSSimulator" targetFlowName="ServiceManager" automaticStart="true" />
-         -->
     </mediationFlows>
 
     <!--dbFlows>

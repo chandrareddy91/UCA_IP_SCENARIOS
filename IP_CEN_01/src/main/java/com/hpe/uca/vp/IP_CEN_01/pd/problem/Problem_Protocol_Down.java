@@ -52,12 +52,17 @@ public class Problem_Protocol_Down extends ProblemDefault implements ProblemInte
 			List<Map<String, String>> result;
 			Alarm Trigger = group.getTriggerAlarm();
 			
+			String reteriveGlobalClassName = MapperUtils.doMapping(Trigger,"reteriveGlobalClassName");
+			String retrievePrimaryKeyUca = MapperUtils.doMapping(Trigger,"retrievePrimaryKeyUca");
+			String caliculateMo = reteriveGlobalClassName+" \""+retrievePrimaryKeyUca+"\"";
+			group.getVar().put("caliculateMo",caliculateMo);
+			
 			String queryName = Common_Util.getPassingFilterParamValue(Trigger, "ProblemAlarm.Enrichment.Query", getClass().getSimpleName());
 			if(queryName!=null && !queryName.isEmpty()){
 				
 				String nodeInfoQuery = getScenario().getMappers().getCypherQuery(queryName);
 				
-				String retrievePrimaryKeyUca = MapperUtils.doMapping(Trigger, group, "retrievePrimaryKeyUca");
+				//String retrievePrimaryKeyUca = MapperUtils.doMapping(Trigger, group, "retrievePrimaryKeyUca");
 				LOG.debug("isAllCriteriaForProblemAlarmCreation : retrievePrimaryKeyUca: "+retrievePrimaryKeyUca);
 				
 				params.put("neid", retrievePrimaryKeyUca.toLowerCase());

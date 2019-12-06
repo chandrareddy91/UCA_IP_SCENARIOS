@@ -45,82 +45,14 @@ public class Problem_Device_Resource_Alarm extends ProblemDefault implements Pro
 		// TODO Auto-generated method stub
 		boolean ret = super.isAllCriteriaForProblemAlarmCreation(group);
 		LOG.debug(" Returned value from isAllCriteriaForProblemAlarmCreation : Enter " + ret);
-		/*
-		 * if(ret) { group.getVar().put("Problem_Class",getClass().getSimpleName());
-		 * //Calculate group variables for RCA Enrichment Map<String, Object> params =
-		 * new HashMap<String, Object>(); List<Map<String, String>> result; Alarm
-		 * Trigger = group.getTriggerAlarm();
-		 * 
-		 * String queryName = Common_Util.getPassingFilterParamValue(Trigger,
-		 * "ProblemAlarm.Enrichment.Query", getClass().getSimpleName());
-		 * if(queryName!=null && !queryName.isEmpty()){
-		 * 
-		 * String nodeInfoQuery = getScenario().getMappers().getCypherQuery(queryName);
-		 * 
-		 * String retrieveNodeFromPrimaryKeyUca = MapperUtils.doMapping(Trigger, group,
-		 * "retrieveNodeFromPrimaryKeyUca"); LOG.
-		 * debug("isAllCriteriaForProblemAlarmCreation : retrieveNodeFromPrimaryKeyUca: "
-		 * +retrieveNodeFromPrimaryKeyUca);
-		 * 
-		 * params.put("neid", retrieveNodeFromPrimaryKeyUca.toLowerCase());
-		 * 
-		 * //params.put("nodeUniqueId",
-		 * group.getName().split("<e>")[1].split("</e>")[0].trim());
-		 * LOG.debug("isAllCriteriaForProblemAlarmCreation : nodeInfoQuery: "
-		 * +nodeInfoQuery + " Params : "+params.toString());
-		 * 
-		 * 
-		 * 
-		 * result = CypherQuery.executeAndReturnResultAsStrings(nodeInfoQuery,params);
-		 * 
-		 * if (result != null && !result.isEmpty() && result.size()>=1){
-		 * LOG.debug("isAllCriteriaForProblemAlarmCreation : nodeInfoQuery output "
-		 * +result.toString());
-		 * 
-		 * //To get Node Type details String linkType =
-		 * result.get(0).get("link.LinkRelation"); String[] linkSep =
-		 * linkType.split("_"); String AnodeType = linkSep[0]; String ZnodeType =
-		 * linkSep[1];
-		 * 
-		 * group.getVar().put("Link_Type_A",AnodeType);
-		 * group.getVar().put("Link_Type_B",ZnodeType);
-		 * group.getVar().put("Pop_Type",(result.get(0).get("link.PopRelation")));
-		 * group.getVar().put("nodeEnrich","RECORDS FOUND");
-		 * 
-		 * }else { group.getVar().put("Link_Type_A","DataNa");
-		 * group.getVar().put("Link_Type_B","DataNa");
-		 * group.getVar().put("Pop_Type","DataNa");
-		 * group.getVar().put("nodeEnrich","NO Result");
-		 * 
-		 * String delay = Common_Util.getPassingFilterParamValue(Trigger,
-		 * "ProblemAlarm.Creation.Delay", getClass().getSimpleName()); int timeToSleep =
-		 * Integer.parseInt(delay);
-		 * LOG.debug("isAllCriteriaForProblemAlarmCreation: going to sleep:"+timeToSleep
-		 * ); Thread.sleep(timeToSleep); LOG.
-		 * debug("isAllCriteriaForProblemAlarmCreation: Sleep time completed: calling update function on  "
-		 * +Trigger); Scenario theScenario = ScenarioThreadLocal.getScenario();
-		 * Common_Util.updateAlarm(theScenario, Trigger, "Additional Text", "Test");
-		 * LOG.debug("isAllCriteriaForProblemAlarmCreation :  Result not found "+result.
-		 * toString()+" ret :"+ret); LOG.
-		 * debug("isAllCriteriaForProblemAlarmCreation: PR will not be created - call to update usertext :"
-		 * +Trigger.getIdentifier()+"ret : "+ret+"timeToSleep :"+timeToSleep);
-		 * 
-		 * ret=false;
-		 * 
-		 * } }else {
-		 * 
-		 * ret=false;
-		 * LOG.debug("isAllCriteriaForProblemAlarmCreation : no cypher query found "+
-		 * queryName+"ret : "+ret); group.getVar().put("nodeEnrich","NO QUERY");
-		 * group.getVar().put("Link_Type_A","DataNa");
-		 * group.getVar().put("Link_Type_B","DataNa");
-		 * group.getVar().put("Pop_Type","DataNa");
-		 * 
-		 * }
-		 * 
-		 * LOG.debug("isAllCriteriaForProblemAlarmCreation: PR will be created for :"
-		 * +Trigger.getIdentifier()+"ret : "+ret); }
-		 */
+		if(ret)
+		{
+			Alarm Trigger = group.getTriggerAlarm();
+			String reteriveGlobalClassName = MapperUtils.doMapping(Trigger,"reteriveGlobalClassName");
+			String retrievePrimaryKeyUca = MapperUtils.doMapping(Trigger,"retrievePrimaryKeyUca");
+			String caliculateMo = reteriveGlobalClassName+" \""+retrievePrimaryKeyUca+"\"";
+			group.getVar().put("caliculateMo",caliculateMo);
+		}
 		LOG.debug(" Returned value from isAllCriteriaForProblemAlarmCreation : Exit " + ret);
 		return ret;
 	}

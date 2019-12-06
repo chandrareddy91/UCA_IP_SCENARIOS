@@ -12,24 +12,24 @@
       </extract>
    </mapper>
    
- <mapper name="retrieveIntefaceFromMO">
+ <mapper name="retrieveMO">
         <extract>
             <fieldName><![CDATA[originatingManagedEntity]]></fieldName>
-            <matcher><![CDATA[(?i)(?s)OSI_SYSTEM.*.\"(.*)\".*]]></matcher>
+            <matcher><![CDATA[(?i)(?s)(.*)]]></matcher>
             <mappedTo><![CDATA[$1]]></mappedTo>
         </extract>
 </mapper>
-
-    <mapper name="retrieveNodeNameFromMO">
-        <extract>
-            <fieldName><![CDATA[originatingManagedEntity]]></fieldName>
-            <matcher><![CDATA[(?i)(?s)OSI_SYSTEM.*.\"(.*)\".*?]]></matcher>
-            <mappedTo><![CDATA[$1]]></mappedTo>
-        </extract>
-    </mapper>
  <mapper name="reteriveStandardAlarmName">
 	  <extract>
 	    <fieldName>standardAlarmName</fieldName>
+	    <matcher>(.*)</matcher>
+	    <mappedTo>$1</mappedTo>
+	  </extract>
+</mapper>
+
+<mapper name="reteriveEmsName">
+	  <extract>
+	    <fieldName>emsName</fieldName>
 	    <matcher>(.*)</matcher>
 	    <mappedTo>$1</mappedTo>
 	  </extract>
@@ -92,6 +92,14 @@
             <mappedTo><![CDATA[$2]]></mappedTo>
        	</extract>
   	</mapper>
+  	
+  	<mapper name="reteriveGlobalClassName">
+		  <extract>
+		    <fieldName>originatingManagedEntity</fieldName>
+		    <matcher>(\S+).*</matcher>
+		    <mappedTo>$1</mappedTo>
+		  </extract>
+	</mapper>
 
 
 
@@ -119,6 +127,22 @@
       <extract>
          <fieldName><![CDATA[nodeType]]></fieldName>
          <matcher><![CDATA[(?s).*SGSN.*]]></matcher>
+         <mappedTo><![CDATA[OK]]></mappedTo>
+      </extract>
+</mapper> 
+
+<mapper name="isWANDL_IPMPLS">
+      <extract>
+         <fieldName><![CDATA[emsName]]></fieldName>
+         <matcher><![CDATA[(?s).*WANDL_CEN.*]]></matcher>
+         <mappedTo><![CDATA[OK]]></mappedTo>
+      </extract>
+</mapper>
+
+<mapper name="isFLDS">
+      <extract>
+         <fieldName><![CDATA[primaryKeyUca]]></fieldName>
+         <matcher><![CDATA[(?s).*flds.*]]></matcher>
          <mappedTo><![CDATA[OK]]></mappedTo>
       </extract>
 </mapper>
@@ -201,6 +225,13 @@
      <booleanExpr><![CDATA[  The.Trigger.Result.calculateLinkCountFromInterface > 0 ]]></booleanExpr>
     </expression>
 </mapper>
+
+<mapper name='getcaliculateMo'>
+	 <expression>
+	  <stringExpr><![CDATA[ Group.LocalVar(caliculateMo)]]>
+	  </stringExpr>
+	 </expression>
+	</mapper> 
 
 
 <mapper name="isSamePop">
@@ -312,10 +343,19 @@
 </mapper>
 
 
-<mapper name='getRcaOC_Interface'>
+<mapper name='getRcaOC_Interface_etc'>
   <expression>
     <stringExpr><![CDATA[(".vil.nnmapp01.id_nnm_ip_rca_oc")]]>
     </stringExpr>
+  </expression>
+</mapper>
+
+<mapper name='getRcaOC_Interface'>
+  <expression>
+   <stringExpr><![CDATA[
+                        (The.Trigger.Match.isWANDL_IPMPLS) ? ".vil.panind.vil_pan_wandl_cen_rca_oc" :
+                        (The.Trigger.Match.isFLDS) ? ".vil.nnmapp03.vil_pan_flds_rca_oc" : ".vil.nnmapp01.id_nnm_ip_rca_oc"
+        ]]></stringExpr>
   </expression>
 </mapper>
 
@@ -346,7 +386,7 @@
 <mapper name='calculateProblemEntitytoUpper'>
   <expression>
     <stringExpr><![CDATA[
-       This.Field.originatingManagedEntity.toUpper]]>
+       The.Trigger.Result.getcaliculateMo.toUpper]]>
     </stringExpr>
   </expression>
 </mapper>
@@ -497,7 +537,7 @@
 
 <mapper name='RCA_pba_interface_down'>
   <expression>
-    <stringExpr><![CDATA["RCA : INTERFACE DOWN"]]>
+    <stringExpr><![CDATA["RCA : Interface Down"]]>
     </stringExpr>
   </expression>
 </mapper>
@@ -508,9 +548,9 @@
 		
 			(The.Trigger.Match.isMSSC) ? "RCA : MSSC LINK DOWN" : 
 			(The.Trigger.Match.isSGSN) ? "RCA : SGSN LINK DOWN" :
-			((The.Trigger.Match.isSamePop) && (The.Trigger.Match.isNotSameNodeType)) ? "RCA : WLD LINK DOWN" :
-			((The.Trigger.Match.isSamePop) && (The.Trigger.Match.isSameNodeType)) ? "RCA : B2B LINK DOWN" :
-			(The.Trigger.Match.isWan) ? "RCA : WAN LINK DOWN" : "RCA : LINK DOWN"
+			((The.Trigger.Match.isSamePop) && (The.Trigger.Match.isNotSameNodeType)) ? "RCA : WLD Link Down" :
+			((The.Trigger.Match.isSamePop) && (The.Trigger.Match.isSameNodeType)) ? "RCA : B2B Link Down" :
+			(The.Trigger.Match.isWan) ? "RCA : Wan Link Down" : "RCA : Link Down"
 
 	]]></stringExpr>
   </expression>
@@ -519,8 +559,8 @@
 <mapper name='RCA_Infra_issue'>
   <expression>
    <stringExpr><![CDATA[
-	(The.Trigger.Result.reteriveStandardAlarmName == "INFRA TEMP") ? "RCA : INFRA FAILURE [High Temperature]" :
-	(The.Trigger.Result.reteriveStandardAlarmName == "INFRA POWER") ? "RCA : INFRA FAILURE [Power Supply Failure]" : "RCA : INFRA FAILURE [Fan Failure]"
+	(The.Trigger.Result.reteriveStandardAlarmName == "INFRA TEMP") ? "RCA : High Temperature" :
+	(The.Trigger.Result.reteriveStandardAlarmName == "INFRA POWER") ? "RCA : Power Supply Failure" : "RCA : Fan Failure"
 	]]></stringExpr>
   </expression>
 </mapper>
@@ -554,7 +594,7 @@
 
 <mapper name='Problem_Hardware_Issue'>
   <expression>
-   <stringExpr><![CDATA["RCA : HARDWARE FAILURE"]]></stringExpr>
+   <stringExpr><![CDATA["RCA : Module Down"]]></stringExpr>
   </expression>
 </mapper>
 

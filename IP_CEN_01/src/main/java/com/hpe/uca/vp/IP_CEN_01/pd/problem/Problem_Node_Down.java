@@ -38,6 +38,14 @@ public class Problem_Node_Down extends ProblemDefault implements ProblemInterfac
 		// TODO Auto-generated method stub
 		boolean ret = super.isAllCriteriaForProblemAlarmCreation(group);
 		LOG.debug(" Returned value from isAllCriteriaForProblemAlarmCreation : Enter " + ret);
+		if(ret)
+		{
+			Alarm Trigger = group.getTriggerAlarm();
+			String reteriveGlobalClassName = MapperUtils.doMapping(Trigger,"reteriveGlobalClassName");
+			String retrievePrimaryKeyUca = MapperUtils.doMapping(Trigger,"retrievePrimaryKeyUca");
+			String caliculateMo = reteriveGlobalClassName+" \""+retrievePrimaryKeyUca+"\"";
+			group.getVar().put("caliculateMo",caliculateMo);
+		}
 		/*
 		 * if(ret) { group.getVar().put("Problem_Class",getClass().getSimpleName());
 		 * //Calculate group variables for RCA Enrichment Map<String, Object> params =

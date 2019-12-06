@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ft.sample.SampleTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 39.519 s - in ft.sample.SampleTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 80.511 s - in ft.sample.SampleTest

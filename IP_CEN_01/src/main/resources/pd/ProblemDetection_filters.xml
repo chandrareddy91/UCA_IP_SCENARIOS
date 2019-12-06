@@ -6,7 +6,7 @@
       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
       					ProblemAlarm.AdditionalText.CustomMapper=RCA_pba_interface_down,
       					ProblemAlarm.Creation.Criteria.Mapper=IsCheckforInterfacedown,
@@ -41,7 +41,7 @@
        <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
                          Alarm.RejectTime=24h,
                          ProblemAlarm.Creation=True,
-                         ProblemAlarm.Creation.Delay=5m,
+                         ProblemAlarm.Creation.Delay=1m,
                          ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
                          ProblemAlarm.AdditionalText.CustomMapper=RCA_pba_link_down,
                          ProblemAlarm.Creation.Criteria.Mapper=IsCheckforLinkdown,
@@ -62,6 +62,10 @@
 	            <operator><![CDATA[isEqual]]></operator>
 	            <patternIdValue><![CDATA[link_down]]></patternIdValue>
 	         </patternIdFilterStatement>
+	          <patternIdFilterStatement> 
+	            <operator><![CDATA[isEqual]]></operator>
+	            <patternIdValue><![CDATA[protocol_down]]></patternIdValue>
+	         </patternIdFilterStatement>
 	        </anyCondition>
 	    </anyCondition>
         <anyCondition
@@ -77,7 +81,7 @@
 </topFilter>
    
    
-<topFilter name="Problem_Protocol_Down" >
+<!-- <topFilter name="Problem_Protocol_Down" >
 <anyCondition>
       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
@@ -111,14 +115,14 @@
 			</allCondition>
 		</anyCondition>
 </anyCondition>
-</topFilter>
+</topFilter> -->
    
 <topFilter name="Problem_Infra_Issue" >
 <anyCondition>
       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
       					ProblemAlarm.AdditionalText.CustomMapper=RCA_Infra_issue,
 						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
@@ -159,7 +163,7 @@
       	<anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
         				ProblemAlarm.AdditionalText.CustomMapper=RCA_Device_Resource_Alarm,
 						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
@@ -203,7 +207,7 @@
 			<anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
       					ProblemAlarm.AdditionalText.CustomMapper=RCA_NNM_Issue,
 						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
@@ -237,7 +241,7 @@
       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=0m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
       					ProblemAlarm.AdditionalText.CustomMapper=Problem_Hardware_Issue,
 						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
@@ -284,7 +288,7 @@
       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
       					ProblemAlarm.AdditionalText.CustomMapper=Problem_Node_Down,
 						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
@@ -316,7 +320,7 @@
       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
       					ProblemAlarm.AdditionalText.CustomMapper=Problem_Node_Isolation,
 						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
@@ -354,7 +358,7 @@
       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
       					ProblemAlarm.AdditionalText.CustomMapper=Problem_Pop_Down,
 						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
@@ -388,7 +392,7 @@
       <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
       					Alarm.RejectTime=24h,
       					ProblemAlarm.Creation=True,
-      					ProblemAlarm.Creation.Delay=5m,
+      					ProblemAlarm.Creation.Delay=1m,
       					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
       					ProblemAlarm.AdditionalText.CustomMapper=Problem_Pop_Isolation,
 						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,

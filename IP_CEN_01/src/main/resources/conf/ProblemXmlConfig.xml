@@ -23,7 +23,7 @@
             <propagateTroubleTicketToProblemAlarm>false</propagateTroubleTicketToProblemAlarm>
             <delayForTroubleTicketCreation>10000</delayForTroubleTicketCreation>
         </troubleTicket>
-        <groupTickFlagAware>false</groupTickFlagAware>
+        <groupTickFlagAware>true</groupTickFlagAware>
         <timeWindow>
             <timeWindowMode>None</timeWindowMode>
             <timeWindowBeforeTrigger>30000</timeWindowBeforeTrigger>
