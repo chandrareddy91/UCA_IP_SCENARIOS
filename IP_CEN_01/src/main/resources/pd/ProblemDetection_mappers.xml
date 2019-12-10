@@ -542,6 +542,13 @@
   </expression>
 </mapper>
 
+<mapper name='RCA_Problem_Reachability'>
+  <expression>
+    <stringExpr><![CDATA["RCA : REACHABILITY PROBLEM"]]>
+    </stringExpr>
+  </expression>
+</mapper>
+
 <mapper name='RCA_pba_link_down'>
   <expression>
    <stringExpr><![CDATA[

@@ -148,6 +148,15 @@
 	                    </stringFilterStatement>
 	                 </anyCondition>
                 </allCondition>
+                <allCondition tag="CategoryId=Reachability">
+	                 <anyCondition>
+	                    <stringFilterStatement tag="PatternId=Reachability_Problem">
+	                        <fieldName><![CDATA[standardAlarmName]]></fieldName>
+	                        <operator><![CDATA[matches]]></operator>
+	                        <fieldValue><![CDATA[REACHABILITY PROBLEM]]></fieldValue>
+	                    </stringFilterStatement>
+	                 </anyCondition>
+                </allCondition>
             </anyCondition>
             <anyCondition>
                        <stringFilterStatement tag="ComputeSourceUniqueIdMapper=retrievePrimaryKeyUca">
@@ -290,6 +299,13 @@
 		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
 		                    	<operator><![CDATA[matches]]></operator>
 		                    	<fieldValue><![CDATA[NIA : POP ISOLATION]]></fieldValue>
+		                 	 	</stringFilterStatement>
+		          </anyCondition>
+		           <anyCondition  tag="ComputeSourceUniqueIdMapper=retrievePrimaryKeyUca, PatternId=pba_Reachability_Problem, CategoryId=Reachability">
+		                	 	<stringFilterStatement>
+		                    	<fieldName><![CDATA[standardAlarmName]]></fieldName>
+		                    	<operator><![CDATA[matches]]></operator>
+		                    	<fieldValue><![CDATA[RCA : REACHABILITY PROBLEM]]></fieldValue>
 		                 	 	</stringFilterStatement>
 		          </anyCondition>
           </anyCondition>

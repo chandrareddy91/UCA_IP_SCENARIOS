@@ -424,45 +424,37 @@
 		</anyCondition>
 </anyCondition>      
 </topFilter>
-   
-   <!--topFilter name="Problem_SwitchDown" >
-      <anyCondition tag="ProblemAlarm.Creation.AdditionalText=SwitchDown,CypherQuery=GetSwitch,ProblemAlarm.Creation.ProblemEntity=ManagedEntity,ServiceManager" >
-         <patternIdFilterStatement tag="ComputeProblemEntityMappers=retrieveSwitchName,SubAlarm,Trigger" >
-            <operator><![CDATA[isEqual]]></operator>
-            <patternIdValue><![CDATA[caused_by_switch_down]]></patternIdValue>
-         </patternIdFilterStatement>
-         <patternIdFilterStatement tag="CypherQuery=GetSwitchFromPhone,SubAlarm" >
-            <operator><![CDATA[isEqual]]></operator>
-            <patternIdValue><![CDATA[caused_by_phone_unregistered]]></patternIdValue>
-         </patternIdFilterStatement>
-         <patternIdFilterStatement tag="ProblemAlarm" >
-            <operator><![CDATA[isEqual]]></operator>
-            <patternIdValue><![CDATA[pba_switch_down]]></patternIdValue>
-         </patternIdFilterStatement>
-         <orchestrationTypeFilterStatement tag="SubEvent,ComputeProblemEntityMappers=getProblemEntityFromFaultyEntity,ComputeSourceUniqueIdMapper=getProblemEntityFromFaultyEntity">
-            <orchestrationTypeValue><![CDATA[TroubleTicket]]></orchestrationTypeValue>
-         </orchestrationTypeFilterStatement>
-      </anyCondition>
-   </topFilter-->
-   
-   <!--topFilter name="Problem_PhoneUnavailable"  >
-      <anyCondition tag="ProblemAlarm.Creation.AdditionalText=PhoneUnavailable,ProblemAlarm.Creation.MinNbOfAllAlarms=2,CypherQuery=GetPhone,ProblemAlarm.Creation.ProblemEntity=ManagedEntity,ServiceManager"  >
-         <patternIdFilterStatement tag="SubAlarm,ComputeProblemEntityMappers=retrievePhoneName" >
-            <operator><![CDATA[isEqual]]></operator>
-            <patternIdValue><![CDATA[caused_by_phone_unregistered]]></patternIdValue>
-         </patternIdFilterStatement>
-         <patternIdFilterStatement tag="Trigger,SubAlarm,ComputeProblemEntityMappers=retrievePhoneName" >
-            <operator><![CDATA[isEqual]]></operator>
-            <patternIdValue><![CDATA[caused_by_phone_unavailable]]></patternIdValue>
-         </patternIdFilterStatement>
-         <patternIdFilterStatement tag="ProblemAlarm" >
-            <operator><![CDATA[isEqual]]></operator>
-            <patternIdValue><![CDATA[pba_phone_unavailable]]></patternIdValue>
-         </patternIdFilterStatement>
-         <orchestrationTypeFilterStatement tag="SubEvent,ComputeProblemEntityMappers=getProblemEntityFromFaultyEntity,ComputeSourceUniqueIdMapper=getProblemEntityFromFaultyEntity">
-            <orchestrationTypeValue><![CDATA[TroubleTicket]]></orchestrationTypeValue>
-         </orchestrationTypeFilterStatement>
-      </anyCondition>
-   </topFilter-->
+
+<topFilter name="Problem_Reachability" >
+<anyCondition>
+      <anyCondition tag="PATTERN_Triggers,Trigger,SubAlarm,
+      					Alarm.RejectTime=24h,
+      					ProblemAlarm.Creation=True,
+      					ProblemAlarm.Creation.Delay=1m,
+      					ProblemAlarm.Creation.OC.Mapper=getRcaOC_Interface,
+      					ProblemAlarm.AdditionalText.CustomMapper=RCA_Problem_Reachability,
+						ProblemAlarm.Creation.ProblemEntity.FromMapper=calculateProblemEntitytoUpper,
+						ProblemAlarm.Creation.Other.Attributes=Standard_Alarm_Name/Problem_Node_Down.Title/Problem_Node_Down,
+						ProblemAlarm.Creation.Severity=HighestNonTerminatedNonCleared,
+						ProblemAlarm.Refresh.AdditionalText=True,
+						Ticket.Creation.OnProblemAlarm.Mapper=True,
+                        Ticket.OnProblemAlarm.Delay=330s">
+			<anyCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca" >				
+			         <patternIdFilterStatement> 
+			            <operator><![CDATA[isEqual]]></operator>
+			            <patternIdValue><![CDATA[Reachability_Problem]]></patternIdValue>
+			         </patternIdFilterStatement>
+	        </anyCondition>
+	     </anyCondition>
+	     <anyCondition	tag="PATTERN_ProblemAlarms,ProblemAlarm">
+				<allCondition tag="ComputeProblemEntityMappers=retrievePrimaryKeyUca">
+					<patternIdFilterStatement>
+						<operator>isEqual</operator>
+						<patternIdValue>pba_Reachability_Problem</patternIdValue>
+					</patternIdFilterStatement>
+				</allCondition>
+		</anyCondition>
+</anyCondition>      
+</topFilter>
    
 </filters>

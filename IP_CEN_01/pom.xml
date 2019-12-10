@@ -271,9 +271,9 @@
         <dependency>
         	<groupId>com.hpe.uca.vp.viltt.action.UTTLTroubleTicketActionsImpl</groupId>
             <artifactId>uttl-customtt</artifactId>
-        	<version>1.4</version>
+        	<version>1.11</version>
              <scope>system</scope>
-             <systemPath>C:\Users\reddydc\git\UCA_IP_SCENARIOS\IP_CEN_01\custom_lib\uttl-customtt-1.10.jar</systemPath>
+             <systemPath>C:\Users\reddydc\git\UCA_IP_SCENARIOS\IP_CEN_01\custom_lib\uttl-customtt-1.11.jar</systemPath>
        </dependency>
         
 

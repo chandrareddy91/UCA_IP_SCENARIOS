@@ -75,6 +75,9 @@ public class CustomInferenceMachineLifeCycleExtended extends InferenceMachineLif
 		}else if(retAlarm.getPassingFiltersTags().containsKey(Problem_Pop_Isolation.class.getSimpleName())){
 			problem = Problem_Pop_Isolation.class.getSimpleName();
 			passingTags=retAlarm.getPassingFiltersTags().get(problem);
+		}else if(retAlarm.getPassingFiltersTags().containsKey(Problem_Reachability.class.getSimpleName())){
+			problem = Problem_Reachability.class.getSimpleName();
+			passingTags=retAlarm.getPassingFiltersTags().get(problem);
 		}
 		
 		if(passingTags!=null) {
